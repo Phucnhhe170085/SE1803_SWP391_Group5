@@ -1,48 +1,37 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dao;
-import models.*;
+
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+/**
+ *
+ * @author kienb
+ */
 public class DBContext {
-    Connection conn=null;
-   // Connection
-    public DBContext(String URL,String userName,String password){
-        try {
-            //driver
+    protected Connection connection;
+    public DBContext()
+    {
+        try{
+            String user="sa";
+            String pass="sa";
+            String url="jdbc:sqlserver://localhost:1433;databaseName=HL_Motel";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            //connect
-            conn=DriverManager.getConnection(URL, userName, password);
-            System.out.println("Connected");
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();      
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            connection = DriverManager.getConnection(url, user, pass);
         }
-   }
-    public DBContext() {
-        this("jdbc:sqlserver://localhost:1433;databaseName=",
-                "sa","123456");
-    }
-    public ResultSet getData(String sql){
-        ResultSet rs=null;
-        Statement state;
-        try {
-            state = conn.createStatement(
-                    ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            rs = state.executeQuery(sql);
-        } catch (SQLException ex) {
+        catch(Exception ex)
+        {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return rs;
-    }
+    }    
+    
     public static void main(String[] args) {
-        new DBContext();
+        DBContext db = new DBContext();
+        System.out.println(db.connection);
     }
-    
-    
 }
