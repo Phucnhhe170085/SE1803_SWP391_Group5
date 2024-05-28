@@ -301,6 +301,10 @@
         </div>
         <div class="update-profile">
             <form action="renterupdate" method="post">
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% if (errorMessage != null) { %>
+                <div class="error"><%= errorMessage %></div>
+                <% } %>
                 <c:set var="user" value="${requestScope.user}" />
 
                 <input type="hidden" name="userID" value="${param.userID}" readonly/><br/>
