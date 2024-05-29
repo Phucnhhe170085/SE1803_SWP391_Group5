@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/DAO/RenterDAO.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/DAO/RoomDAO.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/Models/RulePenChart.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/web/security/renterTable.jsp</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/Models/RenterPenChart.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/web/security/SEdashboard.jsp</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/web/META-INF/context.xml</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/web/security/roomDetail.jsp</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/Controller/Security/DBRoomServlet.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/Controller/Security/DBRenterServlet.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/DAO/DBContext.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/Controller/Security/RoomDetailServlet.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/web/security/roomTable.jsp</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/web/WEB-INF/web.xml</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/Models/RoomItem.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/Controller/Security/ChartServlet.java</file>
+            <file>file:/D:/PRJ301/Code/HL_MOTEL/src/java/DAO/SecurityDAO.java</file>
+        </group>
+    </open-files>
+</project-private>
