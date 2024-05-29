@@ -1,10 +1,8 @@
 package controller;
 
-import models.News;
-import models.Account;
-import models.User;
 import dao.DAORenter;
 import dao.RenterDAO;
+import models.*;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -19,37 +17,24 @@ public class RenterHomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-
-        // For testing: Create and set a mock Account object with email and password
-        Account account = new Account();
-        account.setUserMail("maingoctu@gmail.com");
-        account.setUserPassword("pass1234");
-        session.setAttribute("user", account);
-        session.setAttribute("email", "maingoctu@gmail.com");
-        session.setAttribute("password", "pass1234");
-
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
         // Retrieve the account object from the session
-        account = (Account) session.getAttribute("user");
+        Account account = (Account) session.getAttribute("user");
+        request.setAttribute("email", email);
+        request.setAttribute("password", password);
 
         // Check if the account object exists in the session
         if (account != null) {
-            // Extract email and password from the account object
-            String userMail = (String) session.getAttribute("email");
-            String userPassword = (String) session.getAttribute("password");
-
-            // Now you can use the email and password to fetch data or perform any other actions
-            // Example:
             DAORenter dao1 = new DAORenter();
             List<News> listN = dao1.getAllNews();
             request.setAttribute("ListN", listN);
 
             RenterDAO dao = new RenterDAO();
-            List<User> list = dao.getRenterDetailByAccountAndPassword(userMail, userPassword);
+            List<User> list = dao.getRenterDetailByAccountAndPassword(email, password);
             request.setAttribute("ListRP", list);
             request.getRequestDispatcher("Renter/RenterHome.jsp").forward(request, response);
         } else {
-            // If account object is not found in the session, handle the situation accordingly
-            // For example, redirect the user to the login page
             response.sendRedirect("login.jsp");
         }
     }

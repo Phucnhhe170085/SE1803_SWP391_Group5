@@ -55,13 +55,13 @@ public class RenterProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // For testing: Create and set a mock Account object with email and password
-        HttpSession session = request.getSession();
-        Account account = new Account();
-        account.setUserMail("maingoctu@gmail.com");
-        account.setUserPassword("pass1234");
-        session.setAttribute("user", account);
-        session.setAttribute("email", "maingoctu@gmail.com");
-        session.setAttribute("password", "pass1234");
+         HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
+        // Retrieve the account object from the session
+        Account account = (Account) session.getAttribute("user");
+        request.setAttribute("email", email);
+        request.setAttribute("password", password);
 
         // Retrieve the account object from the session
         account = (Account) session.getAttribute("user");

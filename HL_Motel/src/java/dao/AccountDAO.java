@@ -129,7 +129,7 @@ public class AccountDAO extends MyDAO {
         try {
             PreparedStatement ps;
             ResultSet rs;
-            String sql = "SELECT * FROM [GreenRoom].[dbo].[Account] WHERE userMail = ?";
+            String sql = "SELECT * FROM [HL_Motel].[dbo].[Account] WHERE userMail = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -168,7 +168,7 @@ public class AccountDAO extends MyDAO {
         try {
             PreparedStatement ps;
             ResultSet rs;
-            String sql = "SELECT [userID] FROM [GreenRoom].[dbo].[Account] where Account.userMail = ?";
+            String sql = "SELECT [userID] FROM [HL_Motel].[dbo].[Account] where Account.userMail = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();

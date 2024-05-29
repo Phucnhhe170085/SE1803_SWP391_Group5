@@ -8,9 +8,7 @@
         <servlet-name>RenterHomeController</servlet-name>
         <url-pattern>/renterhome</url-pattern>
     </servlet-mapping>
-    
-    
-        <servlet>
+    <servlet>
         <servlet-name>RenterProfileController</servlet-name>
         <servlet-class>controller.RenterProfileController</servlet-class>
     </servlet>
@@ -18,8 +16,7 @@
         <servlet-name>RenterProfileController</servlet-name>
         <url-pattern>/renterprofile</url-pattern>
     </servlet-mapping>
-    
-     <servlet>
+    <servlet>
         <servlet-name>RenterUpdateProfileControler</servlet-name>
         <servlet-class>controller.RenterUpdateProfileControler</servlet-class>
     </servlet>
@@ -27,8 +24,7 @@
         <servlet-name>RenterUpdateProfileControler</servlet-name>
         <url-pattern>/renterupdate</url-pattern>
     </servlet-mapping>
-    
-     <servlet>
+    <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
