@@ -1,8 +1,10 @@
 package controller;
 
+import model.User;
+import model.Account;
+import model.News;
 import dao.DAORenter;
 import dao.RenterDAO;
-import models.*;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;

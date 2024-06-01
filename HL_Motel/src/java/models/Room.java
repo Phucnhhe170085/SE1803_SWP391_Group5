@@ -1,45 +1,62 @@
 package models;
 
-import models.Item;
-import models.RoomItem;
+import java.math.BigDecimal;
 
-/**
- * Represents a Room with various attributes and associated items.
- * This class provides getter and setter methods to access and modify the room details.
- * 
- * Author: ASUS
- */
 public class Room {
 
     private int roomID;
     private int roomFloor;
     private int roomNumber;
     private int roomSize;
-    private int roomFee;  // Corrected typo
     private String roomImg;
     private int total;
     private Item item;
-    private RoomItem roomItem;  // Changed camel case to maintain consistency
+    private RoomItem roomitem;
+    private BigDecimal roomFee;
 
-    // Default constructor
-    public Room() {
+    public Room(Item item, RoomItem roomitem) {
+        this.item = item;
+        this.roomitem = roomitem;
     }
 
-    // Parameterized constructor
-    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, int roomFee, 
-                String roomImg, int total, Item item, RoomItem roomItem) {
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, BigDecimal roomFee) {
         this.roomID = roomID;
         this.roomFloor = roomFloor;
         this.roomNumber = roomNumber;
         this.roomSize = roomSize;
-        this.roomFee = roomFee;  // Corrected typo
         this.roomImg = roomImg;
-        this.total = total;
-        this.item = item;
-        this.roomItem = roomItem;  // Changed camel case to maintain consistency
+        this.roomFee = roomFee;
     }
 
-    // Getter and Setter methods
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, int total) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;
+        this.roomImg = roomImg;
+        this.total = total;
+    }
+    
+    
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;
+        this.roomImg = roomImg;
+    }
+    
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, BigDecimal roomFee) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;   
+        this.roomFee = roomFee;
+    }
+    
+    public Room() {
+    }
+
     public int getRoomID() {
         return roomID;
     }
@@ -72,14 +89,6 @@ public class Room {
         this.roomSize = roomSize;
     }
 
-    public int getRoomFee() {
-        return roomFee;  // Corrected typo
-    }
-
-    public void setRoomFee(int roomFee) {  // Corrected typo
-        this.roomFee = roomFee;
-    }
-
     public String getRoomImg() {
         return roomImg;
     }
@@ -104,11 +113,26 @@ public class Room {
         this.item = item;
     }
 
-    public RoomItem getRoomItem() {  // Changed camel case to maintain consistency
-        return roomItem;
+    public RoomItem getRoomitem() {
+        return roomitem;
     }
 
-    public void setRoomItem(RoomItem roomItem) {  // Changed camel case to maintain consistency
-        this.roomItem = roomItem;
+    public void setRoomitem(RoomItem roomitem) {
+        this.roomitem = roomitem;
     }
+
+    public BigDecimal getRoomFee() {
+        return roomFee;
+    }
+
+    public void setRoomFee(BigDecimal roomFee) {
+        this.roomFee = roomFee;
+    }
+    
+    
+    
+
 }
+
+
+   

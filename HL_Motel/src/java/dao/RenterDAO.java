@@ -1,9 +1,10 @@
 package dao;
 
-import models.Account;
-import models.Renter;
-import models.Room;
-import models.User;
+import java.math.BigDecimal;
+import model.Account;
+import model.Renter;
+import model.Room;
+import model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,35 +15,34 @@ import java.util.logging.Logger;
 
 /**
  * Data Access Object for Renter-related operations.
- * 
+ *
  * Author: creep
  */
 public class RenterDAO extends MyDAO {
 
     // Retrieve user details by account and password
-    public List<User> getRenterDetailByAccountAndPassword(String accountInput, String passwordInput) {
-        List<User> list = new ArrayList<>();
-        String sql = "SELECT DISTINCT "
-                + "    u.userID, u.userName, u.userGender, u.userBirth, u.userAddress, u.userPhone, u.userAvatar, \n"
-                + "    r.renterID, r.roomID, r.renterStatus, r.renterHaveRoom, r.CGRScore, r.balance, \n"
-                + "    a.userMail, a.userPassword, \n"
-                + "    rm.roomFloor, rm.roomNumber \n"
-                + "FROM \n"
-                + "    \"user\" u \n"
-                + "JOIN \n"
-                + "    renter r ON u.userID = r.userID \n"
-                + "JOIN \n"
-                + "    account a ON u.userID = a.userID \n"
-                + "LEFT JOIN \n"
-                + "    room rm ON r.roomID = rm.roomID \n"
-                + "WHERE \n"
-                + "    a.userMail = ? AND a.userPassword = ?";
+   public List<User> getRenterDetailByAccountAndPassword(String accountInput, String passwordInput) {
+    List<User> list = new ArrayList<>();
+    String sql = "SELECT DISTINCT "
+            + "    u.userID, u.userName, u.userGender, u.userBirth, u.userAddress, u.userPhone, u.userAvatar, "
+            + "    r.renterID, r.roomID, r.renterStatus, r.renterHaveRoom, r.CGRScore, r.balance, "
+            + "    a.userMail, a.userPassword, "
+            + "    rm.roomFloor, rm.roomNumber, rm.roomFee "
+            + "FROM "
+            + "    \"user\" u "
+            + "JOIN "
+            + "    renter r ON u.userID = r.userID "
+            + "JOIN "
+            + "    account a ON u.userID = a.userID "
+            + "LEFT JOIN "
+            + "    room rm ON r.roomID = rm.roomID "
+            + "WHERE "
+            + "    a.userMail = ? AND a.userPassword = ?";
 
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, accountInput);
-            ps.setString(2, passwordInput);
-            ResultSet rs = ps.executeQuery();
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setString(1, accountInput);
+        ps.setString(2, passwordInput);
+        try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int userID = rs.getInt(1);
                 String userName = rs.getString(2);
@@ -61,18 +61,20 @@ public class RenterDAO extends MyDAO {
                 String userPassword = rs.getString(15);
                 int roomFloor = rs.getInt(16);
                 String roomNumber = rs.getString(17);
+                BigDecimal roomFee = rs.getBigDecimal(18);
 
                 Account account = new Account(userID, userMail, userPassword, 1);
                 Renter renter = new Renter(renterID, userID, roomID, renterStatus, renterHaveRoom, CGRScore, balance);
-                Room room = new Room(roomID, roomFloor, Integer.parseInt(roomNumber), 0, 0, null, 0, null, null);
+                Room room = new Room(roomID, roomFloor, roomFloor, roomID, roomFee);
                 User user = new User(userID, userName, userGender, userBirth, userAddress, userPhone, userAvatar, account, renter, room);
                 list.add(user);
             }
-        } catch (SQLException e) {
-            System.out.println("Fail: " + e.getMessage());
         }
-        return list;
+    } catch (SQLException e) {
+        System.out.println("Fail: " + e.getMessage());
     }
+    return list;
+}
 
     // Change password for a user
     public boolean changePassword(String accountInput, String oldPassword, String newPassword) {
@@ -196,14 +198,22 @@ public class RenterDAO extends MyDAO {
     // Main method for testing
     public static void main(String[] args) {
         RenterDAO dao = new RenterDAO();
-        int userID = 1; // Assuming you want to retrieve the user with ID 1
-        User user = dao.getUserByID(userID);
-        if (user != null) {
-            System.out.println("User ID: " + user.getUserID());
-            System.out.println("User Name: " + user.getUserName());
-            // Print other user information as needed
+
+        // Replace with the actual account and password you want to test
+        String accountInput = "maingoctu@gmail.com";
+        String passwordInput = "123";
+
+        List<User> users = dao.getRenterDetailByAccountAndPassword(accountInput, passwordInput);
+        if (users != null && !users.isEmpty()) {
+            for (User user : users) {
+                System.out.println("User ID: " + user.getUserID());
+                System.out.println("User Name: " + user.getUserName());
+                System.out.println("User Address: " + user.getUserAddress());
+                // Print other user information as needed
+            }
         } else {
-            System.out.println("User with ID " + userID + " not found.");
+            System.out.println("No users found with the given account and password.");
         }
     }
+
 }

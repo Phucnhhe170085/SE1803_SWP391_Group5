@@ -1,7 +1,7 @@
 package controller;
 
-import models.User;
-import models.Account;
+import model.User;
+import model.Account;
 import dao.RenterDAO;
 import java.io.IOException;
 import java.io.PrintWriter;

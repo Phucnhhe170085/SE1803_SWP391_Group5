@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Account;
+import model.Account;
 
 /**
  *
@@ -58,7 +58,7 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/renterhome");
                         break;
                     case 2:
-                        response.sendRedirect(request.getContextPath() + "");
+                        response.sendRedirect(request.getContextPath() + "/OwnerController");
                         break;
                     case 3:
                         response.sendRedirect("");

@@ -4,6 +4,7 @@
  */
 package dao;
 
+import model.Account;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
@@ -11,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Account;
 
 /**
  *
@@ -235,7 +235,7 @@ public class AccountDAO extends MyDAO {
         }
         return null;
     }
-
+   
     public void updatePassword(Account a) {
         String sql = "UPDATE Account SET [userPassword] = ? WHERE userID = ?";
         try {

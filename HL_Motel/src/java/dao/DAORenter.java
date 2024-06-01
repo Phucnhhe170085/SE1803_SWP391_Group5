@@ -1,7 +1,7 @@
 package dao;
 
+import model.News;
 import dao.DBContext;
-import models.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
