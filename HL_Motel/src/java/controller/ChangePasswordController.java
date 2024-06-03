@@ -51,9 +51,15 @@ public class ChangePasswordController extends HttpServlet {
                     req.setAttribute("message", "Your repeat password is wrong");
                     req.getRequestDispatcher("change-password.jsp").forward(req, resp);
                 } else {
-                    accountInDb.setUserPassword(password);
-                    dbAccount.updatePassword(accountInDb);
-                    req.getRequestDispatcher("index.html").forward(req, resp);
+                    String regex = "^(?=.*\\\\d)[^\\\\s]{8,}$";
+                    if (password.matches(regex)) {
+                        accountInDb.setUserPassword(password);
+                        dbAccount.updatePassword(accountInDb);
+                        req.getRequestDispatcher("index.html").forward(req, resp);
+                    } else {
+                        req.setAttribute("message", "Please input your password at least 8 characters and at least 1 number and do not have spaces");
+                        req.getRequestDispatcher("change-password.jsp").forward(req, resp);
+                    } // xong r a'
                 }
             }
         }
