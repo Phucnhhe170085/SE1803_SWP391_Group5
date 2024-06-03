@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
-/**
- *
- * @author ASUS
- */
+import java.math.BigDecimal;
+
 public class Room {
 
     private int roomID;
@@ -18,14 +12,21 @@ public class Room {
     private int total;
     private Item item;
     private RoomItem roomitem;
+    private BigDecimal roomFee;
 
     public Room(Item item, RoomItem roomitem) {
         this.item = item;
         this.roomitem = roomitem;
     }
-    
-    
-    
+
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, BigDecimal roomFee) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;
+        this.roomImg = roomImg;
+        this.roomFee = roomFee;
+    }
 
     public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, int total) {
         this.roomID = roomID;
@@ -43,6 +44,14 @@ public class Room {
         this.roomNumber = roomNumber;
         this.roomSize = roomSize;
         this.roomImg = roomImg;
+    }
+    
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, BigDecimal roomFee) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;   
+        this.roomFee = roomFee;
     }
     
     public Room() {
@@ -110,6 +119,14 @@ public class Room {
 
     public void setRoomitem(RoomItem roomitem) {
         this.roomitem = roomitem;
+    }
+
+    public BigDecimal getRoomFee() {
+        return roomFee;
+    }
+
+    public void setRoomFee(BigDecimal roomFee) {
+        this.roomFee = roomFee;
     }
     
     
