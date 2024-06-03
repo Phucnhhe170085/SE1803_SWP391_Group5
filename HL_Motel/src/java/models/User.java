@@ -20,6 +20,7 @@ public class User{
     private Renter renter;
     private Room room;
     private Security security;
+    private String email; // tự thêm 
     
     public User() {
     }
@@ -47,6 +48,26 @@ public class User{
         this.userAvatar = userAvatar;
         this.account = account;
     }
+
+    public User(String userName, String userGender, String userBirth, String userAddress, String userPhone, String email) {
+        this.userName = userName;
+        this.userGender = userGender;
+        this.userBirth = userBirth;
+        this.userAddress = userAddress;
+        this.userPhone = userPhone;
+        this.email = email;
+    }
+
+    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone) {
+        this.userID = userID;
+        this.userName = userName;
+        this.userGender = userGender;
+        this.userBirth = userBirth;
+        this.userAddress = userAddress;
+        this.userPhone = userPhone;
+    }
+    
+    
     
     
 
@@ -167,5 +188,14 @@ public class User{
     public void setRoom(Room room) {
         this.room = room;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     
 }
