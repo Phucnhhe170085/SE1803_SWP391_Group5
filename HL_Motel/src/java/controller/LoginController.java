@@ -43,12 +43,13 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("message", "Login failed");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
+                System.out.println("Login successfully!!");
                 HttpSession session = request.getSession();
                 session.setAttribute("user", account);
                 session.setAttribute("email", email);
                 session.setAttribute("password", password);
                 request.setAttribute("message", "Login successfully");
-
+                
                 
 
                 int role = a.getUserRole(email, password);

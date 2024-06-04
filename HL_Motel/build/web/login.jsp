@@ -30,8 +30,9 @@
           <div class="input-box">
             <span class="details">Password</span>
             <input type="password" name="password" placeholder="Enter your Password" required>
+            <p style="color: red">${message}</p>
           </div>
-
+            
 
           <span class="details">
             Don't have account ?
