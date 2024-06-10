@@ -1,1 +1,8 @@
-ngay dau tien lam code....
+role 1 thì là renter
+role 2 là owner
+role 3 là security
+role 4 = là admin
+role 0
+làm them 1 cái filter về role
+về phần manage account chỉ được chỉnh 1,2,3,4
+chỉnh active về 0
