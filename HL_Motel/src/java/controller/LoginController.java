@@ -54,6 +54,8 @@ public class LoginController extends HttpServlet {
                 int role = a.getUserRole(email, password);
 
                 switch (role) {
+                    case 0:
+                        response.sendRedirect(request.getContextPath() + "/error.jsp");
                     case 1:
                         response.sendRedirect(request.getContextPath() + "/renterhome");
                         break;

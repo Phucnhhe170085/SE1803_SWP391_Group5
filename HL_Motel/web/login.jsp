@@ -41,6 +41,7 @@
                     <div class="button">
                         <input type="submit" value="Login" style="width: 400px; height: 45px">
                     </div>
+                    <input type="radio" name="yea" value="" />
                 </form>
 
                 <div class="form1">

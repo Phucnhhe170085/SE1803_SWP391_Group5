@@ -165,6 +165,8 @@
                             <li><a href="renterprofile">Renter</a></li>
                             <li><a href="Guide.html">Guide</a></li>
                             <li><a href="News.html">News</a></li>
+                            <li><a href="request">Contact Us</a></li>
+                            <li><a href="News.html">LogOut</a></li>
                         </ul>
 
                         <a href="#"
@@ -191,8 +193,7 @@
                     <div class="user-info">
                         <h3>WELCOME TO Hoa Lac Motel!!!</h3>
                         <p>Hello! ${user.userName}</p>
-                        <p>Email: ${user.account.userMail}</p>
-                        <p>Room ${user.renter.roomID}</p>
+                        <p>Email: ${user.account.userMail}</p>                       
                     </div>
                 </div>
             </c:forEach>

@@ -254,9 +254,9 @@ public class AccountDAO extends MyDAO {
 //        int role = dao.getUserRole("maitu@gmail.com", "12345678");
 //        System.out.println("Role: " + role);
 //         AccountDAO dao = new AccountDAO();
-        Account a = dao.check("tester", "2");
+        Account a = dao.check("maingoctu@gmail.com", "pass1234");
         dao.updatePassword(a);
-        Account ac = new Account(a.getUserID(), "tester", "1", a.getUserRole());
+        Account ac = new Account(a.getUserID(), "maingoctu@gmail.com", "pass123", a.getUserRole());
         dao.changep(ac);
     }
 }
