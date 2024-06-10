@@ -3,12 +3,8 @@ package models;
 import models.Item;
 import models.RoomItem;
 
-/**
- * Represents a Room with various attributes and associated items.
- * This class provides getter and setter methods to access and modify the room details.
- * 
- * Author: ASUS
- */
+import java.math.BigDecimal;
+
 public class Room {
 
     private int roomID;
@@ -19,15 +15,24 @@ public class Room {
     private String roomImg;
     private int total;
     private Item item;
-    private RoomItem roomItem;  // Changed camel case to maintain consistency
+    private RoomItem roomitem;
+    private BigDecimal roomFee;
 
-    // Default constructor
-    public Room() {
+    public Room(Item item, RoomItem roomitem) {
+        this.item = item;
+        this.roomitem = roomitem;
     }
 
-    // Parameterized constructor
-    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, int roomFee, 
-                String roomImg, int total, Item item, RoomItem roomItem) {
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, BigDecimal roomFee) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;
+        this.roomImg = roomImg;
+        this.roomFee = roomFee;
+    }
+
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, int total) {
         this.roomID = roomID;
         this.roomFloor = roomFloor;
         this.roomNumber = roomNumber;
@@ -38,8 +43,18 @@ public class Room {
         this.item = item;
         this.roomItem = roomItem;  // Changed camel case to maintain consistency
     }
+    
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, BigDecimal roomFee) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;   
+        this.roomFee = roomFee;
+    }
+    
+    public Room() {
+    }
 
-    // Getter and Setter methods
     public int getRoomID() {
         return roomID;
     }
@@ -111,4 +126,16 @@ public class Room {
     public void setRoomItem(RoomItem roomItem) {  // Changed camel case to maintain consistency
         this.roomItem = roomItem;
     }
+
+    public BigDecimal getRoomFee() {
+        return roomFee;
+    }
+
+    public void setRoomFee(BigDecimal roomFee) {
+        this.roomFee = roomFee;
+    }
+    
+    
+    
+
 }

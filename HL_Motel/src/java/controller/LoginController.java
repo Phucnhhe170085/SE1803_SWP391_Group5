@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Account;
+import model.Account;
 
 /**
  *
@@ -43,13 +43,12 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("message", "Login failed");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-                System.out.println("Login successfully!!");
                 HttpSession session = request.getSession();
                 session.setAttribute("user", account);
                 session.setAttribute("email", email);
                 session.setAttribute("password", password);
                 request.setAttribute("message", "Login successfully");
-                
+
                 
 
                 int role = a.getUserRole(email, password);
@@ -59,7 +58,7 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/renterhome");
                         break;
                     case 2:
-                        response.sendRedirect(request.getContextPath() + "");
+                        response.sendRedirect(request.getContextPath() + "/OwnerController");
                         break;
                     case 3:
                         response.sendRedirect("");

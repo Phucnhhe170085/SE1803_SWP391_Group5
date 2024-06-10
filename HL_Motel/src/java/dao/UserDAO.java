@@ -4,12 +4,17 @@
  */
 package dao;
 
-import models.*;
+import model.Account;
+import model.User;
+import model.Room;
+import java.math.BigDecimal;
+import model.Renter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  *
@@ -77,15 +82,16 @@ public class UserDAO extends MyDAO {
                 String userAvatar = rs.getString(7);
                 int renterID = rs.getInt(8);
                 int roomID = rs.getInt(9);
-                boolean renterStatus = rs.getBoolean(10);
-                boolean renterHaveRoom = rs.getBoolean(11);
-                String userMail = rs.getString(12);
-                String userPassword = rs.getString(13);
-                int roomFloor = rs.getInt(14);
-                String roomNumber = rs.getString(15);
+                BigDecimal roomFee = rs.getBigDecimal(10);
+                boolean renterStatus = rs.getBoolean(11);
+                boolean renterHaveRoom = rs.getBoolean(12);
+                String userMail = rs.getString(13);
+                String userPassword = rs.getString(14);
+                int roomFloor = rs.getInt(15);
+                String roomNumber = rs.getString(16);
                 Account account = new Account(userId, userMail, userPassword, 1);
                 Renter renter = new Renter(renterID, userId, roomID, renterStatus, renterHaveRoom, roomID, roomID);
-                Room room = new Room(roomID, roomFloor, Integer.parseInt(roomNumber), 0, 0, null, 0, null, null);
+                 Room room = new Room(roomID, roomFloor, roomFloor, roomID, roomFee);
                 User user = new User(userId, userName, userGender, userBirth, userAddress, userPhone, userAvatar, account, renter, room);
                 list.add(user);
             }

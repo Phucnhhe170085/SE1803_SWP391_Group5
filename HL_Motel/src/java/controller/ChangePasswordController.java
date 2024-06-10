@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import models.Account;
+import model.*;
 
 /**
  * @author DAT
@@ -22,10 +22,8 @@ public class ChangePasswordController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Req to change password");
         Account account = (Account) req.getSession().getAttribute("user");
         if (account == null) {
-            System.out.println("You are not logged");
             req.getRequestDispatcher("index.html").forward(req, resp);
         } else {
             req.getRequestDispatcher("change-password.jsp").forward(req, resp);
@@ -37,7 +35,6 @@ public class ChangePasswordController extends HttpServlet {
         Account account = (Account) req.getSession().getAttribute("user");
         AccountDAO dbAccount = new AccountDAO();
         if (account == null) {
-            System.out.println("Not found user");
             req.getRequestDispatcher("index.html").forward(req, resp);
         } else {
             System.out.println(account.getUserID());
@@ -54,16 +51,9 @@ public class ChangePasswordController extends HttpServlet {
                     req.setAttribute("message", "Your repeat password is wrong");
                     req.getRequestDispatcher("change-password.jsp").forward(req, resp);
                 } else {
-                    String regex = "^(?=.*\\d)[^\\s]{8,}$";
-                    if (password.matches(regex)) {
-                        accountInDb.setUserPassword(password);
-                        dbAccount.updatePassword(accountInDb);
-                        req.setAttribute("message", "Change password successfully!");
-                        req.getRequestDispatcher("change-password.jsp").forward(req, resp);
-                    } else {
-                        req.setAttribute("message", "Please input your password at least 8 characters and at least 1 number and do not have spaces");
-                        req.getRequestDispatcher("change-password.jsp").forward(req, resp);
-                    }
+                    accountInDb.setUserPassword(password);
+                    dbAccount.updatePassword(accountInDb);
+                    req.getRequestDispatcher("index.html").forward(req, resp);
                 }
             }
         }

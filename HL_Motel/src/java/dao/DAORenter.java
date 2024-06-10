@@ -1,7 +1,7 @@
 package dao;
 
+import model.News;
 import dao.DBContext;
-import models.News;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,18 +53,22 @@ public class DAORenter extends DBContext {
         return list;
     }
 
-    public static void main(String[] args) {
-        DAORenter dao = new DAORenter();
+    public int findUser(String user) throws SQLException {
+        String sql = "select * from account where account.userMail = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, user);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return 2;
+            }
+        } catch (SQLException e) {
 
-        // Fetch news from the database
-        List<News> newsList = dao.getAllNews();
-
-        // Print news details
-        for (News news : newsList) {
-            System.out.println("ID: " + news.getUserName());
-            System.out.println("Content: " + news.getNewsTitle());
-            System.out.println("Date: " + news.getNewDes());
-            System.out.println("-----------");
         }
+        return 1;
+    }
+
+    public static void main(String[] args) {
+        
     }
 }

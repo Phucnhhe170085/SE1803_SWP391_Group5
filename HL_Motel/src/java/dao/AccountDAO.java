@@ -4,6 +4,7 @@
  */
 package dao;
 
+import model.Account;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
@@ -11,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Account;
 
 /**
  *
@@ -105,16 +105,16 @@ public class AccountDAO extends MyDAO {
         try {
             PreparedStatement ps;
             ResultSet rs;
-            String sql = "SELECT * FROM [Account] where userMail = ? and userPassword = ?";
+            String sql = "SELECT * FROM [HL_Motel].[dbo].[Account] where userMail = ? and userPassword = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Account a = new Account();
-                a.setUserID(rs.getInt("userID"));
+                a.setUserID(rs.getInt(1));
                 a.setUserMail(rs.getString(2));
-                a.setUserPassword(rs.getString(3));
+                a.setUserPassword(rs.getString(4));
                 a.setUserRole(rs.getInt(4));
                 return a;
             }
@@ -129,7 +129,7 @@ public class AccountDAO extends MyDAO {
         try {
             PreparedStatement ps;
             ResultSet rs;
-            String sql = "SELECT * FROM [Account] WHERE userMail = ?";
+            String sql = "SELECT * FROM [HL_Motel].[dbo].[Account] WHERE userMail = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -168,7 +168,7 @@ public class AccountDAO extends MyDAO {
         try {
             PreparedStatement ps;
             ResultSet rs;
-            String sql = "SELECT [userID] FROM [GreenRoom].[dbo].[Account] where Account.userMail = ?";
+            String sql = "SELECT [userID] FROM [HL_Motel].[dbo].[Account] where Account.userMail = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -222,60 +222,41 @@ public class AccountDAO extends MyDAO {
     }
 
     public Account checkID(int userid) {
-        String sql = "SELECT * FROM Account WHERE userID = ?";
+        String sql = "SELECT * FROM Account WHERE userid = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, userid); // Set parameter using setInt for integer value
-            ResultSet rsT = st.executeQuery();
-            if (rsT.next()) {
-                return new Account(userid, rsT.getString("userMail"), rsT.getString("userPassword"), rsT.getInt("userRole"));
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new Account(userid, rs.getString("username"), rs.getString("password"), rs.getInt("userRole"));
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
         return null;
     }
-
+   
     public void updatePassword(Account a) {
         String sql = "UPDATE Account SET [userPassword] = ? WHERE userID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, a.getUserPassword());
             st.setInt(2, a.getUserID());
+
             st.executeUpdate();
         } catch (SQLException e) {
             // Handle the exception appropriately, e.g., log it
             e.printStackTrace();
         }
     }
-
-    public Account insert(Account account) {
-        try {
-            String sql = "insert into account(userMail, userPassword, userRole) values (?,?,?)";
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            ps = connection.prepareStatement(sql);
-            ps.setString(1, account.getUserMail());
-            ps.setString(2, account.getUserPassword());
-            ps.setInt(3, account.getUserRole());
-            ps.executeUpdate();
-            return account;
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
 //        int role = dao.getUserRole("maitu@gmail.com", "12345678");
 //        System.out.println("Role: " + role);
 //         AccountDAO dao = new AccountDAO();
-//        Account a = dao.check("tester", "2");
-//        dao.updatePassword(a);
-//        Account ac = new Account(a.getUserID(), "tester", "1", a.getUserRole());
-//        dao.changep(ac);
-    Account a = dao.checkID(1);
-        System.out.println(a.getUserMail());
+        Account a = dao.check("maingoctu@gmail.com", "pass1234");
+        dao.updatePassword(a);
+        Account ac = new Account(a.getUserID(), "maingoctu@gmail.com", "pass123", a.getUserRole());
+        dao.changep(ac);
     }
 }
