@@ -16,20 +16,10 @@ public class Room {
     private int total;
     private Item item;
     private RoomItem roomitem;
-    private BigDecimal roomFee;
 
     public Room(Item item, RoomItem roomitem) {
         this.item = item;
         this.roomitem = roomitem;
-    }
-
-    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, BigDecimal roomFee) {
-        this.roomID = roomID;
-        this.roomFloor = roomFloor;
-        this.roomNumber = roomNumber;
-        this.roomSize = roomSize;
-        this.roomImg = roomImg;
-        this.roomFee = roomFee;
     }
 
     public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, int total) {
@@ -37,21 +27,18 @@ public class Room {
         this.roomFloor = roomFloor;
         this.roomNumber = roomNumber;
         this.roomSize = roomSize;
-        this.roomFee = roomFee;  // Corrected typo
         this.roomImg = roomImg;
         this.total = total;
-        this.item = item;
-        this.roomItem = roomItem;  // Changed camel case to maintain consistency
     }
-    
-    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, BigDecimal roomFee) {
+
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, int roomFee) {
         this.roomID = roomID;
         this.roomFloor = roomFloor;
         this.roomNumber = roomNumber;
-        this.roomSize = roomSize;   
+        this.roomSize = roomSize;
         this.roomFee = roomFee;
     }
-    
+
     public Room() {
     }
 
@@ -119,23 +106,12 @@ public class Room {
         this.item = item;
     }
 
-    public RoomItem getRoomItem() {  // Changed camel case to maintain consistency
-        return roomItem;
+    public RoomItem getRoomitem() {
+        return roomitem;
     }
 
-    public void setRoomItem(RoomItem roomItem) {  // Changed camel case to maintain consistency
-        this.roomItem = roomItem;
+    public void setRoomitem(RoomItem roomitem) {
+        this.roomitem = roomitem;
     }
-
-    public BigDecimal getRoomFee() {
-        return roomFee;
-    }
-
-    public void setRoomFee(BigDecimal roomFee) {
-        this.roomFee = roomFee;
-    }
-    
-    
-    
 
 }

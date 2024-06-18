@@ -24,10 +24,10 @@ public class RoomDAO extends DBContext {
                 int roomFloor = rs.getInt("roomFloor");
                 int roomNumber = rs.getInt("roomNumber");
                 int roomSize = rs.getInt("roomSize");
-                BigDecimal roomFee = rs.getBigDecimal("roomFee");
+//                BigDecimal roomFee = rs.getBigDecimal("roomFee");
                 String roomImg = rs.getString("roomImg");
 
-                Room room = new Room(roomID, roomFloor, roomNumber, roomSize, roomImg, roomFee);
+                Room room = new Room(roomID, roomFloor, roomNumber, roomSize, roomImg, 0);
                 rooms.add(room);
             }
         } catch (SQLException e) {
@@ -35,6 +35,28 @@ public class RoomDAO extends DBContext {
         }
 
         return rooms;
+    }
+
+    public Room findById(int id) {
+        String query = "SELECT * FROM room where roomID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int roomID = rs.getInt("roomID");
+                int roomFloor = rs.getInt("roomFloor");
+                int roomNumber = rs.getInt("roomNumber");
+                int roomSize = rs.getInt("roomSize");
+                String roomImg = rs.getString("roomImg");
+
+                Room room = new Room(roomID, roomFloor, roomNumber, roomSize, roomImg, 0);
+                return room;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     public User getOwnerProfileByID(int userID) {
@@ -86,14 +108,6 @@ public class RoomDAO extends DBContext {
 
     public static void main(String[] args) {
         RoomDAO roomDAO = new RoomDAO();
-//        User check = roomDAO.getOwnerProfileByID(15);
-//        System.out.println(check.getUserBirth());
-        int a = roomDAO.update(new User(15, "Nguyễn Văn Linh", "Female", "1991-12-05", 
-                "100 Hai Bà Trưng, Hoàn Kiếm, Hà Nội", "0987654321"));
-        if (a > 0) {
-            System.out.println("updated");
-        } else {
-            System.out.println("fail");
-        }
+        System.out.println(roomDAO.getRooms().toString());
     }
 }

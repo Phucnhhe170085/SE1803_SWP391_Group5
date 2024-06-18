@@ -34,7 +34,7 @@ public class RegisterController extends HttpServlet {
         account.setUserMail(email);
         account.setUserPassword(password);
         account.setUserRole(1); // default role
-        dbAccount.insert(account);
+        //dbAccount.insert(account);
         req.getRequestDispatcher("index.html").forward(req, resp);
     }
 
