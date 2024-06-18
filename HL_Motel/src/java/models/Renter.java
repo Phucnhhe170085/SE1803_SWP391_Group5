@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package models;
+package Models;
+
+import jakarta.annotation.Nullable;
 
 /**
  *
@@ -52,12 +54,12 @@ public class Renter {
     public int getRoomID() {
         return roomID;
     }
-
+    @Nullable
     public void setRoomID(int roomID) {
         this.roomID = roomID;
     }
 
-    public boolean isRenterStatus() {
+    public boolean getRenterStatus() {
         return renterStatus;
     }
 
@@ -65,7 +67,7 @@ public class Renter {
         this.renterStatus = renterStatus;
     }
 
-    public boolean isRenterHaveRoom() {
+    public boolean getRenterHaveRoom() {
         return renterHaveRoom;
     }
 
@@ -89,5 +91,16 @@ public class Renter {
         this.balance = balance;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Renter{" +
+                "renterID=" + renterID +
+                ", userID=" + userID +
+                ", roomID=" + roomID +
+                ", renterStatus=" + renterStatus +
+                ", renterHaveRoom=" + renterHaveRoom +
+                ", CGRScore=" + CGRScore +
+                ", balance=" + balance +
+                '}';
+    }
 }

@@ -7,6 +7,7 @@ package Controller.Security;
 
 import DAO.RenterDAO;
 import Models.Renter;
+import Models.RenterList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,7 +60,7 @@ public class DBRenterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         RenterDAO renterDAO = new RenterDAO();
-        List<Renter> renters = renterDAO.getAllRenters();
+        List<RenterList> renters = renterDAO.getRenters();
         request.setAttribute("rt", renters);
         request.getRequestDispatcher("security/renterTable.jsp").forward(request, response);
         

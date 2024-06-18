@@ -2,46 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package models;
+package Models;
 
 /**
  *
- * @author ASUS
+ * @author Admin
  */
 public class RenterList {
-    private int userID;
-    private String userAvatar;
     private String userName;
-    private String userMail;
-    private boolean renterHaveRoom;
+    private String userGender;
+    private int roomID;
     private boolean renterStatus;
+    private boolean renterHaveRoom;
+    private int CGRScore;
+    private double balance;
 
     public RenterList() {
     }
 
-    public RenterList(int userID, String userAvatar, String userName, String userMail, boolean renterHaveRoom, boolean renterStatus) {
-        this.userID = userID;
-        this.userAvatar = userAvatar;
+    public RenterList(String userName, String userGender, int roomID, boolean renterStatus, boolean renterHaveRoom, int CGRScore, double balance) {
         this.userName = userName;
-        this.userMail = userMail;
-        this.renterHaveRoom = renterHaveRoom;
+        this.userGender = userGender;
+        this.roomID = roomID;
         this.renterStatus = renterStatus;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public String getUserAvatar() {
-        return userAvatar;
-    }
-
-    public void setUserAvatar(String userAvatar) {
-        this.userAvatar = userAvatar;
+        this.renterHaveRoom = renterHaveRoom;
+        this.CGRScore = CGRScore;
+        this.balance = balance;
     }
 
     public String getUserName() {
@@ -52,12 +38,28 @@ public class RenterList {
         this.userName = userName;
     }
 
-    public String getUserMail() {
-        return userMail;
+    public String getUserGender() {
+        return userGender;
     }
 
-    public void setUserMail(String userMail) {
-        this.userMail = userMail;
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
+    }
+
+    public int getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
+    }
+
+    public boolean isRenterStatus() {
+        return renterStatus;
+    }
+
+    public void setRenterStatus(boolean renterStatus) {
+        this.renterStatus = renterStatus;
     }
 
     public boolean isRenterHaveRoom() {
@@ -68,13 +70,25 @@ public class RenterList {
         this.renterHaveRoom = renterHaveRoom;
     }
 
-    public boolean isRenterStatus() {
-        return renterStatus;
+    public int getCGRScore() {
+        return CGRScore;
     }
 
-    public void setRenterStatus(boolean renterStatus) {
-        this.renterStatus = renterStatus;
+    public void setCGRScore(int CGRScore) {
+        this.CGRScore = CGRScore;
     }
-    
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "RenterList{" + "userName=" + userName + ", userGender=" + userGender + ", roomID=" + roomID + ", renterStatus=" + renterStatus + ", renterHaveRoom=" + renterHaveRoom + ", CGRScore=" + CGRScore + ", balance=" + balance + '}';
+    }
     
 }

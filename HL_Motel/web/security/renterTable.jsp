@@ -65,6 +65,18 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Room List
                             </a>
+                            <a class="nav-link" href="pen">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Penalty List
+                            </a>
+                            <a class="nav-link" href="newlist">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                News
+                            </a>
+                            <a class="nav-link" href="rule">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Rule
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -91,8 +103,8 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Renter ID</th>
-                                            <th>User ID</th>
+                                            <th>Renter Name</th>
+                                            <th>Gender</th>
                                             <th>Room ID</th>
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
@@ -103,8 +115,8 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Renter ID</th>
-                                            <th>User ID</th>
+                                            <th>Renter Name</th>
+                                            <th>Gender</th>
                                             <th>Room ID</th>
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
@@ -116,8 +128,8 @@
                                     <c:forEach var="t" items="${rt}">
                                         <tr>
                                             
-                                            <td>${t.renterID}</td>
-                                            <td>${t.userID}</td>
+                                            <td>${t.userName}</td>
+                                            <td>${t.userGender}</td>
                                             <td>${t.roomID}</td>
                                             <td>${t.renterStatus}</td>
                                             <td>${t.renterHaveRoom}</td>

@@ -62,6 +62,8 @@
                            
                             
                             <div class="sb-sidenav-menu-heading">Addons</div>
+                            
+                            
                             <a class="nav-link" href="dbrenter">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Renter List
@@ -69,6 +71,18 @@
                             <a class="nav-link" href="dbroom">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Room List
+                            </a>
+                            <a class="nav-link" href="pen">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Penalty List
+                            </a>
+                            <a class="nav-link" href="newlist">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                News
+                            </a>
+                            <a class="nav-link" href="rule">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Rule
                             </a>
                         </div>
                     </div>

@@ -5,6 +5,7 @@
 package DAO;
 
 import Models.Renter;
+import Models.RenterList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,18 +17,26 @@ import java.util.List;
  * @author Admin
  */
 public class RenterDAO extends DBContext {
-    public List<Renter> getAllRenters() {
-        List<Renter> renters = new ArrayList<>();
-        String sql = "SELECT * FROM Renter"; 
+    public List<RenterList> getRenters() {
+        List<RenterList> renters = new ArrayList<>();
+        String sql = "SELECT userName\n" +
+                    "      ,userGender\n" +
+                    "      ,r.roomID\n" +
+                    "      ,r.renterStatus\n" +
+                    "      ,r.renterHaveRoom\n" +
+                    "      ,r.CGRScore\n" +
+                    "	  ,r.balance\n" +
+                    "  FROM [HL_Motel].[dbo].[user]\n" +
+                    "  join renter r on [user].userID = r.userID"; 
         
         try (Connection conn = connection;
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             
             while (rs.next()) {
-                Renter rt = new Renter();
-                rt.setRenterID(rs.getInt("renterID"));
-                rt.setUserID(rs.getInt("userID"));
+                RenterList rt = new RenterList();
+                rt.setUserName(rs.getString("userName"));
+                rt.setUserGender(rs.getString("userGender"));
                 rt.setRoomID(rs.getInt("RoomID"));
                 rt.setRenterStatus(rs.getBoolean("RenterStatus"));
                 rt.setRenterHaveRoom(rs.getBoolean("RenterHaveRoom"));
@@ -45,10 +54,10 @@ public class RenterDAO extends DBContext {
 }
     public static void main(String[] args) {
         RenterDAO renterDAO = new RenterDAO();
-        List<Renter> renters = renterDAO.getAllRenters();
+        List<RenterList> renters = renterDAO.getRenters();
         
         
-            for (Renter renter: renters) {
+            for (RenterList renter: renters) {
                 System.out.println(renter);
             }
         

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package models;
+package Models;
 
 /**
  *
@@ -14,38 +14,19 @@ public class Room {
     private int roomFloor;
     private int roomNumber;
     private int roomSize;
+    private float roomFee;
     private String roomImg;
-    private int total;
-    private Item item;
-    private RoomItem roomitem;
 
-    public Room(Item item, RoomItem roomitem) {
-        this.item = item;
-        this.roomitem = roomitem;
-    }
-    
-    
-    
-
-    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, int total) {
-        this.roomID = roomID;
-        this.roomFloor = roomFloor;
-        this.roomNumber = roomNumber;
-        this.roomSize = roomSize;
-        this.roomImg = roomImg;
-        this.total = total;
-    }
-    
-    
-    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg) {
-        this.roomID = roomID;
-        this.roomFloor = roomFloor;
-        this.roomNumber = roomNumber;
-        this.roomSize = roomSize;
-        this.roomImg = roomImg;
-    }
-    
     public Room() {
+    }
+
+    public Room(int roomID, int roomFloor, int roomNumber, int roomSize, float roomFee, String roomImg) {
+        this.roomID = roomID;
+        this.roomFloor = roomFloor;
+        this.roomNumber = roomNumber;
+        this.roomSize = roomSize;
+        this.roomFee = roomFee;
+        this.roomImg = roomImg;
     }
 
     public int getRoomID() {
@@ -80,6 +61,14 @@ public class Room {
         this.roomSize = roomSize;
     }
 
+    public float getRoomFee() {
+        return roomFee;
+    }
+
+    public void setRoomFee(float roomFee) {
+        this.roomFee = roomFee;
+    }
+
     public String getRoomImg() {
         return roomImg;
     }
@@ -88,28 +77,9 @@ public class Room {
         this.roomImg = roomImg;
     }
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public RoomItem getRoomitem() {
-        return roomitem;
-    }
-
-    public void setRoomitem(RoomItem roomitem) {
-        this.roomitem = roomitem;
+    @Override
+    public String toString() {
+        return roomID + " " +  roomFloor + " " + roomNumber + " " + roomSize + " " + roomFee + " " + roomImg;
     }
     
     
