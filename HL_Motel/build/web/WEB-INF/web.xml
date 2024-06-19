@@ -17,11 +17,11 @@
         <url-pattern>/renterprofile</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>RenterUpdateProfileControler</servlet-name>
-        <servlet-class>controller.RenterUpdateProfileControler</servlet-class>
+        <servlet-name>RenterUpdateProfileController</servlet-name>
+        <servlet-class>controller.RenterUpdateProfileController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RenterUpdateProfileControler</servlet-name>
+        <servlet-name>RenterUpdateProfileController</servlet-name>
         <url-pattern>/renterupdate</url-pattern>
     </servlet-mapping>
     <servlet>

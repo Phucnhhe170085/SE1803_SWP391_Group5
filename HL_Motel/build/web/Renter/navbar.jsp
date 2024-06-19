@@ -1,11 +1,11 @@
 <%-- 
     Document   : navbar
     Created on : 25 thg 5, 2024, 15:32:37
-    Author     : quocp
+    Author     : phuc
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% String service = (String) request.getParameter("service"); %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +14,7 @@
         <meta name="author" content="Untree.co">
         <link rel="shortcut icon" href="../images/favicon.png">
 
-        <meta name="description" content="" />
+        <meta name="description" content="Your description here" />
         <meta name="keywords" content="bootstrap, bootstrap5" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,16 +33,18 @@
     </head>
     <body>        
         <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-            <li class="<%= (service == null || service.equals("OwnerHome")) ? "active" : "" %>"><a href="">Home</a></li>            
-            <li class="has-children <%= "listRoom".equals(service) ? "active" : "" %>">
+            <li class="${param.service == null || param.service == 'renterhome' ? 'active' : ''}">
+                <a href="rentercontroller?service=renterhome">Home</a>
+            </li>
+            <li class="has-children ${param.service == 'listRoom' ? 'active' : ''}">
                 <a href="#">View</a>
                 <ul class="dropdown">
-                    <li><a href="OwnerController?service=listRoom">List of room</a></li>
+                    <li><a href="rentercontroller?service=guideandrule">Guide and Rule</a></li>
                     <li><a href="#">Security</a></li>
                 </ul>
             </li>               
             <li><a href="#">Payment</a></li>
-            <li><a href="#">Renter Management</a></li>
+            <li><a href="rentercontroller?service=request">Contact Us</a></li>
             <li class="has-children">
                 <a href="#">Manage</a>
                 <ul class="dropdown">
@@ -50,9 +52,9 @@
                     <li><a href="#">News</a></li>
                 </ul>
             </li>
-            <li><a href="login.html">Login</a></li>
+            <li><a href="logout">Logout</a></li>
             <li>
-                <a href="OwnerController?service=ownerProfile">
+                <a href="rentercontroller?service=renterprofile">
                     <img src="images/firefly.jpg" alt="Profile Image" width="30px" height="30px" style="border-radius: 10px;">
                 </a>
             </li>

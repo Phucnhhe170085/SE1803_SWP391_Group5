@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Request;
 import model.ReqType;
+import model.Request;
 import model.RequestList;
-import model.User;
 
 public class RequestDAO extends DBContext {
 
@@ -18,7 +17,9 @@ public class RequestDAO extends DBContext {
         List<ReqType> requestTypes = new ArrayList<>();
         String sql = "SELECT * FROM requestType"; // Adjust based on your table structure
         try (
-                PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery()
+        ) {
             while (rs.next()) {
                 int id = rs.getInt("reqTypeId");
                 String name = rs.getString("typeName");
@@ -32,17 +33,20 @@ public class RequestDAO extends DBContext {
 
     public List<RequestList> getReqListByID(int userID) {
         List<RequestList> requests = new ArrayList<>();
-        String sql = "SELECT u.userID, u.userName, r.title, r.description, rt.typeName, r.createAt, r.resStatus "
+        String sql = "SELECT u.userID, u.userName, r.requestID, r.title, r.description, rt.typeName, r.createAt, r.resStatus "
                 + "FROM request r "
                 + "JOIN [user] u ON r.renterID = u.userID "
                 + "JOIN requestType rt ON r.requestType = rt.reqTypeID "
                 + "WHERE u.userID = ?";
         try (
-                PreparedStatement st = connection.prepareStatement(sql)) {
-            // Set the parameter for the userID
+            PreparedStatement st = connection.prepareStatement(sql)
+        ) {
             st.setInt(1, userID);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
+                                       
+                    int requestID = rs.getInt("requestID");
+                    int uID = rs.getInt("userID");
                     String userName = rs.getString("userName");
                     String title = rs.getString("title");
                     String description = rs.getString("description");
@@ -50,7 +54,7 @@ public class RequestDAO extends DBContext {
                     String createAt = rs.getString("createAt");
                     String resStatus = rs.getString("resStatus");
 
-                    RequestList request = new RequestList(userName, title, description, typeName, createAt, resStatus);
+                    RequestList request = new RequestList(requestID, uID, userName, title, description, typeName, createAt, resStatus);
                     requests.add(request);
                 }
             }
@@ -59,39 +63,11 @@ public class RequestDAO extends DBContext {
         }
         return requests;
     }
-
-    public List<RequestList> getReqList() {
-        List<RequestList> requests = new ArrayList<>();
-        String sql = "SELECT \n"
-                + "    u.userName, r.title, r.description, rt.typeName, r.createAt, r.resStatus\n"
-                + "FROM \n"
-                + "    request r\n"
-                + "JOIN \n"
-                + "    [user] u ON r.renterID = u.userID\n"
-                + "JOIN \n"
-                + "    requestType rt ON r.requestType = rt.reqTypeID;";
-        try (
-                PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
-            while (rs.next()) {
-                String userName = rs.getString("userName");
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-                String typeName = rs.getString("typeName");
-                String createAt = rs.getString("createAt");
-                String resStatus = rs.getString("resStatus");
-
-                RequestList request = new RequestList(userName, title, description, typeName, createAt, resStatus);
-                requests.add(request);
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, "Failed to fetch requests", e);
-        }
-        return requests;
-    }
+    
 
     public boolean insertRequest(int renterID, int requestType, String title, String description, String createAt, String resStatus) {
         String sql = "INSERT INTO request (renterID, requestType, title, description, createAt, resStatus) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql);) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, renterID);
             ps.setInt(2, requestType);
             ps.setString(3, title);
@@ -107,48 +83,85 @@ public class RequestDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
+    public boolean updateRequest(int requestID, int renterID, int requestType, String title, String description, String createAt, String resStatus) {
+        String sql = "UPDATE request SET renterID = ?, requestType = ?, title = ?, description = ?, createAt = ?, resStatus = ? WHERE requestID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, renterID);
+            ps.setInt(2, requestType);
+            ps.setString(3, title);
+            ps.setString(4, description);
+            ps.setString(5, createAt);
+            ps.setString(6, resStatus);
+            ps.setInt(7, requestID);
 
-    RequestDAO dao = new RequestDAO();
-
-    // Fetch and print request list for a specific userID
-    int userID = 1;
-    List<RequestList> requests = dao.getReqListByID(userID);
-    if (requests.isEmpty()) {
-        System.out.println("No requests found.");
-    } else {
-        System.out.println("Requests:");
-        for (RequestList req : requests) {
-            System.out.println(req);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, "Failed to update request", e);
+            return false;
         }
     }
-}
 
-//        RequestDAO dao = new RequestDAO();
-//
-//        // Fetch and print request list
-//        List<RequestList> requests = dao.getReqList();
-//        if (requests.isEmpty()) {
-//            System.out.println("No requests found.");
-//        } else {
-//            System.out.println("Requests:");
-//            for (RequestList req : requests) {
-//                System.out.println(req);
-//            }
-//        }
-//    }
-//    public static void main(String[] args) {
-//        RequestDAO dao = new RequestDAO();
-//        List<ReqType> requestTypes = dao.getAllReqType();
-//        if (requestTypes.isEmpty()) {
-//            System.out.println("No request types found.");
-//        } else {
-//            System.out.println("Request Types:");
-//            for (ReqType type : requestTypes) {
-//                System.out.println("ID: " + type.getReqTypeId() + ", Name: " + type.getTypeName());
-//            }
-//        }
-//
-//        
-//    }
+    public boolean deleteRequest(int requestID) {
+        String sql = "DELETE FROM request WHERE requestID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, requestID);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, "Failed to delete request", e);
+            return false;
+        }
+    }
+
+    public RequestList getRequestByID(int requestID) {
+        RequestList request = null;
+        String sql = "SELECT u.userName, r.title, r.description, rt.typeName, r.createAt, r.resStatus "
+                + "FROM request r "
+                + "JOIN [user] u ON r.renterID = u.userID "
+                + "JOIN requestType rt ON r.requestType = rt.reqTypeID "
+                + "WHERE r.requestID = ?";
+        try (
+            PreparedStatement st = connection.prepareStatement(sql)
+        ) {
+            st.setInt(1, requestID);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    String userName = rs.getString("userName");
+                    String title = rs.getString("title");
+                    String description = rs.getString("description");
+                    String typeName = rs.getString("typeName");
+                    String createAt = rs.getString("createAt");
+                    String resStatus = rs.getString("resStatus");
+
+                    request = new RequestList(userName, title, description, typeName, createAt, resStatus);
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, "Failed to fetch request by ID", e);
+        }
+        return request;
+    }
+    public static void main(String[] args) {
+        // Example usage to test updateRequest method
+        RequestDAO requestDAO = new RequestDAO();
+
+        // Example values (replace with your actual test values)
+        int requestID = 309;
+        int renterID = 1;
+        int requestType = 1;
+        String title = "BCD";
+        String description = "BCD";
+        String createAt = "2024-06-15 10:00:00"; // Example timestamp
+        String resStatus = "Pending"; // Example status
+
+        boolean updateSuccess = requestDAO.updateRequest(requestID, renterID, requestType, title, description, createAt, resStatus);
+
+        if (updateSuccess) {
+            System.out.println("Request updated successfully.");
+        } else {
+            System.out.println("Failed to update request.");
+        }
+    }
 }

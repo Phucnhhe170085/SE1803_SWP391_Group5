@@ -1,6 +1,7 @@
 package model;
 
 public class RequestList {
+    private int requestID;
     private int userID;
     private String userName;
     private String title;
@@ -10,6 +11,17 @@ public class RequestList {
     private String resStatus;
 
     public RequestList(int userID, String userName, String title, String description, String typeName, String createAt, String resStatus) {
+        this.userID = userID;
+        this.userName = userName;
+        this.title = title;
+        this.description = description;
+        this.typeName = typeName;
+        this.createAt = createAt;
+        this.resStatus = resStatus;
+    }
+
+    public RequestList(int requestID, int userID, String userName, String title, String description, String typeName, String createAt, String resStatus) {
+        this.requestID = requestID;
         this.userID = userID;
         this.userName = userName;
         this.title = title;
@@ -29,8 +41,16 @@ public class RequestList {
         this.createAt = createAt;
         this.resStatus = resStatus;
     }
+    
+    public int getRequestID() {
+        return requestID;
+    }
 
     // Getters and Setters
+    public void setRequestID(int requestID) {    
+        this.requestID = requestID;
+    }
+
     public String getUserName() {
         return userName;
     }

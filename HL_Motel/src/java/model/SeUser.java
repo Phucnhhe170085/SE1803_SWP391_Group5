@@ -4,7 +4,6 @@
  */
 package model;
 
-import models.*;
 import java.sql.Date;
 
 /**

@@ -89,7 +89,7 @@
                         <div class="container" >
                             <div class="menu-bg-wrap">
                                 <div class="site-navigation">
-                                    <a href="/renterprofile" class="logo m-0 float-start" style="text-decoration: none;">Profile</a>
+                                    <a href="renterprofile" class="logo m-0 float-start" style="text-decoration: none;">Profile</a>
 
                                     <jsp:include page="navbar.jsp"></jsp:include>
 

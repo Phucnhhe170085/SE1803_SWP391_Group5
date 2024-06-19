@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <script>
+<!--        <script>
             function validateRecaptcha() {
                 var response = grecaptcha.getResponse();
                 if (response.length == 0) {
@@ -61,6 +61,6 @@
                 }
                 return true;
             }
-        </script>
+        </script>-->
     </body>
 </html>
