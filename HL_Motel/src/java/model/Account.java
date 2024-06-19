@@ -38,6 +38,12 @@ public class Account {
         this.userRole = userRole;
         this.user = user;
     }
+
+    public Account(String userMail, String userPassword, int userRole) {
+        this.userMail = userMail;
+        this.userPassword = userPassword;
+        this.userRole = userRole;
+    }
     
     
 

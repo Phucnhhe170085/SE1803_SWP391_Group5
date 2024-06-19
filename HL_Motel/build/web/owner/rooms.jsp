@@ -1,4 +1,4 @@
-<%@page import="dao.RoomDAO,java.util.List,java.util.Vector"%>
+<%@page import="dao.RoomDAO,java.util.List"%>
 <%@page import="model.Rooms" %>
 
 <%
@@ -94,7 +94,7 @@
 
                             <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                                 <ol class="breadcrumb text-center justify-content-center">
-                                    <li class="breadcrumb-item "><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item "><a href="OwnerController?service=OwnerHome">Home</a></li>
                                 </ol>
                             </nav>
                         </div>
@@ -149,7 +149,7 @@
                                                 </span>
                                             </div>
 
-                                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                            <a href="OwnerController?service=roomDetail&roomID=<%= listRoom.get(i).getRoomID()%>" class="btn btn-primary py-2 px-3">See details</a>
                                         </div>
                                     </div>
                                 </div> <!-- .item -->
@@ -200,7 +200,7 @@
                                         </span>
                                     </div>
 
-                                    <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                    <a href="OwnerController?service=roomDetail&roomID=<%= listRoom.get(i).getRoomID()%>" class="btn btn-primary py-2 px-3">See details</a>
                                 </div>
                             </div>
                         </div> <!-- .item -->
@@ -211,7 +211,7 @@
             </div>
         </div>
     </div>
-                 
+
     <div class="site-footer">
         <div class="container">
 
