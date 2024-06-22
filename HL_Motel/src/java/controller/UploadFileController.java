@@ -59,7 +59,7 @@ public class UploadFileController extends HttpServlet {
         String[] items = contentDisp.split(";");
         for (String s : items) {
             if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("-") + 2, s.length() - 1);
+                return s.substring(12, s.length() - 1);
             }
         }
         return "";
