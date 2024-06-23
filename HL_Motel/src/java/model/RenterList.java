@@ -4,21 +4,34 @@
  */
 package model;
 
-import models.*;
-
 /**
  *
  * @author ASUS
  */
 public class RenterList {
+
     private int userID;
     private String userAvatar;
     private String userName;
     private String userMail;
     private boolean renterHaveRoom;
     private boolean renterStatus;
+    private String userGender;
+    private int roomID;
+    private int CGRScore;
+    private double balance;
 
     public RenterList() {
+    }
+
+    public RenterList(String userName, String userGender, int roomID, boolean renterStatus, boolean renterHaveRoom, int CGRScore, double balance) {
+        this.userName = userName;
+        this.userGender = userGender;
+        this.roomID = roomID;
+        this.renterStatus = renterStatus;
+        this.renterHaveRoom = renterHaveRoom;
+        this.CGRScore = CGRScore;
+        this.balance = balance;
     }
 
     public RenterList(int userID, String userAvatar, String userName, String userMail, boolean renterHaveRoom, boolean renterStatus) {
@@ -77,6 +90,37 @@ public class RenterList {
     public void setRenterStatus(boolean renterStatus) {
         this.renterStatus = renterStatus;
     }
-    
-    
+
+    public String getUserGender() {
+        return userGender;
+    }
+
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
+    }
+
+    public int getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
+    }
+
+    public int getCGRScore() {
+        return CGRScore;
+    }
+
+    public void setCGRScore(int CGRScore) {
+        this.CGRScore = CGRScore;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
 }

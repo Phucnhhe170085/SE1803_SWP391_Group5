@@ -41,6 +41,7 @@
                     <div class="button">
                         <input type="submit" value="Login" style="width: 400px; height: 45px">
                     </div>
+                    <input type="radio" name="yea" value="" />
                 </form>
 
                 <div class="form1">
@@ -51,7 +52,7 @@
             </div>
         </div>
 
-        <script>
+<!--        <script>
             function validateRecaptcha() {
                 var response = grecaptcha.getResponse();
                 if (response.length == 0) {
@@ -60,6 +61,6 @@
                 }
                 return true;
             }
-        </script>
+        </script>-->
     </body>
 </html>

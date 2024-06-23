@@ -89,7 +89,7 @@
                         <div class="container" >
                             <div class="menu-bg-wrap">
                                 <div class="site-navigation">
-                                    <a href="/renterprofile" class="logo m-0 float-start" style="text-decoration: none;">Profile</a>
+                                    <a href="renterprofile" class="logo m-0 float-start" style="text-decoration: none;">Profile</a>
 
                                     <jsp:include page="navbar.jsp"></jsp:include>
 
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <c:forEach items="${ListRP}" var="user">
+                        <c:forEach items="${ListRP}" var="user">
                             <c:set var="uid" value="${user.userID}" />
                             <div class="card mb-3">
                                 <div class="card-body">
@@ -160,7 +160,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Gender</h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">
+                                        <div class="col-sm-9 text-secondary" >
                                             ${user.userGender}
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@
                                             <h6 class="mb-0">Date of birth</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                           ${user.userBirth}
+                                            ${user.userBirth}
                                         </div>
                                     </div>
                                     <hr>
@@ -194,6 +194,14 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col-sm-3">
+                                            <h6 class="mb-0">Phone Number</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            ${user.userPhone}
+                                        </div>
+                                    </div>
+                                        <div class="row">
+                                        <div class="col-sm-3">
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
@@ -208,7 +216,7 @@
                                     </div>
                                 </div>
                             </div>
-                                        </c:forEach>
+                        </c:forEach>
                     </div>
                 </div>
 
