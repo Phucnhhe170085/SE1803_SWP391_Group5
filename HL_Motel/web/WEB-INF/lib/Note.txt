@@ -1,3 +1,0 @@
-RequestDIspacter chi su dung giao dien jsp
-đường dẫn servlet kết nối với file java controller dùng để nhận thông tin
-
