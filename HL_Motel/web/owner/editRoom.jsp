@@ -205,7 +205,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>                       
-                                                <% 
+                                                <%
+                                                    if (roomDetail.getItemName() != null) {
                                                     String[] itemNames = roomDetail.getItemName();
                                                     int[] quantities = roomDetail.getQuantity();
                                                     int[] itemIDs = roomDetail.getItemID();
@@ -227,6 +228,7 @@
                                             <% 
                                                     }
                                                 }
+                                            }
                                             %>
                                             </tbody>
                                         </table>
@@ -291,10 +293,17 @@
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>     
 <script>
-                                                document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
-                                                    var form = document.getElementById('addItemFormModal');
-                                                    form.submit();
-                                                });
+    document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
+        var quantityInput = document.getElementById('newQuantityModal').value;
+        var quantity = parseFloat(quantityInput);
+        
+        if (!Number.isInteger(quantity) || quantity <= 0) {
+            alert('Quantity is not valid. Please enter a positive integer');
+        } else {
+            var form = document.getElementById('addItemFormModal');
+            form.submit();
+        }
+    });
 </script>
 
 <script>

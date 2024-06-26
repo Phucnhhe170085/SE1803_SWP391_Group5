@@ -218,7 +218,7 @@ public class OwnerController extends HttpServlet {
             roomImg_raw = convertInputStreamToByteArray(photo.getInputStream());
             roomImg = Base64.getEncoder().encodeToString(roomImg_raw);
         }
-        
+
         int updateRoomDetail = dao.updateRoomDetail(roomID, roomNumber, roomSize, roomFee, roomImg);
         request.getRequestDispatcher("OwnerController?service=roomDetail").forward(request, response);
     }
