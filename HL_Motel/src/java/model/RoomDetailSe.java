@@ -11,7 +11,7 @@ public class RoomDetailSe {
     private int chair;
     private boolean ceilingFans;
     private boolean airConditional;
-    private byte[] roomImg;
+    private String roomImg;
     private String[] itemName;
     private byte[] itemImg;
     private int[] quantity;
@@ -19,7 +19,7 @@ public class RoomDetailSe {
     private int[] itemID;
 
     public RoomDetailSe(int roomID, int roomNumber, int roomSize, int roomFloor, 
-            byte[] roomImg, String[] itemName, byte[] itemImg, int[] quantity, 
+            String roomImg, String[] itemName, byte[] itemImg, int[] quantity, 
             double roomFee, int[] itemID) {
         this.roomID = roomID;
         this.roomNumber = roomNumber;
@@ -92,11 +92,11 @@ public class RoomDetailSe {
         this.roomNumber = roomNumber;
     }
 
-    public byte[] getRoomImg() {
+    public String getRoomImg() {
         return roomImg;
     }
 
-    public void setRoomImg(byte[] roomImg) {
+    public void setRoomImg(String roomImg) {
         this.roomImg = roomImg;
     }
 

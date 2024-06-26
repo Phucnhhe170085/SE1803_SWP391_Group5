@@ -126,7 +126,7 @@
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
                                         <form action="OwnerController" enctype="multipart/form-data" id="imageForm" method="post">
-                                        <% String base64Image = Base64.getEncoder().encodeToString(ownerProfile.getUserAvatar()); %>
+                                        <% String base64Image = ownerProfile.getUserAvatar(); %>
                                         <img src="data:image/jpg;base64, <%= base64Image %>" alt="Owner" class="rounded-circle" width="150">
                                         <div class="file-input-wrapper">
                                             <button type="button" class="btn btn-primary">Chọn ảnh</button>
@@ -170,7 +170,7 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="card">
-                            <form action="OwnerController" method="get">
+                            <form action="OwnerController" method="post">
                                 <div class="card-body">                                    
                                     <div class="row mb-3">
                                         <div class="col-sm-3">

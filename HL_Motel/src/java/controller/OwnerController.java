@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Vector;
 import jakarta.servlet.http.Part;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.Base64;
 import model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -148,19 +151,74 @@ public class OwnerController extends HttpServlet {
     private void updateAvatar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RoomDAO dao = new RoomDAO();
         Part photo = request.getPart("img");
-        byte[] avatar = dao.convertInputStreamToByteArray(photo.getInputStream());
+        byte[] avatar_raw = convertInputStreamToByteArray(photo.getInputStream());
+        String avatar = Base64.getEncoder().encodeToString(avatar_raw);
         int updateAvatar = dao.updateAvatar(new User(15, avatar));
         request.getRequestDispatcher("OwnerController?service=editOwnerProfile").forward(request, response);
     }
 
     private void updateRoomDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RoomDAO dao = new RoomDAO();
-        int roomNumber = Integer.parseInt(request.getParameter("roomNumber"));
+        List<Rooms> listRoom = dao.getRooms();
         int roomID = Integer.parseInt(request.getParameter("roomID"));
-        double roomFee = Double.parseDouble(request.getParameter("roomFee"));
-        int roomSize = Integer.parseInt(request.getParameter("roomSize"));
+        RoomDetailSe roomDetail = dao.getRoomDetail(roomID);
+        int currentRoomNumber = roomDetail.getRoomNumber();
+        int roomNumber = 0;
+        double roomFee = 0;
+        int roomSize = 0;
+        try {
+            roomNumber = Integer.parseInt(request.getParameter("roomNumber"));
+            for (Rooms rooms : listRoom) {
+                if (rooms.getRoomNumber() == roomNumber) {
+                    if (roomNumber == currentRoomNumber) {
+
+                    } else {
+                        request.setAttribute("error", "Invalid room number");
+                        request.getRequestDispatcher("OwnerController?service=editRoom&roomID=" + roomID).forward(request, response);
+                        return;
+                    }
+                }
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid room number");
+            request.getRequestDispatcher("OwnerController?service=editRoom&roomID=" + roomID).forward(request, response);
+            return;
+        }
+
+        try {
+            roomFee = Double.parseDouble(request.getParameter("roomFee"));
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid room fee");
+            request.getRequestDispatcher("OwnerController?service=editRoom&roomID=" + roomID).forward(request, response);
+            return;
+        }
+
+        try {
+            roomSize = Integer.parseInt(request.getParameter("roomSize"));
+            if (roomSize <= 0 || roomSize > 2) {
+                request.setAttribute("error", "Invalid room size");
+                request.getRequestDispatcher("OwnerController?service=editRoom&roomID=" + roomID).forward(request, response);
+                return;
+            }
+        } catch (Exception e) {
+            request.setAttribute("error", "Invalid room size");
+            request.getRequestDispatcher("OwnerController?service=editRoom&roomID=" + roomID).forward(request, response);
+            return;
+        }
+
         Part photo = request.getPart("roomImg");
-        byte[] roomImg = dao.convertInputStreamToByteArray(photo.getInputStream());
+        String contentType = photo.getContentType();
+        byte[] roomImg_raw = null;
+        String roomImg = null;
+        if (!contentType.equals("image/jpeg")) {
+            request.setAttribute("error", "Invalid room image");
+            request.getRequestDispatcher("OwnerController?service=editRoom&roomID=" + roomID).forward(request, response);
+            return;
+        } else {
+            roomImg_raw = convertInputStreamToByteArray(photo.getInputStream());
+            roomImg = Base64.getEncoder().encodeToString(roomImg_raw);
+        }
+        
         int updateRoomDetail = dao.updateRoomDetail(roomID, roomNumber, roomSize, roomFee, roomImg);
         request.getRequestDispatcher("OwnerController?service=roomDetail").forward(request, response);
     }
@@ -223,16 +281,31 @@ public class OwnerController extends HttpServlet {
                     int itemID = Integer.parseInt(itemIDStr);
                     int quantity = Integer.parseInt(quantityStr);
                     int roomID = Integer.parseInt(roomIDStr);
-                    dao.updateItemQuantity(roomID, itemID, quantity);
+                    if (quantity == 0) {
+                        dao.deleteRoomItem(roomID, itemID);
+                    } else {
+                        dao.updateItemQuantity(roomID, itemID, quantity);
+                    }
+
                 }
             } else {
                 System.out.println("Received empty JSON.");
             }
-            
+
             response.sendRedirect("OwnerController?service=roomDetail&roomID=" + roomID_raw);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096]; // Sử dụng một buffer có kích thước lớn hơn cho hiệu suất tốt hơn
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        return outputStream.toByteArray();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

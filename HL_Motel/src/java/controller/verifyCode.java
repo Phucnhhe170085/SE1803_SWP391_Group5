@@ -18,6 +18,7 @@ import model.User;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
+import java.util.Base64;
 
 /**
  *
@@ -50,7 +51,8 @@ public class verifyCode extends HttpServlet {
         RegisterDAO dao = new RegisterDAO();
 
         Path defaultImg = Paths.get("images/default.jpg");
-        byte[] userAvatar = convertPathToByteArray(defaultImg);
+        byte[] userAvatar_raw = convertPathToByteArray(defaultImg);
+        String userAvatar = Base64.getEncoder().encodeToString(userAvatar_raw);
 
         String authCode = (String) session.getAttribute("authCode");
         Long codeGeneratedTime = (Long) session.getAttribute("codeGeneratedTime");
@@ -80,7 +82,7 @@ public class verifyCode extends HttpServlet {
             return Files.readAllBytes(path);
         } catch (IOException e) {
             e.printStackTrace();
-            // Trả về mảng byte rỗng hoặc xử lý ngoại lệ tùy theo yêu cầu của bạn
+            
             return new byte[0];
         }
     }

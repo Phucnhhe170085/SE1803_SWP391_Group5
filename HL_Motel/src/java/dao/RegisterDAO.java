@@ -87,7 +87,7 @@ public class RegisterDAO extends DBContext {
             pre.setString(4, user.getUserBirth());
             pre.setString(5, user.getUserAddress());
             pre.setString(6, user.getUserPhone());
-            pre.setBytes(7, user.getUserAvatar());
+            pre.setString(7, user.getUserAvatar());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
 

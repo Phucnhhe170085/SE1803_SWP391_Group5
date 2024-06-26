@@ -133,7 +133,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <% String base64Image = Base64.getEncoder().encodeToString(ownerProfile.getUserAvatar()); %>
+                                        <% String base64Image = ownerProfile.getUserAvatar(); %>
                                         <img src="data:image/jpg;base64, <%= base64Image %>" alt="Owner" class="rounded-circle" width="150">
                                         <div class="mt-3">
                                             <h4>💀</h4>

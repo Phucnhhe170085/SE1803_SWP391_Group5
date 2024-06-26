@@ -108,7 +108,7 @@ public class RoomDAO extends DBContext {
                 String userAddress = rs.getString("userAddress");
                 String userPhone = rs.getString("userPhone");
                 String email = rs.getString("userMail");
-                byte[] userAvatar = rs.getBytes("userAvatar");
+                String userAvatar = rs.getString("userAvatar");
                 ownerProfile = new User(userName, userGender, userBirth, userAddress, userPhone, email, userAvatar);
             }
         } catch (SQLException e) {
@@ -150,7 +150,7 @@ public class RoomDAO extends DBContext {
                 + " WHERE userID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setBytes(1, ownerProfile.getUserAvatar());
+            pre.setString(1, ownerProfile.getUserAvatar());
             pre.setInt(2, ownerProfile.getUserID());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
@@ -158,16 +158,6 @@ public class RoomDAO extends DBContext {
         }
 
         return n;
-    }
-
-    public byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096]; // Sử dụng một buffer có kích thước lớn hơn cho hiệu suất tốt hơn
-        int bytesRead;
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-        return outputStream.toByteArray();
     }
 
     public RoomDetailSe getRoomDetail(int roomid) {
@@ -194,7 +184,7 @@ public class RoomDAO extends DBContext {
                         int roomFloor = rs.getInt("roomFloor");
                         int roomSize = rs.getInt("roomSize");
                         double roomFee = rs.getDouble("roomFee");
-                        byte[] roomImg = rs.getBytes("roomImg");
+                        String roomImg = rs.getString("roomImg");
                         byte[] itemImg = rs.getBytes("itemImg");
                         roomDetail = new RoomDetailSe(roomID, roomNumber, roomSize, roomFloor,
                                 roomImg, null, itemImg, null, roomFee, null);
@@ -278,7 +268,7 @@ public class RoomDAO extends DBContext {
         return n;
     }
 
-    public int updateRoomDetail(int roomID, int roomNumber, double roomSize, double roomFee, byte[] roomImg) {
+    public int updateRoomDetail(int roomID, int roomNumber, double roomSize, double roomFee, String roomImg) {
         String query = "UPDATE [dbo].[room]\n"
                 + "   SET [roomNumber] = ?\n"
                 + "      ,[roomSize] = ?\n"
@@ -290,7 +280,7 @@ public class RoomDAO extends DBContext {
             ps.setInt(1, roomNumber);
             ps.setDouble(2, roomSize);
             ps.setDouble(3, roomFee);
-            ps.setBytes(4, roomImg);
+            ps.setString(4, roomImg);
             ps.setInt(5, roomID);
             n = ps.executeUpdate();
         } catch (SQLException e) {
@@ -301,11 +291,9 @@ public class RoomDAO extends DBContext {
 
     public static void main(String[] args) {
         RoomDAO dao = new RoomDAO();
-        String test = "Abc";
-        if (test.equals("abc")) {
-            System.out.println("true");
-        } else {
-            System.out.println("fail");
+        List<Rooms> room = dao.getRooms();
+        for (Rooms rooms : room) {
+            System.out.println(rooms.getRoomImg());
         }
     }
 }

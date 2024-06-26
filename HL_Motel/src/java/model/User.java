@@ -15,7 +15,7 @@ public class User{
     private String userBirth;
     private String userAddress;
     private String userPhone;
-    private byte[] userAvatar; // string -> byte[]
+    private String userAvatar; 
     private Account account;
     private Renter renter;
     private Rooms room;
@@ -25,7 +25,7 @@ public class User{
     public User() {
     }
 
-    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, byte[] userAvatar, Account account, Renter renter, Rooms room) {
+    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Renter renter, Rooms room) {
         this.userID = userID;
         this.userName = userName;
         this.userGender = userGender;
@@ -38,7 +38,7 @@ public class User{
         this.room = room;
     }
 
-    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, byte[] userAvatar, Account account) {
+    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account) {
         this.userID = userID;
         this.userName = userName;
         this.userGender = userGender;
@@ -49,7 +49,7 @@ public class User{
         this.account = account;
     }
 
-    public User(String userName, String userGender, String userBirth, String userAddress, String userPhone, String email, byte[] userAvatar) {
+    public User(String userName, String userGender, String userBirth, String userAddress, String userPhone, String email, String userAvatar) {
         this.userName = userName;
         this.userGender = userGender;
         this.userBirth = userBirth;
@@ -69,7 +69,7 @@ public class User{
         
     }
 
-    public User(int userID, byte[] userAvatar) {
+    public User(int userID, String userAvatar) {
         this.userID = userID;
         this.userAvatar = userAvatar;
     }
@@ -80,14 +80,14 @@ public class User{
     
     
 
-    public User(int userID, String userName, byte[] userAvatar, Account account) {
+    public User(int userID, String userName, String userAvatar, Account account) {
         this.userID = userID;
         this.userName = userName;
         this.userAvatar = userAvatar;
         this.account = account;
     }
 
-    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, byte[] userAvatar) {
+    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar) {
         this.userID = userID;
         this.userName = userName;
         this.userGender = userGender;
@@ -97,7 +97,7 @@ public class User{
         this.userAvatar = userAvatar;
     }
 
-    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, byte[] userAvatar, Account account, Security security) {
+    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Security security) {
         this.userID = userID;
         this.userName = userName;
         this.userGender = userGender;
@@ -166,11 +166,11 @@ public class User{
         this.userPhone = userPhone;
     }
 
-    public byte[] getUserAvatar() {
+    public String getUserAvatar() {
         return userAvatar;
     }
 
-    public void setUserAvatar(byte[] userAvatar) {
+    public void setUserAvatar(String userAvatar) {
         this.userAvatar = userAvatar;
     }
 

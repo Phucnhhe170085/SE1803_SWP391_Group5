@@ -9,6 +9,7 @@
 
 <% RoomDetailSe roomDetail = (RoomDetailSe) request.getAttribute("roomDetail"); 
    String[] listItemNames = (String[]) request.getAttribute("listItem");
+   String error = (String) request.getAttribute("error");
 %>
 
 
@@ -153,16 +154,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+
+                        <div class="col-lg-8">                       
                             <div class="card">
-                                <form action="OwnerController" method="post" enctype="multipart/form-data">
-                                    <div class="card-body">                                    
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Room Number</h6>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                <input type="text" class="form-control" name="roomNumber" value="<%= roomDetail.getRoomNumber()%>">
+                            <% if (error != null) { %>
+                            <p style="margin: 0px; text-align: center; color: red; margin: 10px 0px; background: beige"><%= error %></p>
+                            <%}%>
+                            <form action="OwnerController" method="post" enctype="multipart/form-data">
+                                <div class="card-body">                                    
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Room Number</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="roomNumber" value="<%= roomDetail.getRoomNumber()%>">
                                         </div>
                                     </div>                              
                                     <div class="row mb-3">
@@ -186,7 +191,7 @@
                                             <h6 class="mb-0">Room Image</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="file" class="form-control" name="roomImg" value="<%= roomDetail.getRoomImg()%>" required="">
+                                            <input type="file" class="form-control" name="roomImg" value="<%= roomDetail.getRoomImg()%>" required="" >
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -212,7 +217,7 @@
                                                             int itemID = itemIDs[i];
                                                 %>
                                                 <tr data-itemid="<%= itemID %>">
-                                                    <td><input type="text" class="form-control" name="itemNames" value="<%= itemName %>" ></td>
+                                                    <td><input type="text" class="form-control" name="itemNames" value="<%= itemName %>" readonly="" ></td>
                                                     <td><input type="text" class="form-control" name="quantities" value="<%= quantity %>" ></td>
                                             <input type="hidden" name="roomID_updateItem" value="<%= roomID_updateItem %>"> 
                                             <td>
@@ -271,8 +276,7 @@
                                 </div>
                             </div> 
                         </div>
-                    </div>
-
+                    </div>                                              
                 </div>
             </div>
         </div>
@@ -307,6 +311,8 @@
         const rows = document.querySelectorAll("#itemTable tbody tr");
         const updatedItems = [];
         const roomID_updateItem = document.querySelector('input[name="roomID_updateItem"]').value;
+        let hasInvalidQuantity = false;
+
         rows.forEach(row => {
             const itemNameInput = row.querySelector('input[name="itemNames"]');
             const quantityInput = row.querySelector('input[name="quantities"]');
@@ -315,9 +321,21 @@
                 const itemName = itemNameInput.value;
                 const quantity = quantityInput.value;
                 const itemID = row.getAttribute("data-itemid");
+
+                if (quantity < 0) {
+                    hasInvalidQuantity = true;
+                    alert("Quantity cannot be less than 0 for item: " + itemName);
+                    return;
+                }
+
                 updatedItems.push({itemID: itemID, itemName: itemName, quantity: quantity, roomID: roomID_updateItem});
             }
         });
+
+        if (hasInvalidQuantity) {
+            isUpdating = false;
+            return;
+        }
 
         console.log("Updated items: ", updatedItems);
 
