@@ -3,6 +3,8 @@
 
 <%
     List<Rooms> listRoom = (List<Rooms>) request.getAttribute("rooms");
+    int totalPage = (int) request.getAttribute("totalPage");
+    int index = (int) request.getAttribute("index");
 %>
 <!doctype html>
 <html lang="en">
@@ -29,32 +31,34 @@
 
         <title>Hola Motel</title>
         <style>
-            .container1 {
-                width: 500px;
-                margin: auto;
-                text-align: center;
-            }
             .pagination {
-                width: 400px;
-                margin-left: 50px;
-            }
-            .pagination a {
-                display: block;
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color .3s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
             }
 
-            .pagination a.active {
-                background-color: #4CAF50;
+            .pagination a {
+                color: #007bff;
+                padding: 8px 16px;
+                text-decoration: none;
+                border: 1px solid #ddd;
+                margin: 0 5px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .pagination a:hover {
+                background-color: #007bff;
                 color: white;
             }
 
-            .pagination a:hover:not(.active) {
-                background-color: #ddd;
+            .pagination a.active {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
             }
+
             .search-container {
                 text-align: left;
                 margin-bottom: 20px;
@@ -71,10 +75,104 @@
             }
 
             .search-input:focus {
-                width: 300px;
+                width: 270px;
                 outline: none;
                 border-color: #4CAF50;
             }
+
+            .search-filter {
+                background-color: #f8f9fa;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .search-container {
+                margin-bottom: 20px;
+            }
+
+            .search-input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+                font-size: 16px;
+            }
+
+            .price-range {
+                margin-top: 20px;
+            }
+
+            .price-label {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .price-input {
+                margin-right: 10px;
+            }
+
+            .price-label + input {
+                margin-top: 10px;
+            }
+
+            .price-input:checked + .price-label {
+                color: #007bff;
+            }
+
+            .search-filter label {
+                display: block;
+                cursor: pointer;
+                margin-bottom: 10px;
+                padding: 5px 0;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .search-filter input[type="radio"] {
+                display: none;
+            }
+
+            .search-filter input[type="radio"] + label {
+                position: relative;
+                padding-left: 30px;
+                cursor: pointer;
+            }
+
+            .search-filter input[type="radio"] + label:before {
+                content: '';
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #007bff;
+                border-radius: 50%;
+                background: #fff;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .search-filter input[type="radio"]:checked + label:after {
+                content: '';
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #007bff;
+                position: absolute;
+                left: 4px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .search-filter input[type="radio"]:checked + label:before {
+                border-color: #007bff;
+            }
+
         </style>
     </head>
     <body>
@@ -122,10 +220,10 @@
                 </div>
             </div>
 
-            <div class="section section-properties">
+            <div class="section section-properties" style="padding-bottom: 30px">
                 <div class="container main-container">
                     <div class="row">
-
+                        <!-- search -->
                         <div class="col-lg-3" style="margin-left: -80px;">
                             <div class="search-filter">
                                 <div class="search-container">
@@ -133,7 +231,7 @@
                                 </div>
 
                                 <div class="price-range">
-                                    <label class="price-label">Price</label><br>
+                                    <label style="margin: 0px; padding-bottom: 0px" class="price-label">Price Levels</label><br>
                                     <input type="radio" id="priceAll" name="priceRange" value="all" class="price-input" onclick="filterRooms()">
                                     <label for="priceAll" class="price-label">All</label><br>
                                     <input type="radio" id="priceBelow1M" name="priceRange" value="below1M" class="price-input" onclick="filterRooms()">
@@ -145,7 +243,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- end search -->
 
                         <div class="col-lg-9">
                             <div id="roomList" class="room-list-container row">
@@ -182,6 +280,13 @@
                 </div>
             </div>
         </div>
+
+        <!-- paging -->
+        <div class="pagination" style="margin: 0px; padding-bottom: 50px">
+            <% for (int i = 0; i < totalPage; i++) { %>
+            <a href="OwnerController?service=pagingRoom&index=<%=i+1%>" class="<%= (i + 1 == index) ? "active" : "" %>"><%= i + 1 %></a>
+            <% } %>
+        </div>  
 
 
         <div class="site-footer">
@@ -242,19 +347,6 @@
                 </div> <!-- /.row -->
             </div> <!-- /.container -->
         </div> <!-- /.site-footer -->
-
-
-        <!-- Preloader -->
-        <div id="overlayer"></div>
-        <div class="loader">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-
-
-        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-        <div id="preloader"></div>
 
 
         <script src="js/bootstrap.bundle.min.js"></script>
@@ -321,6 +413,6 @@
                 });
             }
         </script>
-        
+
     </body>
 </html>

@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/courses/prj301/HL_Motel/web/owner/OwnerHome.jsp</file>
             <file>file:/D:/courses/prj301/HL_Motel/src/java/controller/OwnerController.java</file>
             <file>file:/D:/courses/prj301/HL_Motel/src/java/dao/RoomDAO.java</file>
             <file>file:/D:/courses/prj301/HL_Motel/web/owner/roomDetail.jsp</file>
             <file>file:/D:/courses/prj301/HL_Motel/web/owner/rooms.jsp</file>
             <file>file:/D:/courses/prj301/HL_Motel/web/owner/editRoom.jsp</file>
+            <file>file:/D:/courses/prj301/HL_Motel/web/owner/navbar.jsp</file>
         </group>
     </open-files>
 </project-private>

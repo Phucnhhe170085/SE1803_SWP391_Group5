@@ -6,6 +6,7 @@
 
 <%@page import="dao.RoomDAO,java.util.List"%>
 <%@page import="model.RoomDetailSe"%>
+<%@ page import="java.text.DecimalFormat" %>
 
 <% RoomDetailSe roomDetail = (RoomDetailSe) request.getAttribute("roomDetail"); 
    String[] listItemNames = (String[]) request.getAttribute("listItem");
@@ -175,7 +176,11 @@
                                             <h6 class="mb-0">Room Fee</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="roomFee" value="<%= roomDetail.getRoomFee()%>">
+                                            <%
+                                                DecimalFormat df = new DecimalFormat("#.##");
+                                                String formattedFee = df.format(roomDetail.getRoomFee());
+                                            %>
+                                            <input type="text" class="form-control" name="roomFee" value="<%= formattedFee %>">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -190,7 +195,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Room Image</h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">
+                                        <div class="col-sm-9 text-secondary">                                           
                                             <input type="file" class="form-control" name="roomImg" value="<%= roomDetail.getRoomImg()%>" required="" >
                                         </div>
                                     </div>
@@ -293,17 +298,17 @@
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>     
 <script>
-    document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
-        var quantityInput = document.getElementById('newQuantityModal').value;
-        var quantity = parseFloat(quantityInput);
-        
-        if (!Number.isInteger(quantity) || quantity <= 0) {
-            alert('Quantity is not valid. Please enter a positive integer');
-        } else {
-            var form = document.getElementById('addItemFormModal');
-            form.submit();
-        }
-    });
+                                                document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
+                                                    var quantityInput = document.getElementById('newQuantityModal').value;
+                                                    var quantity = parseFloat(quantityInput);
+
+                                                    if (!Number.isInteger(quantity) || quantity <= 0) {
+                                                        alert('Quantity is not valid. Please enter a positive integer');
+                                                    } else {
+                                                        var form = document.getElementById('addItemFormModal');
+                                                        form.submit();
+                                                    }
+                                                });
 </script>
 
 <script>

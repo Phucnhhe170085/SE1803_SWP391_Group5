@@ -53,7 +53,7 @@ public class OwnerController extends HttpServlet {
 
         if (service.equals("OwnerHome")) {
             OwnerHome(request, response);
-        } else if (service.equals("listRoom")) {
+        } else if (service.equals("pagingRoom")) {
             listRoom(request, response);
         } else if (service.equals("ownerProfile")) {
             getOwnerProfile(request, response, 0);
@@ -84,9 +84,20 @@ public class OwnerController extends HttpServlet {
 
     private void listRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RoomDAO dao = new RoomDAO();
-        List<Rooms> rooms = dao.getRooms();
-
+        int index = Integer.parseInt(request.getParameter("index"));
+        if (index == 0) {
+            index = 1;
+        }
+        List<Rooms> rooms = dao.pagingRoom(index);
+        int totalRoom = dao.getTotalRoom();
+        int totalPage = totalRoom / 6;
+        if (totalPage % 6 != 0) {
+            totalPage++;
+        }
+        request.setAttribute("totalPage", totalPage);
+        request.setAttribute("index", index);
         request.setAttribute("rooms", rooms);
+
         request.getRequestDispatcher("owner/rooms.jsp").forward(request, response);
     }
 

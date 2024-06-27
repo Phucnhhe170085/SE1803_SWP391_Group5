@@ -1,6 +1,7 @@
 <%@page import="dao.RoomDAO,java.util.List"%>
 <%@page import="model.RoomDetailSe"%>
 <%@ page import="java.util.Base64" %>
+<%@ page import="java.text.DecimalFormat" %>
 
 <% RoomDetailSe roomDetail = (RoomDetailSe) request.getAttribute("roomDetail"); %>
 
@@ -97,17 +98,21 @@
                         <div class="col-lg-7">
                             <div class="img-property-slide-wrap">
                                 <div class="img-property-slide">
-                                    <% String base64Image = roomDetail.getRoomImg(); %>
-                                    
-                                    <img style="margin-top: 50px;" src="data:image/jpg;base64, <%= base64Image %>" alt="Image" class="img-fluid">
+                                <% String base64Image = roomDetail.getRoomImg(); %>
 
-                                </div>
+                                <img style="margin-top: 50px;" src="data:image/jpg;base64, <%= base64Image %>" alt="Image" class="img-fluid">
+
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="d-block agent-box p-5">
-                                <h2 class="heading text-primary" style="font-weight: 700"> Room <%= roomDetail.getRoomNumber()%></h2>
-                            <p class="meta" style="color: #c90927; font-size: 18px; font-weight: 600"><%= roomDetail.getRoomFee()%> VND/Month</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-block agent-box p-5">
+                            <h2 class="heading text-primary" style="font-weight: 700"> Room <%= roomDetail.getRoomNumber()%></h2>
+                            <%
+                               DecimalFormat df = new DecimalFormat("#.##");
+                               String formattedFee = df.format(roomDetail.getRoomFee());
+                            %>
+                            <p class="meta" style="color: #c90927; font-size: 18px; font-weight: 600"><%= formattedFee %>k VND/Month</p>
                             <label class="textDetail" style="font-size: 20px; font-weight: 500">Detailed description</label>
                             <p class="textDetail">Area: 22m²</p>
                             <p class="textDetail">Room Floor: <%= roomDetail.getRoomFloor()%></p>
