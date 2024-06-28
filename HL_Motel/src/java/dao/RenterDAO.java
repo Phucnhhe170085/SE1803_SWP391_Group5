@@ -1,6 +1,7 @@
 package dao;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import model.Account;
 import model.Renter;
 import model.Room;
@@ -12,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.News;
 import model.UserDetail;
+import model.Renter;
+import model.RenterList;
 
 /**
  * Data Access Object for Renter-related operations.
@@ -20,13 +24,14 @@ import model.UserDetail;
  * Author: creep
  */
 public class RenterDAO extends MyDAO {
-
-    // Retrieve user details by account and password
-    public List<User> getRenterDetailByAccountAndPassword(String accountInput, String passwordInput) {
+        Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+   public List<User> getRenterDetailByAccountAndPassword(String accountInput, String passwordInput) {
         List<User> list = new ArrayList<>();
         String sql = "SELECT DISTINCT "
                 + "    u.userID, u.userName, u.userGender, u.userBirth, u.userAddress, u.userPhone, u.userAvatar, "
-                + "    r.renterID, r.roomID, r.renterStatus, r.renterHaveRoom, r.CGRScore, r.balance, "
+                + "    r.renterID, r.roomID, r.renterStatus, r.renterHaveRoom, r.balance, "
                 + "    a.userMail, a.userPassword, "
                 + "    rm.roomFloor, rm.roomNumber, rm.roomFee "
                 + "FROM "
@@ -56,16 +61,15 @@ public class RenterDAO extends MyDAO {
                     int roomID = rs.getInt(9);
                     boolean renterStatus = rs.getBoolean(10);
                     boolean renterHaveRoom = rs.getBoolean(11);
-                    int CGRScore = rs.getInt(12);
-                    double balance = rs.getDouble(13);
-                    String userMail = rs.getString(14);
-                    String userPassword = rs.getString(15);
-                    int roomFloor = rs.getInt(16);
-                    String roomNumber = rs.getString(17);
-                    BigDecimal roomFee = rs.getBigDecimal(18);
+                    double balance = rs.getDouble(12);
+                    String userMail = rs.getString(13);
+                    String userPassword = rs.getString(14);
+                    int roomFloor = rs.getInt(15);
+                    String roomNumber = rs.getString(16);
+                    BigDecimal roomFee = rs.getBigDecimal(17);
 
                     Account account = new Account(userID, userMail, userPassword, 1);
-                    Renter renter = new Renter(renterID, userID, roomID, renterStatus, renterHaveRoom, CGRScore, balance);
+                    Renter renter = new Renter(renterID, userID, roomID, renterStatus, renterHaveRoom, balance);
                     Room room = new Room(roomID, roomFloor, roomFloor, roomID, roomFee);
                     User user = new User(userID, userName, userGender, userBirth, userAddress, userPhone, userAvatar, account, renter, room);
                     list.add(user);
@@ -76,7 +80,13 @@ public class RenterDAO extends MyDAO {
         }
         return list;
     }
+   
+   
+   
 
+    
+    
+    
     // Change password for a user
     public boolean changePassword(String accountInput, String oldPassword, String newPassword) {
         String sql = "UPDATE account SET userPassword = ? WHERE userMail = ? AND userPassword = ?";
@@ -93,7 +103,26 @@ public class RenterDAO extends MyDAO {
             return false;
         }
     }
-
+ public List<News> getAllNews() {
+        List<News> list = new ArrayList<>();
+        String query = "select u.userName, n.newsTitle, n.newsDes\n"
+                + "from  [dbo].[News] as n, [dbo].[User] as u\n"
+                + "where n.ownerID = u.userID";
+        try {
+            conn = connection;
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new News(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    
     // Retrieve password by account
     public String getPasswordByAccount(String accountInput) {
         String password = null;
@@ -223,9 +252,8 @@ public class RenterDAO extends MyDAO {
                     String userMail = rs.getString(8);
                     String userPassword = rs.getString(9);
 
-                    Account account = new Account(userID, userMail, userPassword, 1);
-                    User user = new User(userID, userName, userGender, userBirth, userAddress, userPhone, userAvatar);
-                    userDetail = new UserDetail(account, user);
+                   
+                    userDetail = new UserDetail(userName, userGender, userBirth, userAddress, userPhone, userAvatar, userMail, userPassword);
                 }
             }
         } catch (SQLException e) {
@@ -233,18 +261,68 @@ public class RenterDAO extends MyDAO {
         }
         return userDetail;
     }
-
-    public static void main(String[] args) {
-        RenterDAO dao = new RenterDAO();
-        UserDetail userDetail = dao.RenterBasicDetail("Creeper2k3@gmail.com", "pass1234");
-        if (userDetail != null) {
-            System.out.println("User Name: " + userDetail.getUser().getUserName());
-            System.out.println("User Address: " + userDetail.getUser().getUserAddress());
-            System.out.println("User Mail: " + userDetail.getAccount().getUserMail());
-            System.out.println("User Password: " + userDetail.getAccount().getUserPassword());
-        } else {
-            System.out.println("No user found with the given account and password.");
+    
+    //ThienAnh RenterDAO
+    
+      public List<RenterList> getRenters() {
+        List<RenterList> renters = new ArrayList<>();
+        String sql = "SELECT userName\n" +
+                    "      ,userGender\n" +
+                    "      ,r.roomID\n" +
+                    "      ,r.renterStatus\n" +
+                    "      ,r.renterHaveRoom\n" +
+                    "	  ,r.balance\n" +
+                    "  FROM [HL_Motel].[dbo].[user]\n" +
+                    "  join renter r on [user].userID = r.userID"; 
+        
+        try (Connection conn = connection;
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            
+            while (rs.next()) {
+                RenterList rt = new RenterList();
+                rt.setUserName(rs.getString("userName"));
+                rt.setUserGender(rs.getString("userGender"));
+                rt.setRoomID(rs.getInt("RoomID"));
+                rt.setRenterStatus(rs.getBoolean("RenterStatus"));
+                rt.setRenterHaveRoom(rs.getBoolean("RenterHaveRoom"));               
+                rt.setBalance(rs.getDouble("Balance"));
+                
+                
+                renters.add(rt);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        
+        return renters;
+}
+    public static void main(String[] args) {
+    String accountInput = "maingoctu@gmail.com";
+    String passwordInput = "pass1234";
+
+    // Create a RenterDAO instance and initialize connection
+    RenterDAO renterDAO = new RenterDAO();
+    // Call the RenterBasicDetail method
+    UserDetail userDetail = renterDAO.RenterBasicDetail(accountInput, passwordInput);
+    // Print the retrieved user detail (for testing purposes)
+    if (userDetail != null) {
+        System.out.println("User Detail:");
+        System.out.println("UserID: " + userDetail.getAccount().getUserID());
+        System.out.println("UserName: " + userDetail.getUser().getUserName());
+        System.out.println("UserGender: " + userDetail.getUser().getUserGender());
+        System.out.println("UserBirth: " + userDetail.getUser().getUserBirth());
+        System.out.println("UserAddress: " + userDetail.getUser().getUserAddress());
+        System.out.println("UserPhone: " + userDetail.getUser().getUserPhone());
+        System.out.println("UserAvatar: " + userDetail.getUser().getUserAvatar());
+        System.out.println("UserMail: " + userDetail.getAccount().getUserMail());
+        System.out.println("UserPassword: " + userDetail.getAccount().getUserPassword());
+    } else {
+        System.out.println("User not found for provided credentials.");
     }
+    // Ensure the connection is closed after use
+    
+}
+
 
 }

@@ -169,11 +169,11 @@
                                         <input type="hidden" name="id" value="${request.requestID}">
                                         <i class="fas fa-edit btn-icon" style ="cursor: pointer" onclick="this.parentNode.submit()"></i>
                                     </form>
-                                    <form action="request" method="POST">
-                                        <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="id" value="${request.requestID}">
-                                        <i class="fas fa-trash-alt btn-icon" style ="cursor: pointer" onclick="this.parentNode.submit()"></i>
-                                    </form>
+                                       <form action="request" method="POST">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="${request.requestID}">
+                                    <i class="fas fa-trash-alt btn-icon" style="cursor: pointer" onclick="return confirmDelete(this)"></i>
+                                </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -259,4 +259,14 @@
         <script src="js/counter.js"></script>
         <script src="js/custom.js"></script>
     </body>
+    
+    <script>
+        function confirmDelete(element) {
+            if (confirm("Are you sure you want to delete this request?")) {
+                element.parentNode.submit();
+            } else {
+                return false;
+            }
+        }
+    </script>
 </html>

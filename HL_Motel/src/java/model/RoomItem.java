@@ -15,10 +15,19 @@ public class RoomItem {
     private int roomID;
     private int itemID;
     private int quantity;
-
+    private String itemName;
+    private String itemImg;
     public RoomItem() {
     }
 
+        public RoomItem(int roomItemID, int roomID, int itemID, int quantity, String itemName, String itemImg) {
+        this.roomItemID = roomItemID;
+        this.itemID = itemID;
+        this.quantity = quantity;
+        this.itemName = itemName;
+        this.itemImg = itemImg;
+    }
+    
     public RoomItem(int roomItemID, int roomID, int itemID, int quantity) {
         this.roomItemID = roomItemID;
         this.roomID = roomID;
@@ -62,6 +71,22 @@ public class RoomItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemImg() {
+        return itemImg;
+    }
+
+    public void setItemImg(String itemImg) {
+        this.itemImg = itemImg;
     }
     
     

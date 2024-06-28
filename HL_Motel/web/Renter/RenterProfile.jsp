@@ -6,6 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="dao.RoomDAO, dao.RenterDAO, java.util.List,java.util.Vector"%>
+<%@page import="model.Room, model.User, model.UserDetail, model.Account" %>
+<% UserDetail userDetail = (UserDetail) request.getAttribute("userDetail"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -110,9 +113,9 @@
                                     <div class="d-flex flex-column align-items-center text-center">
                                         <img src="images/firefly.jpg" alt="Admin" class="rounded-circle" width="150">
                                         <div class="mt-3">
-                                            <h4>💀</h4>
-                                            <p class="text-secondary mb-1">Cần cù thì bù .....</p>
-                                            <p class="text-muted font-size-sm">A. Siêng năng B.Thông minh</p>
+                                            <h4><input type="submit" value="Add Picture" /></h4>
+                                            <p class="text-secondary mb-1"></p>
+                                            <p class="text-muted font-size-sm"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -142,9 +145,9 @@
                                 </ul>
                             </div>
                         </div>
+
+
                         <div class="col-md-8">
-                        <c:forEach items="${ListRP}" var="user">
-                            <c:set var="uid" value="${user.userID}" />
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="row">
@@ -152,81 +155,73 @@
                                             <h6 class="mb-0">Full Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            ${user.userName}
+                                            <%= userDetail.getUserName()%>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Gender</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary" >
-                                            ${user.userGender}
-                                        </div>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Date of birth</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            ${user.userBirth}
-                                        </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= userDetail.getUserGender()%>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Email</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            ${user.account.userMail}
-                                        </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Date of birth</h6>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Phone</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            ${user.userPhone}
-                                        </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= userDetail.getUserBirth()%>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Phone Number</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            ${user.userPhone}
-                                        </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Email</h6>
                                     </div>
-                                        <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Address</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            ${user.userAddress}
-                                        </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= userDetail.getUserMail()%>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <a class="btn btn-info " target="__blank" href="renterupdate?userID=${uid}">Edit</a>
-                                        </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Phone</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= userDetail.getUserPhone()%>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Address</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= userDetail.getUserAddress()%>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <a class="btn btn-info " target="__blank" href="rentercontroller?service=renterupdate">Edit</a>
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-            <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js'></script>
-            <script src="js/bootstrap.bundle.min.js"></script>
-            <script src="js/tiny-slider.js"></script>
-            <script src="js/aos.js"></script>
-            <script src="js/navbar.js"></script>
-            <script src="js/counter.js"></script>
-            <script src="js/custom.js"></script>
-    </body>
-</html>
+
+                </div>
+                <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js'></script>
+                <script src="js/bootstrap.bundle.min.js"></script>
+                <script src="js/tiny-slider.js"></script>
+                <script src="js/aos.js"></script>
+                <script src="js/navbar.js"></script>
+                <script src="js/counter.js"></script>
+                <script src="js/custom.js"></script>
+                </body>
+                </html>

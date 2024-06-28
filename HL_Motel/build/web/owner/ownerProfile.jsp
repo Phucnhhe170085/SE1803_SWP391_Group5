@@ -6,9 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="dao.RoomDAO,java.util.List,java.util.Vector"%>
-<%@page import="model.Room, model.User" %>
+<%@page import="model.Rooms, model.User" %>
+<%@ page import="java.util.Base64" %>
 
-<% User ownerProfile = (User) request.getAttribute("ownerProfile"); %>
+<% User ownerProfile = (User) request.getAttribute("ownerProfile"); 
+   String error = (String) request.getAttribute("error");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -82,6 +85,25 @@
             .shadow-none {
                 box-shadow: none!important;
             }
+
+            .error-message {
+                background-color: #ffe4e1; /* Màu nền hồng nhạt */
+                border: 1px solid #f5c6cb; /* Viền đỏ */
+                padding: 10px; /* Khoảng cách giữa nội dung và viền */
+                margin-bottom: 20px; /* Khoảng cách với các phần tử khác */
+                border-radius: 5px; /* Bo tròn viền */
+            }
+
+            .error-message h6 {
+                margin-bottom: 0; /* Loại bỏ khoảng cách dưới của tiêu đề */
+            }
+
+            .error-text {
+                color: #dc3545; /* Màu chữ đỏ */
+                font-size: 15px;
+            }
+
+
         </style>
     </head>
     <body>
@@ -96,22 +118,23 @@
 
                                     <jsp:include page="navbar.jsp"></jsp:include>
 
-                                    <a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-                                        <span></span>
-                                    </a>
+                                        <a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
+                                            <span></span>
+                                        </a>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </nav>
-                </div>
+                        </nav>
+                    </div>
 
                     <div class="row gutters-sm" style="margin-top: 100px;">
                         <div class="col-md-4 mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <img src="images/firefly.jpg" alt="Admin" class="rounded-circle" width="150">
+                                        <% String base64Image = ownerProfile.getUserAvatar(); %>
+                                        <img src="data:image/jpg;base64, <%= base64Image %>" alt="Owner" class="rounded-circle" width="150">
                                         <div class="mt-3">
                                             <h4>💀</h4>
                                             <p class="text-secondary mb-1">Cần cù thì bù .....</p>
@@ -148,18 +171,32 @@
                         <div class="col-md-8">
                             <div class="card mb-3">
                                 <div class="card-body">
-                                    <div class="row">
+                                <% if (error != null) { %>
+                                <div class="error-message">
+                                    <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Full Name</h6>
+                                            <h6 class="mb-0" style="color: red">Error</h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <%= ownerProfile.getUserName()%>
+                                        <div class="col-sm-9 text-danger">
+                                            <p class="error-text"><%= error%></p>
                                         </div>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Gender</h6>
+                                </div>
+                                <%}%>
+
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Full Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= ownerProfile.getUserName()%>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Gender</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <%= ownerProfile.getUserGender()%>
@@ -204,7 +241,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a class="btn btn-info " target="__blank" href="OwnerController?service=editOwnerProfile">Edit</a>
+                                        <a class="btn btn-info " href="OwnerController?service=editOwnerProfile">Edit</a>
                                     </div>
                                 </div>
                             </div>

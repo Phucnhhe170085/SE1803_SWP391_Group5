@@ -1,8 +1,10 @@
-<%@page import="dao.RoomDAO,java.util.List,java.util.Vector"%>
-<%@page import="model.Room" %>
+<%@page import="dao.RoomDAO,java.util.List"%>
+<%@page import="model.Rooms" %>
 
 <%
-    List<Room> listRoom = (List<Room>) request.getAttribute("rooms");
+    List<Rooms> listRoom = (List<Rooms>) request.getAttribute("rooms");
+    int totalPage = (int) request.getAttribute("totalPage");
+    int index = (int) request.getAttribute("index");
 %>
 <!doctype html>
 <html lang="en">
@@ -29,32 +31,148 @@
 
         <title>Hola Motel</title>
         <style>
-            .container1 {
-                width: 500px;
-                margin: auto;
-                text-align: center;
-            }
             .pagination {
-                width: 400px;
-                margin-left: 50px;
-            }
-            .pagination a {
-                display: block;
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color .3s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
             }
 
-            .pagination a.active {
-                background-color: #4CAF50;
+            .pagination a {
+                color: #007bff;
+                padding: 8px 16px;
+                text-decoration: none;
+                border: 1px solid #ddd;
+                margin: 0 5px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .pagination a:hover {
+                background-color: #007bff;
                 color: white;
             }
 
-            .pagination a:hover:not(.active) {
-                background-color: #ddd;
+            .pagination a.active {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
             }
+
+            .search-container {
+                text-align: left;
+                margin-bottom: 20px;
+                margin-right: 10px;
+            }
+
+            .search-input {
+                width: 250px;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                transition: width 0.4s ease-in-out;
+            }
+
+            .search-input:focus {
+                width: 270px;
+                outline: none;
+                border-color: #4CAF50;
+            }
+
+            .search-filter {
+                background-color: #f8f9fa;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .search-container {
+                margin-bottom: 20px;
+            }
+
+            .search-input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+                font-size: 16px;
+            }
+
+            .price-range {
+                margin-top: 20px;
+            }
+
+            .price-label {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .price-input {
+                margin-right: 10px;
+            }
+
+            .price-label + input {
+                margin-top: 10px;
+            }
+
+            .price-input:checked + .price-label {
+                color: #007bff;
+            }
+
+            .search-filter label {
+                display: block;
+                cursor: pointer;
+                margin-bottom: 10px;
+                padding: 5px 0;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .search-filter input[type="radio"] {
+                display: none;
+            }
+
+            .search-filter input[type="radio"] + label {
+                position: relative;
+                padding-left: 30px;
+                cursor: pointer;
+            }
+
+            .search-filter input[type="radio"] + label:before {
+                content: '';
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #007bff;
+                border-radius: 50%;
+                background: #fff;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .search-filter input[type="radio"]:checked + label:after {
+                content: '';
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #007bff;
+                position: absolute;
+                left: 4px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .search-filter input[type="radio"]:checked + label:before {
+                border-color: #007bff;
+            }
+
         </style>
     </head>
     <body>
@@ -94,7 +212,7 @@
 
                             <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                                 <ol class="breadcrumb text-center justify-content-center">
-                                    <li class="breadcrumb-item "><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item "><a href="OwnerController?service=OwnerHome">Home</a></li>
                                 </ol>
                             </nav>
                         </div>
@@ -102,42 +220,45 @@
                 </div>
             </div>
 
-
-            <div class="section">
-                <div class="container">
-                    <div class="row mb-5 align-items-center">
-                        <div class="col-lg-6 text-center mx-auto">
-                            <h2 class="font-weight-bold text-primary heading">The Rooms</h2>
-                        </div>
-
-                    </div>
+            <div class="section section-properties" style="padding-bottom: 30px">
+                <div class="container main-container">
                     <div class="row">
+                        <!-- search -->
+                        <div class="col-lg-3" style="margin-left: -80px;">
+                            <div class="search-filter">
+                                <div class="search-container">
+                                    <input type="text" id="searchInput" class="form-control search-input" placeholder="Search by room number">
+                                </div>
 
-                        <div class="col-12">
+                                <div class="price-range">
+                                    <label style="margin: 0px; padding-bottom: 0px" class="price-label">Price Levels</label><br>
+                                    <input type="radio" id="priceAll" name="priceRange" value="all" class="price-input" onclick="filterRooms()">
+                                    <label for="priceAll" class="price-label">All</label><br>
+                                    <input type="radio" id="priceBelow1M" name="priceRange" value="below1M" class="price-input" onclick="filterRooms()">
+                                    <label for="priceBelow1M" class="price-label">Under 1 million</label><br>
+                                    <input type="radio" id="price1To2M" name="priceRange" value="1To2M" class="price-input" onclick="filterRooms()">
+                                    <label for="price1To2M" class="price-label">1-2 million</label><br>
+                                    <input type="radio" id="price2To3M" name="priceRange" value="2To3M" class="price-input" onclick="filterRooms()">
+                                    <label for="price2To3M" class="price-label">2-3 million</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end search -->
 
-
-                            <div class="property-slider-wrap">
-
-
-
-                                <div class="property-slider">
-
-                                <%
-                                    for (int i = 1; i <= 4; i++) {
-                                %>
-
-                                <div class="property-item">
-
-                                    <a href="property-single.html" class="img">
-                                        <img src="images/room<%= i%>.jpg" alt="Image" class="img-fluid">
+                        <div class="col-lg-9">
+                            <div id="roomList" class="room-list-container row">
+                            <% for (int i = 0; i < listRoom.size(); i++) { %>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-room-name="<%= listRoom.get(i).getRoomNumber() %>" data-room-price="<%= listRoom.get(i).getRoomFee().longValue() %>">
+                                <div class="property-item mb-30">
+                                    <a href="OwnerController?service=roomDetail&roomID=<%= listRoom.get(i).getRoomID()%>" class="img">
+                                        <% String base64Image = listRoom.get(i).getRoomImg(); %>
+                                        <img src="data:image/jpg;base64,<%= base64Image %>" class="img-fluid" style="height: 350px; width: 100%;">
                                     </a>
-
                                     <div class="property-content">
-                                        <div class="price mb-2"><span><%= listRoom.get(i).getRoomFee()%> VND</span></div>
+                                        <div class="price mb-2"><span><%= listRoom.get(i).getRoomFee().longValue()%>k VND</span></div>
                                         <div>
                                             <span class="d-block mb-2 text-black-50">Thon 3, Tan Xa, Thach That</span>
                                             <span class="city d-block mb-3">Room <%= listRoom.get(i).getRoomNumber()%></span>
-
                                             <div class="specs d-flex mb-4">
                                                 <span class="d-block d-flex align-items-center me-3">
                                                     <span class="icon-bed me-2"></span>
@@ -148,144 +269,150 @@
                                                     <span class="caption"><%= listRoom.get(i).getRoomFloor()%> Floor</span>
                                                 </span>
                                             </div>
-
-                                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                            <a href="OwnerController?service=roomDetail&roomID=<%= listRoom.get(i).getRoomID()%>" class="btn btn-primary py-2 px-3">See details</a>
                                         </div>
                                     </div>
-                                </div> <!-- .item -->
-                                <%}%>
-                            </div>
-
-                            <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-                                <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
-                                <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <div class="section section-properties">
-            <div class="container">
-                <div class="row">
-                    <%
-                            for (int i = 0; i <= 19; i++) {
-                    %>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-
-                        <div class="property-item mb-30">
-
-                            <a href="property-single.html" class="img">
-                                <img src="images/room<%= i + 1%>.jpg" alt="Image" class="img-fluid">
-                            </a>
-
-                            <div class="property-content">
-                                <div class="price mb-2"><span><%= listRoom.get(i).getRoomFee()%> VND</span></div>
-                                <div>
-                                    <span class="d-block mb-2 text-black-50">Thon 3, Tan Xa, Thach That</span>
-                                    <span class="city d-block mb-3">Room <%= listRoom.get(i).getRoomNumber()%></span>
-
-                                    <div class="specs d-flex mb-4">
-                                        <span class="d-block d-flex align-items-center me-3">
-                                            <span class="icon-bed me-2"></span>
-                                            <span class="caption"><%= listRoom.get(i).getRoomSize()%> beds</span>
-                                        </span>
-                                        <span class="d-block d-flex align-items-center">
-                                            <span class="icon-building me-2"></span>
-                                            <span class="caption"><%= listRoom.get(i).getRoomFloor()%> Floor</span>
-                                        </span>
-                                    </div>
-
-                                    <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
                                 </div>
                             </div>
-                        </div> <!-- .item -->
-
+                            <% } %>
+                        </div>
                     </div>
-                    <%}%>                    
                 </div>
             </div>
         </div>
-    </div>
-                 
-    <div class="site-footer">
-        <div class="container">
 
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="widget">
-                        <h3>Contact</h3>
-                        <address>FPT University, Thach That, Ha Noi</address>
-                        <ul class="list-unstyled links">
-                            <li><a href="tel://11234567890">+1(123)-456-789</a></li>
-                            <li><a href="tel://11234567890">+1(123)-456-789</a></li>
-                            <li><a href="mailto:info@mydomain.com">fptuniversity@fpt.edu.vn</a></li>
-                        </ul>
-                    </div> <!-- /.widget -->
-                </div> <!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                    <div class="widget">
-                        <h3>Sources</h3>
-                        <ul class="list-unstyled float-start links">
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Vision</a></li>
-                            <li><a href="#">Mission</a></li>
-                            <li><a href="#">Terms</a></li>
-                            <li><a href="#">Privacy</a></li>
-                        </ul>
-                        <ul class="list-unstyled float-start links">
-                            <li><a href="#">Partners</a></li>
-                            <li><a href="#">Business</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">Creative</a></li>
-                        </ul>
-                    </div> <!-- /.widget -->
-                </div> <!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                    <div class="widget">
-                        <h3>Links</h3>
-                        <ul class="list-unstyled links">
-                            <li><a href="#">Our Vision</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Contact us</a></li>
-                        </ul>
-
-                        <ul class="list-unstyled social">
-                            <li><a href="#"><span class="icon-instagram"></span></a></li>
-                            <li><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li><a href="https://www.facebook.com/elfadkeachother"><span class="icon-facebook"></span></a></li>
-                            <li><a href="#"><span class="icon-linkedin"></span></a></li>
-                            <li><a href="#"><span class="icon-pinterest"></span></a></li>
-                            <li><a href="#"><span class="icon-dribbble"></span></a></li>
-                        </ul>
-                    </div> <!-- /.widget -->
-                </div> <!-- /.col-lg-4 -->
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
-    </div> <!-- /.site-footer -->
+        <!-- paging -->
+        <div class="pagination" style="margin: 0px; padding-bottom: 50px">
+            <% for (int i = 0; i < totalPage; i++) { %>
+            <a href="OwnerController?service=pagingRoom&index=<%=i+1%>" class="<%= (i + 1 == index) ? "active" : "" %>"><%= i + 1 %></a>
+            <% } %>
+        </div>  
 
 
-    <!-- Preloader -->
-    <div id="overlayer"></div>
-    <div class="loader">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
+        <div class="site-footer">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="widget">
+                            <h3>Contact</h3>
+                            <address>FPT University, Thach That, Ha Noi</address>
+                            <ul class="list-unstyled links">
+                                <li><a href="tel://11234567890">+1(123)-456-789</a></li>
+                                <li><a href="tel://11234567890">+1(123)-456-789</a></li>
+                                <li><a href="mailto:info@mydomain.com">fptuniversity@fpt.edu.vn</a></li>
+                            </ul>
+                        </div> <!-- /.widget -->
+                    </div> <!-- /.col-lg-4 -->
+                    <div class="col-lg-4">
+                        <div class="widget">
+                            <h3>Sources</h3>
+                            <ul class="list-unstyled float-start links">
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Vision</a></li>
+                                <li><a href="#">Mission</a></li>
+                                <li><a href="#">Terms</a></li>
+                                <li><a href="#">Privacy</a></li>
+                            </ul>
+                            <ul class="list-unstyled float-start links">
+                                <li><a href="#">Partners</a></li>
+                                <li><a href="#">Business</a></li>
+                                <li><a href="#">Careers</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Creative</a></li>
+                            </ul>
+                        </div> <!-- /.widget -->
+                    </div> <!-- /.col-lg-4 -->
+                    <div class="col-lg-4">
+                        <div class="widget">
+                            <h3>Links</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Our Vision</a></li>
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Contact us</a></li>
+                            </ul>
+
+                            <ul class="list-unstyled social">
+                                <li><a href="#"><span class="icon-instagram"></span></a></li>
+                                <li><a href="#"><span class="icon-twitter"></span></a></li>
+                                <li><a href="https://www.facebook.com/elfadkeachother"><span class="icon-facebook"></span></a></li>
+                                <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                                <li><a href="#"><span class="icon-pinterest"></span></a></li>
+                                <li><a href="#"><span class="icon-dribbble"></span></a></li>
+                            </ul>
+                        </div> <!-- /.widget -->
+                    </div> <!-- /.col-lg-4 -->
+                </div> <!-- /.row -->
+            </div> <!-- /.container -->
+        </div> <!-- /.site-footer -->
 
 
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/tiny-slider.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="js/counter.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/tiny-slider.js"></script>
+        <script src="js/aos.js"></script>
+        <script src="js/navbar.js"></script>
+        <script src="js/counter.js"></script>
+        <script src="js/custom.js"></script>
+
+
+        <!-- JavaScript Libraries -->
+        <script src="lib/jquery/jquery.min.js"></script>
+        <script src="lib/jquery/jquery-migrate.min.js"></script>
+        <script src="lib/popper/popper.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/scrollreveal/scrollreveal.min.js"></script>
+
+
+        <!-- Template Main Javascript File -->
+        <script src="js/main_owner.js"></script>
+
+        <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            var searchInput = document.getElementById('searchInput');
+                                            var roomList = document.getElementById('roomList').children;
+
+                                            searchInput.addEventListener('input', function () {
+                                                var filter = searchInput.value.toLowerCase();
+                                                Array.from(roomList).forEach(function (room) {
+                                                    var roomName = room.getAttribute('data-room-name').toLowerCase();
+                                                    if (roomName.indexOf(filter) > -1) {
+                                                        room.style.display = '';
+                                                    } else {
+                                                        room.style.display = 'none';
+                                                    }
+                                                });
+                                            });
+                                        });
+        </script>
+
+        <script>
+            function filterRooms() {
+
+                var selectedPriceRange = document.querySelector('input[name="priceRange"]:checked').value;
+
+
+                var roomList = document.getElementById('roomList').children;
+                Array.from(roomList).forEach(function (room) {
+                    var price = room.getAttribute('data-room-price');
+
+                    if (selectedPriceRange === "all") {
+                        room.style.display = "block";
+                    } else if (selectedPriceRange === "below1M" && price < 1000) {
+                        room.style.display = "block";
+                    } else if (selectedPriceRange === "1To2M" && price >= 1000 && price <= 2000) {
+                        room.style.display = "block";
+                    } else if (selectedPriceRange === "2To3M" && price > 2000 && price <= 3000) {
+                        room.style.display = "block";
+                    } else {
+                        room.style.display = "none";
+                    }
+                });
+            }
+        </script>
+
+    </body>
 </html>

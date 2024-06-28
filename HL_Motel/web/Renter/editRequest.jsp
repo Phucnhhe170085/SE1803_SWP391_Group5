@@ -117,7 +117,8 @@
                             <label for="resStatus">Response Status</label>
                             <input type="text" name="resStatus" class="form-control" value="${requestDetails.resStatus}" readonly>
                         </div>
-                        <button type="submit" class="btn btn-primary">Update Request</button>
+                        <div></br></div>
+                        <button" type="submit" class="btn btn-primary">Update Request</button>
                     </form>
                 </div>
             </div>

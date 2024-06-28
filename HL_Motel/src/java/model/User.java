@@ -22,10 +22,16 @@ public class User{
     private Security security;
     private String email; // tự thêm 
     
+    
     public User() {
     }
 
-    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Renter renter, Room room) {
+        public User(int userID, String userAvatar) {
+        this.userID = userID;
+        this.userAvatar = userAvatar;
+    }
+
+        public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Renter renter, Room room) {
         this.userID = userID;
         this.userName = userName;
         this.userGender = userGender;
@@ -49,13 +55,14 @@ public class User{
         this.account = account;
     }
 
-    public User(String userName, String userGender, String userBirth, String userAddress, String userPhone, String email) {
+    public User(String userName, String userGender, String userBirth, String userAddress, String userPhone, String email, String userAvatar) {
         this.userName = userName;
         this.userGender = userGender;
         this.userBirth = userBirth;
         this.userAddress = userAddress;
         this.userPhone = userPhone;
         this.email = email;
+        this.userAvatar = userAvatar;
     }
 
     public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone) {
@@ -65,11 +72,8 @@ public class User{
         this.userBirth = userBirth;
         this.userAddress = userAddress;
         this.userPhone = userPhone;
+        
     }
-    
-    
-    
-    
 
     public User(int userID, String userName, String userAvatar, Account account) {
         this.userID = userID;
@@ -99,6 +103,23 @@ public class User{
         this.account = account;
         this.security = security;
     }
+
+    
+
+    public User(String userName, String userGender, String userBirth, String userAddress, String userPhone, String email) {
+        this.userName = userName;
+        this.userGender = userGender;
+        this.userBirth = userBirth;
+        this.userAddress = userAddress;
+        this.userPhone = userPhone;
+        this.email = email;
+    }
+
+    
+    
+    
+
+
 
     public Security getSecurity() {
         return security;

@@ -1,42 +1,79 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-import model.*;
-
-/**
- *
- * @author ASUS
- */
 public class RoomDetailSe {
 
-   private int roomID;
-    private String roomNumber;
-    private String roomImg;
-    private String roomSize;
+    private int roomID;
+    private int roomNumber;
+    private int roomSize;
     private int roomFloor;
     private int singleBed;
     private int bunk;
     private int chair;
     private boolean ceilingFans;
     private boolean airConditional;
+    private String roomImg;
+    private String[] itemName;
+    private byte[] itemImg;
+    private int[] quantity;
+    private double roomFee;
+    private int[] itemID;
 
-    public RoomDetailSe() {
-    }
-
-    public RoomDetailSe(int roomID, String roomNumber, String roomImg, String roomSize, int roomFloor, int singleBed, int bunk, int chair, boolean ceilingFans, boolean airConditional) {
+    public RoomDetailSe(int roomID, int roomNumber, int roomSize, int roomFloor, 
+            String roomImg, String[] itemName, byte[] itemImg, int[] quantity, 
+            double roomFee, int[] itemID) {
         this.roomID = roomID;
         this.roomNumber = roomNumber;
-        this.roomImg = roomImg;
         this.roomSize = roomSize;
         this.roomFloor = roomFloor;
-        this.singleBed = singleBed;
-        this.bunk = bunk;
-        this.chair = chair;
-        this.ceilingFans = ceilingFans;
-        this.airConditional = airConditional;
+        this.roomImg = roomImg;
+        this.itemName = itemName;
+        this.itemImg = itemImg;
+        this.quantity = quantity;
+        this.roomFee = roomFee;
+        this.itemID = itemID;
+    }
+
+    public int[] getItemID() {
+        return itemID;
+    }
+
+    public void setItemID(int[] itemID) {
+        this.itemID = itemID;
+    }
+    
+    public double getRoomFee() {
+        return roomFee;
+    }
+
+    public void setRoomFee(double roomFee) {
+        this.roomFee = roomFee;
+    }      
+    
+    public String[] getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String[] itemName) {
+        this.itemName = itemName;
+    }
+
+    public byte[] getItemImg() {
+        return itemImg;
+    }
+
+    public void setItemImg(byte[] itemImg) {
+        this.itemImg = itemImg;
+    }
+
+    public int[] getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int[] quantity) {
+        this.quantity = quantity;
+    }
+
+    public RoomDetailSe() {
     }
 
     public int getRoomID() {
@@ -47,11 +84,11 @@ public class RoomDetailSe {
         this.roomID = roomID;
     }
 
-    public String getRoomNumber() {
+    public int getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(String roomNumber) {
+    public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -63,11 +100,11 @@ public class RoomDetailSe {
         this.roomImg = roomImg;
     }
 
-    public String getRoomSize() {
+    public int getRoomSize() {
         return roomSize;
     }
 
-    public void setRoomSize(String roomSize) {
+    public void setRoomSize(int roomSize) {
         this.roomSize = roomSize;
     }
 
