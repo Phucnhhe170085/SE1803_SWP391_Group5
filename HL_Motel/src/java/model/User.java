@@ -15,17 +15,23 @@ public class User{
     private String userBirth;
     private String userAddress;
     private String userPhone;
-    private String userAvatar; 
+    private String userAvatar;
     private Account account;
     private Renter renter;
-    private Rooms room;
+    private Room room;
     private Security security;
     private String email; // tự thêm 
+    
     
     public User() {
     }
 
-    public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Renter renter, Rooms room) {
+        public User(int userID, String userAvatar) {
+        this.userID = userID;
+        this.userAvatar = userAvatar;
+    }
+
+        public User(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Renter renter, Room room) {
         this.userID = userID;
         this.userName = userName;
         this.userGender = userGender;
@@ -69,17 +75,6 @@ public class User{
         
     }
 
-    public User(int userID, String userAvatar) {
-        this.userID = userID;
-        this.userAvatar = userAvatar;
-    }
-
-    
-    
-    
-    
-    
-
     public User(int userID, String userName, String userAvatar, Account account) {
         this.userID = userID;
         this.userName = userName;
@@ -108,6 +103,23 @@ public class User{
         this.account = account;
         this.security = security;
     }
+
+    
+
+    public User(String userName, String userGender, String userBirth, String userAddress, String userPhone, String email) {
+        this.userName = userName;
+        this.userGender = userGender;
+        this.userBirth = userBirth;
+        this.userAddress = userAddress;
+        this.userPhone = userPhone;
+        this.email = email;
+    }
+
+    
+    
+    
+
+
 
     public Security getSecurity() {
         return security;
@@ -190,11 +202,11 @@ public class User{
         this.renter = renter;
     }
     
-    public Rooms getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setRoom(Rooms room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 

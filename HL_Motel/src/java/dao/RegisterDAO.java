@@ -26,7 +26,7 @@ public class RegisterDAO extends DBContext {
                 + "on u.userID = a.userID\n"
                 + "where userPhone = ? or a.userMail = ?";
         try {
-            PreparedStatement pre = conn.prepareStatement(sql);
+            PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, ownerProfile.getUserPhone());
             pre.setString(2, ownerProfile.getEmail());
 
@@ -49,7 +49,7 @@ public class RegisterDAO extends DBContext {
                 + "           ,[userRole])\n"
                 + "     VALUES (?,?,?)";
         try {
-            PreparedStatement pre = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pre = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pre.setString(1, account.getUserMail());
             pre.setString(2, account.getUserPassword());
             pre.setInt(3, account.getUserRole());
@@ -80,14 +80,14 @@ public class RegisterDAO extends DBContext {
                 + "           ,[userAvatar])\n"
                 + "     VALUES (?,?,?,?,?,?,?)";
         try {
-            PreparedStatement pre = conn.prepareStatement(sql);
+            PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, userID);
             pre.setString(2, user.getUserName());
             pre.setString(3, user.getUserGender());
             pre.setString(4, user.getUserBirth());
             pre.setString(5, user.getUserAddress());
             pre.setString(6, user.getUserPhone());
-            pre.setString(7, user.getUserAvatar());
+//            pre.setBytes(7, user.getUserAvatar());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
 

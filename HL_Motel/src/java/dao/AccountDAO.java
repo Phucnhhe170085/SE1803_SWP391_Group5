@@ -1,4 +1,3 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author ASUS
  */
-public class AccountDAO extends DBContext {
+public class AccountDAO extends MyDAO {
 
     //Table - Account
     /*
@@ -32,9 +31,9 @@ public class AccountDAO extends DBContext {
         Account account = new Account();
         String statement = "select * from [Account]";
         try {
-            PreparedStatement ps = conn.prepareStatement(statement);
+            ps = con.prepareStatement(statement);
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 account.setUserID(rs.getInt(1));
                 account.setUserMail(rs.getString(2));
@@ -52,9 +51,9 @@ public class AccountDAO extends DBContext {
         List<Account> list = new ArrayList<>();
         String sql = "SELECT * FROM Account WHERE userRole = 1";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                 list.add(account);
@@ -70,9 +69,9 @@ public class AccountDAO extends DBContext {
         List<Account> list = new ArrayList<>();
         String sql = "SELECT * FROM Account WHERE userRole = 2";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                 list.add(account);
@@ -87,10 +86,10 @@ public class AccountDAO extends DBContext {
         String sql = "SELECT userRole FROM [Account] \n"
                 + "WHERE userMail = ? AND userPassword = ?";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, mail);
             ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             if (rs.next()) {
                 return rs.getInt("userRole");
@@ -107,7 +106,7 @@ public class AccountDAO extends DBContext {
             PreparedStatement ps;
             ResultSet rs;
             String sql = "SELECT * FROM [HL_Motel].[dbo].[Account] where userMail = ? and userPassword = ?";
-            ps = conn.prepareStatement(sql);
+            ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
             rs = ps.executeQuery();
@@ -131,7 +130,7 @@ public class AccountDAO extends DBContext {
             PreparedStatement ps;
             ResultSet rs;
             String sql = "SELECT * FROM [HL_Motel].[dbo].[Account] WHERE userMail = ?";
-            ps = conn.prepareStatement(sql);
+            ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -154,7 +153,7 @@ public class AccountDAO extends DBContext {
             PreparedStatement ps;
             ResultSet rs;
             String sql = "update [Account] set userPassword = ? where userMail = ?";
-            ps = conn.prepareStatement(sql);
+            ps = connection.prepareStatement(sql);
             ps.setString(2, email);
             ps.setString(1, password);
             ps.execute();
@@ -170,7 +169,7 @@ public class AccountDAO extends DBContext {
             PreparedStatement ps;
             ResultSet rs;
             String sql = "SELECT [userID] FROM [HL_Motel].[dbo].[Account] where Account.userMail = ?";
-            ps = conn.prepareStatement(sql);
+            ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -191,7 +190,7 @@ public class AccountDAO extends DBContext {
     public void changep(Account a) {
         String sql = "UPDATE [dbo].[account] set userPassword = ? where userMail = ?";
         try {
-            PreparedStatement st = conn.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, a.getUserPassword());
             st.setString(2, a.getUserMail());
             st.executeQuery();
@@ -203,7 +202,7 @@ public class AccountDAO extends DBContext {
     public Account check(String usermail, String password) {
         String sql = "select * from Account where userMail = ? and userPassword = ?";
         try {
-            PreparedStatement st = conn.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, usermail);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
@@ -225,7 +224,7 @@ public class AccountDAO extends DBContext {
     public Account checkID(int userid) {
         String sql = "SELECT * FROM Account WHERE userid = ?";
         try {
-            PreparedStatement st = conn.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, userid); // Set parameter using setInt for integer value
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -240,7 +239,7 @@ public class AccountDAO extends DBContext {
     public void updatePassword(Account a) {
         String sql = "UPDATE Account SET [userPassword] = ? WHERE userID = ?";
         try {
-            PreparedStatement st = conn.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, a.getUserPassword());
             st.setInt(2, a.getUserID());
 

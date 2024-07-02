@@ -106,6 +106,57 @@
                 margin-top: 5px;
                 display: none;
             }
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+            }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 34px;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: #4CAF50;
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
+
+            .button-group {
+                text-align: center;
+                margin-top: 20px;
+            }
+
         </style>
     </head>
     <body>
@@ -238,12 +289,25 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10 text-secondary">
-                                            <button type="button" id="updateButton" class="btn btn-success" onclick="updateRoomItems()">Update Room Item</button>
-                                            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addItemModal">Add Room Item</a>
-                                            <input type="submit" class="btn btn-primary px-4" value="Save Changes">                                           
+                                    <div class="container">
+                                        <div class="row" style="margin-top: 50px">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10 text-secondary">
+                                                <button type="button" id="updateButton" class="btn btn-success" onclick="updateRoomItems()">Update Room Item</button>
+                                                <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addItemModal">Add Room Item</a>
+                                                <input type="submit" class="btn btn-primary px-4" value="Save Changes">                                           
+                                            </div>
+                                        </div>
+                                        <div class="row button-group">
+                                            <div class="col-sm-12 text-center">
+                                                <div class="status-container">
+                                                    <label class="switch">
+                                                        <input type="checkbox" id="toggle" onclick="toggleButton()" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <p>Status: <span id="status">ON</span></p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <input type="hidden" name="roomID" value="<%= roomDetail.getRoomID()%>">
@@ -298,17 +362,17 @@
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>     
 <script>
-                                                document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
-                                                    var quantityInput = document.getElementById('newQuantityModal').value;
-                                                    var quantity = parseFloat(quantityInput);
+                                                            document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
+                                                                var quantityInput = document.getElementById('newQuantityModal').value;
+                                                                var quantity = parseFloat(quantityInput);
 
-                                                    if (!Number.isInteger(quantity) || quantity <= 0) {
-                                                        alert('Quantity is not valid. Please enter a positive integer');
-                                                    } else {
-                                                        var form = document.getElementById('addItemFormModal');
-                                                        form.submit();
-                                                    }
-                                                });
+                                                                if (!Number.isInteger(quantity) || quantity <= 0) {
+                                                                    alert('Quantity is not valid. Please enter a positive integer');
+                                                                } else {
+                                                                    var form = document.getElementById('addItemFormModal');
+                                                                    form.submit();
+                                                                }
+                                                            });
 </script>
 
 <script>
@@ -369,6 +433,31 @@
             }
         };
         xhr.send(JSON.stringify(updatedItems));
+    }
+</script>
+
+<script>
+    function toggleButton() {
+        var checkbox = document.getElementById("toggle");
+        var status = document.getElementById("status");
+        var roomStatus = checkbox.checked;
+
+        if (!checkbox.checked) {
+            var confirmOff = confirm("Are you sure you want to temporarily stop selling this room?");
+            if (!confirmOff) {
+                checkbox.checked = true;
+                status.innerHTML = "ON";
+                return;
+            }
+        }
+
+        status.innerHTML = checkbox.checked ? "ON" : "OFF";
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "OwnerController", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("roomStatus=" + (checkbox.checked ? "true" : "false"));
     }
 </script>
 

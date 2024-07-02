@@ -4,6 +4,8 @@
  */
 package model;
 
+
+
 /**
  *
  * @author ASUS
@@ -16,9 +18,23 @@ public class Request {
     private String description;
     private String createAt;
     private String resStatus;
+    private User user;
 
     public Request() {
+        
     }
+
+     public Request(int requestID, int renterID, int requestType, String title, String description, String createAt, String resStatus, User user) {
+        this.requestID = requestID;
+        this.renterID = renterID;
+        this.requestType = requestType;
+        this.title = title;
+        this.description = description;
+        this.createAt = createAt;
+        this.resStatus = resStatus;
+        this.user = user;
+    }
+   
 
     public Request(int requestID, int renterID, int requestType, String title, String description, String createAt, String resStatus) {
         this.requestID = requestID;
@@ -84,6 +100,14 @@ public class Request {
 
     public void setResStatus(String resStatus) {
         this.resStatus = resStatus;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
     

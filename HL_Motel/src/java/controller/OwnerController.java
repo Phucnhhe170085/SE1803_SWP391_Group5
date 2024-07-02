@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import dao.RenterDAO;
 import java.lang.reflect.Type;
 import dao.RoomDAO;
 import java.io.IOException;
@@ -79,16 +80,15 @@ public class OwnerController extends HttpServlet {
     }
 
     private void OwnerHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("owner/OwnerHome.jsp").forward(request, response);
+        request.getRequestDispatcher("Owner/OwnerHome.jsp").forward(request, response);
     }
 
     private void listRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RoomDAO dao = new RoomDAO();
         int index = Integer.parseInt(request.getParameter("index"));
-        if (index == 0) {
-            index = 1;
-        }
+
         List<Rooms> rooms = dao.pagingRoom(index);
+        List<Rooms> allRooms = dao.getRooms();
         int totalRoom = dao.getTotalRoom();
         int totalPage = totalRoom / 6;
         if (totalPage % 6 != 0) {
@@ -97,25 +97,29 @@ public class OwnerController extends HttpServlet {
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("index", index);
         request.setAttribute("rooms", rooms);
+        request.setAttribute("allRooms", allRooms);
 
-        request.getRequestDispatcher("owner/rooms.jsp").forward(request, response);
+        request.getRequestDispatcher("Owner/rooms.jsp").forward(request, response);
     }
 
     private void roomDetail(HttpServletRequest request, HttpServletResponse response, int flag) throws ServletException, IOException {
         RoomDAO dao = new RoomDAO();
+        RenterDAO daoRenter = new RenterDAO();
         HttpSession session = request.getSession();
         int roomID = Integer.parseInt(request.getParameter("roomID"));
         RoomDetailSe roomDetail = dao.getRoomDetail(roomID);
+        List<String> listNameRenter = daoRenter.getRenterName(roomID);
         request.setAttribute("roomDetail", roomDetail);
+        request.setAttribute("listNameRenter", listNameRenter);
         session.setAttribute("roomID", roomID);
 
         if (flag == 0) {
-            request.getRequestDispatcher("owner/roomDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("Owner/roomDetail.jsp").forward(request, response);
         } else if (flag == 1) {
             List<String> listItemNames = dao.getItemName();
             String[] listItem = listItemNames.toArray(new String[0]);
             request.setAttribute("listItem", listItem);
-            request.getRequestDispatcher("owner/editRoom.jsp").forward(request, response);
+            request.getRequestDispatcher("Owner/editRoom.jsp").forward(request, response);
         }
     }
 
@@ -153,9 +157,9 @@ public class OwnerController extends HttpServlet {
         User ownerProfile = dao.getOwnerProfileByID(15);
         request.setAttribute("ownerProfile", ownerProfile);
         if (flag == 0) {
-            request.getRequestDispatcher("owner/ownerProfile.jsp").forward(request, response);
+            request.getRequestDispatcher("Owner/ownerProfile.jsp").forward(request, response);
         } else if (flag == 1) {
-            request.getRequestDispatcher("owner/formOwnerProfile.jsp").forward(request, response);
+            request.getRequestDispatcher("Owner/formOwnerProfile.jsp").forward(request, response);
         }
     }
 
