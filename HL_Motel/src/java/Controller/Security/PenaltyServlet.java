@@ -80,35 +80,49 @@ public class PenaltyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String action = request.getParameter("action");
-        int penId = Integer.parseInt(request.getParameter("penId"));
-        int roomId = Integer.parseInt(request.getParameter("roomId"));
-        String description = request.getParameter("description");
-        String penDateStr = request.getParameter("penDate");
-        String ruleId = request.getParameter("ruleId");
-        boolean penStatus = Boolean.parseBoolean(request.getParameter("penStatus"));
+    String penIdStr = request.getParameter("penId");
+    String roomIdStr = request.getParameter("roomId");
+    String description = request.getParameter("description");
+    String penDateStr = request.getParameter("penDate");
+    String ruleId = request.getParameter("ruleId");
+    String penStatusStr = request.getParameter("penStatus");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date penDate = null;
-        try {
-            penDate = sdf.parse(penDateStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    int penId = 0;
+    int roomId = 0;
+    boolean penStatus = false;
 
-        PenaltyList penalty = new PenaltyList();
-        PenaltyDao penaltyDao = new PenaltyDao();
-        penaltyDao.addPenalty(penalty);
-        penStatus = true;
-//        if ("Add".equals(action)) {
-//            penaltyDao.addPenalty(penalty);
-//            penStatus = true;
-//        } else if ("Update".equals(action)) {
-//            penaltyDao.updatePenalty(penalty);
-//        } else if ("Delete".equals(action)) {
-//            penaltyDao.deletePenalty(penId);
-//        }
+    if (penIdStr!= null &&!penIdStr.isEmpty()) {
+        penId = Integer.parseInt(penIdStr);
+    }
 
-        response.sendRedirect("pen");
+    if (roomIdStr!= null &&!roomIdStr.isEmpty()) {
+        roomId = Integer.parseInt(roomIdStr);
+    }
+
+    if (penStatusStr!= null &&!penStatusStr.isEmpty()) {
+        penStatus = Boolean.parseBoolean(penStatusStr);
+    }
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date penDate = null;
+    try {
+        penDate = sdf.parse(penDateStr);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    PenaltyList penalty = new PenaltyList();
+    penalty.setPenId(penId);
+    penalty.setRoomId(roomId);
+    penalty.setDescription(description);
+    penalty.setPenDate(penDate);
+    penalty.setRuleId(Integer.parseInt(ruleId));
+    penalty.setPenStatus(penStatus);
+
+    PenaltyDao penaltyDao = new PenaltyDao();
+    penaltyDao.addPenalty(penalty);
+
+    response.sendRedirect("pen");
     }
 
     /** 

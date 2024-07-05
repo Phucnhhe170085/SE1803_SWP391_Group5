@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import DAO.DBContext;
 import Models.RulePenChart;
+import Models.SeUserProfile;
+import java.sql.Date;
 
 /**
  *
@@ -69,14 +71,112 @@ public class SecurityDAO extends DBContext {
         }
         return pen;
     }
+    
+    public List<SeUserProfile> showProfile(String seID) {
+    List<SeUserProfile> show = new ArrayList<>();
+    String sql = "SELECT \n" +
+                    "  i.userID,\n" +
+                    "  i.seID,\n" +
+                    "  j.userName,\n" +
+                    "  j.userGender,\n" +
+                    "  j.userBirth,\n" +
+                    "  j.userAddress,\n" +
+                    "  j.userPhone,\n" +
+                    "  j.userAvatar,\n" +
+                    "  k.userMail,\n" +
+                    "  i.sShift,\n" +
+                    "  i.seStatus\n" +
+                    "FROM \n" +
+                    "  HL_Motel.dbo.security i\n" +
+                    "  JOIN HL_Motel.dbo.[user] j ON i.userID = j.userID\n" +
+                    "  join HL_Motel.dbo.[account] k on i.userID = k.userID\n" +
+                    "  where i.seID = ?;";
+
+    try {
+        java.sql.Connection conn = connection;
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, seID); // set the userID parameter
+        
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            SeUserProfile profile = new SeUserProfile();
+
+            profile.setSeID(rs.getInt("seID"));
+            profile.setUserName(rs.getString("userName"));
+            profile.setUserGender(rs.getString("userGender"));
+            profile.setUserBirth(rs.getDate("userBirth"));
+            profile.setUserAddress(rs.getString("userAddress"));
+            profile.setUserPhone(rs.getString("userPhone"));
+            profile.setUserAvatar(rs.getString("userAvatar"));
+            profile.setUserMail(rs.getString("userMail"));
+            profile.setxShift(rs.getInt("sShift"));
+            profile.setSeStatus(rs.getBoolean("seStatus"));
+
+            show.add(profile);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return show;
+    }
+    
+    public boolean editUserProfile(SeUserProfile profile) {
+    String sqlUser = "UPDATE HL_Motel.dbo.[user] SET userName =?, userGender =?, userBirth =?, userAddress =?, userPhone =?, userAvatar =? WHERE userID = (SELECT userID FROM HL_Motel.dbo.security WHERE seID =?)";
+    String sqlAccount = "UPDATE HL_Motel.dbo.[account] SET userMail =? WHERE userID = (SELECT userID FROM HL_Motel.dbo.security WHERE seID =?)";
+
+    try {
+        java.sql.Connection conn = connection;
+        conn.setAutoCommit(false);
+
+        PreparedStatement psUser = conn.prepareStatement(sqlUser);
+        psUser.setString(1, profile.getUserName());
+        psUser.setString(2, profile.getUserGender());
+        psUser.setDate(3, profile.getUserBirth());
+        psUser.setString(4, profile.getUserAddress());
+        psUser.setString(5, profile.getUserPhone());
+        psUser.setString(6, profile.getUserAvatar());
+        psUser.setInt(7, profile.getSeID());
+
+        int rowsAffectedUser = psUser.executeUpdate();
+
+        PreparedStatement psAccount = conn.prepareStatement(sqlAccount);
+        psAccount.setString(1, profile.getUserMail());
+        psAccount.setInt(2, profile.getSeID());
+
+        int rowsAffectedAccount = psAccount.executeUpdate();
+
+        conn.commit();
+
+        return rowsAffectedUser > 0 && rowsAffectedAccount > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 
     public static void main(String[] args) {
-        SecurityDAO SecurityDAO = new SecurityDAO();
-        List<RulePenChart> rI = SecurityDAO.getTopPenRule();
+    SecurityDAO securityDAO = new SecurityDAO();
 
-        for (RulePenChart room : rI) {
-            System.out.println(room);
+    // Create a new SeUserProfile object to update
+    SeUserProfile profile = new SeUserProfile();
+    profile.setSeID(1); // assume seID 2 exists in the database
+    profile.setUserID(1); // assume userID 1 exists in the database
+    profile.setUserName("New Name");
+    profile.setUserGender("Male");
+    profile.setUserBirth(java.sql.Date.valueOf("1990-01-01"));
+    profile.setUserAddress("New Address");
+    profile.setUserPhone("123-456-7890");
+    profile.setUserAvatar("new_avatar.jpg");
+    profile.setUserMail("new_email@example.com");
+    profile.setxShift(1);
+    profile.setSeStatus(true);
 
-        }
+    boolean updated = securityDAO.editUserProfile(profile);
+    if (updated) {
+        System.out.println("User profile updated successfully!");
+    } else {
+        System.out.println("Failed to update user profile.");
+    }
     }
 }

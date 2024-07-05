@@ -51,6 +51,13 @@ public class UpdateServlet extends HttpServlet {
         }
 
         PenaltyList penalty = new PenaltyList();
+        penalty.setPenId(penId);
+        penalty.setRoomId(roomId);
+        penalty.setDescription(description);
+        penalty.setPenDate(penDate);
+        penalty.setRuleId(Integer.parseInt(ruleId));
+        penalty.setPenStatus(penStatus);
+
         PenaltyDao penaltyDao = new PenaltyDao();
         penaltyDao.updatePenalty(penalty);
     } 

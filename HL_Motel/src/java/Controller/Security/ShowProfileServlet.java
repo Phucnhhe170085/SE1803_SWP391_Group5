@@ -5,8 +5,10 @@
 
 package Controller.Security;
 
-import DAO.PenaltyDao;
-import Models.PenaltyList;
+import DAO.NewDAO;
+import DAO.SecurityDAO;
+import Models.News;
+import Models.SeUserProfile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +16,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="AddPenaltyServlet", urlPatterns={"/add"})
-public class AddPenaltyServlet extends HttpServlet {
+@WebServlet(name="ShowProfileServlet", urlPatterns={"/profile"})
+public class ShowProfileServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,33 +35,18 @@ public class AddPenaltyServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        int penId = Integer.parseInt(request.getParameter("penId"));
-        int roomId = Integer.parseInt(request.getParameter("roomId"));
-        String description = request.getParameter("description");
-        String penDateStr = request.getParameter("penDate");
-        String ruleId = request.getParameter("ruleId");
-        boolean penStatus = Boolean.parseBoolean(request.getParameter("penStatus"));
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date penDate = null;
-        try {
-            penDate = sdf.parse(penDateStr);
-        } catch (Exception e) {
-            e.printStackTrace();
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ShowProfileServlet</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ShowProfileServlet at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
-        PenaltyList penalty = new PenaltyList();
-        penalty.setPenId(penId);
-        penalty.setRoomId(roomId);
-        penalty.setDescription(description);
-        penalty.setPenDate(penDate);
-        penalty.setRuleId(Integer.parseInt(ruleId));
-        penalty.setPenStatus(penStatus);
-
-        PenaltyDao penaltyDao = new PenaltyDao();
-        penaltyDao.addPenalty(penalty);
-        penStatus = true;
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,7 +60,12 @@ public class AddPenaltyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        SecurityDAO SecurityDAO = new SecurityDAO();
+        String seID = request.getParameter("seID");
+        List<SeUserProfile> listR = SecurityDAO.showProfile(seID);
+        request.setAttribute("list1", listR);
+        request.getRequestDispatcher("security/showProfile.jsp").forward(request, response);
+        System.out.println(seID);
     } 
 
     /** 

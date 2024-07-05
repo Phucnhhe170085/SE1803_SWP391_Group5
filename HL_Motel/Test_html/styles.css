@@ -1,0 +1,56 @@
+.card_container{
+    padding: 20px;
+    box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.avatar{
+    border: 5px solid rgb(79, 72, 72);
+    width: 400px;
+    height: 400px;
+    padding: 3px;
+    box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+}
+img{
+    width: 100%;
+    height: 100%;
+}
+ .title{
+    font-size: 15px;
+    text-align: left;   
+}
+ .value{
+    font-size: 15px;
+    font-weight: bold;
+    text-align: left;
+    width: 600px;
+}
+.information{
+    display: flex;
+    margin-bottom: 5px;
+    padding-bottom: 20px;    
+    border-bottom: 1px solid gray;
+}
+h3 {
+    color: rgb(35, 177, 224);
+}
+.user_info{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;    
+}
+.contact{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+.content_box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
