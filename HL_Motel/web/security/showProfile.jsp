@@ -171,7 +171,8 @@
                                                         <span class="title">UserID: </span>
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <span class="value"> 001</span>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="row user_info">
@@ -246,7 +247,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="editbtn" href="updateProfile"  class="btn btn-primary">Update Profile</button>
+                                        
+                                        <a type="editbtn" href="updateProfile" class="btn btn-primary">Update Profile</a>
                                     </div>
                                 </div>
 

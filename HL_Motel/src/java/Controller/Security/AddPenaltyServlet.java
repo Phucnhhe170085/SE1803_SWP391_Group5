@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller.Security;
 
 import DAO.PenaltyDao;
@@ -21,51 +20,37 @@ import java.util.Date;
  *
  * @author Admin
  */
-@WebServlet(name="AddPenaltyServlet", urlPatterns={"/add"})
+@WebServlet(name = "AddPenaltyServlet", urlPatterns = {"/add"})
 public class AddPenaltyServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        int penId = Integer.parseInt(request.getParameter("penId"));
-        int roomId = Integer.parseInt(request.getParameter("roomId"));
+        
+        String roomID = request.getParameter("roomID");
         String description = request.getParameter("description");
-        String penDateStr = request.getParameter("penDate");
-        String ruleId = request.getParameter("ruleId");
-        boolean penStatus = Boolean.parseBoolean(request.getParameter("penStatus"));
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date penDate = null;
-        try {
-            penDate = sdf.parse(penDateStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PenaltyList penalty = new PenaltyList();
-        penalty.setPenId(penId);
-        penalty.setRoomId(roomId);
-        penalty.setDescription(description);
-        penalty.setPenDate(penDate);
-        penalty.setRuleId(Integer.parseInt(ruleId));
-        penalty.setPenStatus(penStatus);
-
+        String penDate = request.getParameter("penDate");
+        String ruleID = request.getParameter("ruleID");
         PenaltyDao penaltyDao = new PenaltyDao();
-        penaltyDao.addPenalty(penalty);
-        penStatus = true;
-    } 
+
+        penaltyDao.addPenalty(roomID, description, penDate, ruleID);
+        response.sendRedirect("pen");
+//        request.getRequestDispatcher("security/test.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -73,12 +58,13 @@ public class AddPenaltyServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -86,12 +72,13 @@ public class AddPenaltyServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

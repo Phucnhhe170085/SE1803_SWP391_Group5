@@ -17,6 +17,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script type = ></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -26,7 +27,7 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                
+
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -89,7 +90,7 @@
                             <li class="breadcrumb-item"><a href="ChartServlet">Dashboard</a></li>
                             <li class="breadcrumb-item active">Tables</li>
                         </ol>
-                        
+
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -108,7 +109,7 @@
                                             <th>Rule</th>
                                             <th>Status</th>
                                             <th> </th>
-                                             <th> </th>
+                                            <th> </th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -124,21 +125,32 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                    <c:forEach var="o" items="${list}">
-                                        <tr>
-                                            
-                                            <td>${o.penId}</td>
-                                            <td>${o.roomId}</td>
-                                            <td>${o.description}</td>
-                                            <td>${o.penDate}</td>
-                                            <td>${o.ruleName}</td>
-                                            <td>${o.penStatus}</td>
-                                            <th><a href="up">Update</a></th>
-                                            <th><a href="up">Delete</a></th>
-                                            
-                                        </tr>
-                                    </c:forEach>
-                                    
+                                        <c:forEach var="o" items="${list}">
+                                            <tr>
+
+                                                <td>${o.penId}</td>
+                                                <td>${o.roomId}</td>
+                                                <td>${o.description}</td>
+                                                <td>${o.penDate}</td>
+                                                <td>${o.ruleName}</td>
+                                                <c:choose>
+                                                    <c:when test="${o.penStatus == true}">
+                                                        <td>done</td>
+                                                    </c:when>
+                                                    <c:when test="${o.penStatus == false}">
+                                                        <td>processing</td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td>unknown status</td>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <th><a href="updatepen?id=${o.penId}">Update</a></th>
+                                                <th><a href="delete?id=${o.penId}">Delete</a></th>
+
+                                            </tr>
+                                        </c:forEach>
+
                                     </tbody>
                                 </table>
                             </div>

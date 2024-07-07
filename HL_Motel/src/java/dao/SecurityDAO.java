@@ -75,6 +75,7 @@ public class SecurityDAO extends DBContext {
     public List<SeUserProfile> showProfile(String seID) {
     List<SeUserProfile> show = new ArrayList<>();
     String sql = "SELECT \n" +
+                    "  i.seID,\n" +
                     "  i.userID,\n" +
                     "  i.seID,\n" +
                     "  j.userName,\n" +
@@ -101,7 +102,7 @@ public class SecurityDAO extends DBContext {
 
         while (rs.next()) {
             SeUserProfile profile = new SeUserProfile();
-
+            
             profile.setSeID(rs.getInt("seID"));
             profile.setUserName(rs.getString("userName"));
             profile.setUserGender(rs.getString("userGender"));
@@ -119,6 +120,10 @@ public class SecurityDAO extends DBContext {
         e.printStackTrace();
     }
     return show;
+    }
+    public SeUserProfile selectUpdateByAccount(String name,String pass){
+        
+        return null;
     }
     
     public boolean editUserProfile(SeUserProfile profile) {
@@ -167,9 +172,9 @@ public class SecurityDAO extends DBContext {
     profile.setUserBirth(java.sql.Date.valueOf("1990-01-01"));
     profile.setUserAddress("New Address");
     profile.setUserPhone("123-456-7890");
-    profile.setUserAvatar("new_avatar.jpg");
+    
     profile.setUserMail("new_email@example.com");
-    profile.setxShift(1);
+    profile.setxShift(0);
     profile.setSeStatus(true);
 
     boolean updated = securityDAO.editUserProfile(profile);

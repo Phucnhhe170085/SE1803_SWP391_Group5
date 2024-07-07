@@ -5,7 +5,9 @@
 
 package Controller.Security;
 
+import DAO.RoomDAO;
 import DAO.RuleDAO;
+import Models.Room;
 import Models.Rule;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,6 +37,9 @@ public class importServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         RuleDAO rule = new RuleDAO();
         List<Rule> listR = rule.getRule();
+        RoomDAO roomDAO = new RoomDAO();
+        List<Room> listRoom = roomDAO.getAllRooms();
+        request.setAttribute("listRoom", listRoom);
         request.setAttribute("list", listR);
         request.getRequestDispatcher("security/addPenalty.jsp").forward(request, response);
     } 

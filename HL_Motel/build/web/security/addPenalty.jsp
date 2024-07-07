@@ -84,37 +84,42 @@
                 <main>
                     <div class="container">
                         <h1 class="mt-4">Penalty Form</h1>
-                        <form action="pen" method="post">
-                            <input type="hidden" name="action" value="${param.action}">
-                            <input type="hidden" name="penId" value="${param.penId}">
+                        
+                        <form action="add" method="post">
+                  
                             <div class="form-group">
-                                <label for="roomId" class="form-label">Room ID:</label>
-                                <input type="number" id="roomId" name="roomId" class="form-control" value="${param.roomId}">
+
+                                <label>RoomID</label>
+                                <select name="roomID" class="form-select" aria-label="Default select example">
+                                    <c:forEach items="${listRoom}" var="room">
+                                        <option value="${room.roomID}">${room.roomID}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                             <br>
                             <div class="form-group">
                                 <label for="description" class="form-label">Description:</label>
-                                <input type="text" id="description" name="description" class="form-control" value="${param.description}">
+                                <input type="text" id="description" name="description" class="form-control" required>
                             </div>
                             <br>
                             <div class="form-group">
                                 <label for="penDate" class="form-label">Date:</label>
-                                <input type="date" id="penDate" name="penDate" class="form-control" value="${param.penDate}">
+                                <input type="date" id="penDate" name="penDate" class="form-control" required>
                             </div>
                             <br>
                             <div class="form-group">
 
                                 <label>RuleName</label>
-                                <select name="ruleId" class="form-select" aria-label="Default select example">
+                                <select name="ruleID" class="form-select" aria-label="Default select example">
                                     <c:forEach items="${list}" var="category">
                                         <option value="${category.ruleId}">${category.ruleName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             
-                            <br>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="modal-footer">
+                                <input type="submit" name="submit" class="btn btn-success" value="Add">
+                            </div>
                         </form>
                     </div>
                 </main>

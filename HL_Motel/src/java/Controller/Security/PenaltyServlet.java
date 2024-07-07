@@ -79,50 +79,7 @@ public class PenaltyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String action = request.getParameter("action");
-    String penIdStr = request.getParameter("penId");
-    String roomIdStr = request.getParameter("roomId");
-    String description = request.getParameter("description");
-    String penDateStr = request.getParameter("penDate");
-    String ruleId = request.getParameter("ruleId");
-    String penStatusStr = request.getParameter("penStatus");
-
-    int penId = 0;
-    int roomId = 0;
-    boolean penStatus = false;
-
-    if (penIdStr!= null &&!penIdStr.isEmpty()) {
-        penId = Integer.parseInt(penIdStr);
-    }
-
-    if (roomIdStr!= null &&!roomIdStr.isEmpty()) {
-        roomId = Integer.parseInt(roomIdStr);
-    }
-
-    if (penStatusStr!= null &&!penStatusStr.isEmpty()) {
-        penStatus = Boolean.parseBoolean(penStatusStr);
-    }
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date penDate = null;
-    try {
-        penDate = sdf.parse(penDateStr);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-    PenaltyList penalty = new PenaltyList();
-    penalty.setPenId(penId);
-    penalty.setRoomId(roomId);
-    penalty.setDescription(description);
-    penalty.setPenDate(penDate);
-    penalty.setRuleId(Integer.parseInt(ruleId));
-    penalty.setPenStatus(penStatus);
-
-    PenaltyDao penaltyDao = new PenaltyDao();
-    penaltyDao.addPenalty(penalty);
-
-    response.sendRedirect("pen");
+        
     }
 
     /** 

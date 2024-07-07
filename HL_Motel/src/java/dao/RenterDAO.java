@@ -24,7 +24,7 @@ public class RenterDAO extends DBContext {
                     "      ,r.roomID\n" +
                     "      ,r.renterStatus\n" +
                     "      ,r.renterHaveRoom\n" +
-                    "      ,r.CGRScore\n" +
+//                    "      ,r.CGRScore\n" +
                     "	  ,r.balance\n" +
                     "  FROM [HL_Motel].[dbo].[user]\n" +
                     "  join renter r on [user].userID = r.userID"; 
@@ -40,7 +40,7 @@ public class RenterDAO extends DBContext {
                 rt.setRoomID(rs.getInt("RoomID"));
                 rt.setRenterStatus(rs.getBoolean("RenterStatus"));
                 rt.setRenterHaveRoom(rs.getBoolean("RenterHaveRoom"));
-                rt.setCGRScore(rs.getInt("CGRScore"));
+//                rt.setCGRScore(rs.getInt("CGRScore"));
                 rt.setBalance(rs.getDouble("Balance"));
                 
                 

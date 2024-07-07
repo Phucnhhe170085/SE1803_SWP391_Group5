@@ -34,32 +34,14 @@ public class UpdateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        int penId = Integer.parseInt(request.getParameter("penId"));
-        int roomId = Integer.parseInt(request.getParameter("roomId"));
-        String description = request.getParameter("description");
-        String penDateStr = request.getParameter("penDate");
-        String ruleId = request.getParameter("ruleId");
-        boolean penStatus = Boolean.parseBoolean(request.getParameter("penStatus"));
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date penDate = null;
-        try {
-            penDate = sdf.parse(penDateStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PenaltyList penalty = new PenaltyList();
-        penalty.setPenId(penId);
-        penalty.setRoomId(roomId);
-        penalty.setDescription(description);
-        penalty.setPenDate(penDate);
-        penalty.setRuleId(Integer.parseInt(ruleId));
-        penalty.setPenStatus(penStatus);
+        
+        String id = request.getParameter("penId");
+        String penStatus = request.getParameter("penStatus");
 
         PenaltyDao penaltyDao = new PenaltyDao();
-        penaltyDao.updatePenalty(penalty);
+        
+        penaltyDao.updatePenalty(penStatus, id);
+        response.sendRedirect("pen");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

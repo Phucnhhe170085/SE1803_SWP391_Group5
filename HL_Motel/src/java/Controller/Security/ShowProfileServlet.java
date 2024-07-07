@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -60,11 +61,13 @@ public class ShowProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
         SecurityDAO SecurityDAO = new SecurityDAO();
         String seID = request.getParameter("seID");
         List<SeUserProfile> listR = SecurityDAO.showProfile(seID);
         request.setAttribute("list1", listR);
         request.getRequestDispatcher("security/showProfile.jsp").forward(request, response);
+        
         System.out.println(seID);
     } 
 

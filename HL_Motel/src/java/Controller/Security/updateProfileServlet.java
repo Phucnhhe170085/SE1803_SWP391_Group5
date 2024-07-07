@@ -66,8 +66,6 @@ public class updateProfileServlet extends HttpServlet {
         List<SeUserProfile> listR = SecurityDAO.showProfile("1");
         boolean updated = securityDAO.editUserProfile(profile);
         
-        
-        
         request.getRequestDispatcher("security/editProfile.jsp").forward(request, response);
         if (updated) {
             System.out.println("Profile updated successfully!");

@@ -108,7 +108,7 @@
                                             <th>Room ID</th>
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
-                                            <th>CGR Score</th>
+                                            
                                             <th>Balance</th>
 
                                         </tr>
@@ -120,7 +120,7 @@
                                             <th>Room ID</th>
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
-                                            <th>CGR Score</th>
+                                           
                                             <th>Balance</th>
                                         </tr>
                                     </tfoot>
@@ -133,7 +133,7 @@
                                             <td>${t.roomID}</td>
                                             <td>${t.renterStatus}</td>
                                             <td>${t.renterHaveRoom}</td>
-                                            <td>${t.CGRScore}</td>
+                                           
                                             <td>${t.balance}</td>
                                             
                                         </tr>

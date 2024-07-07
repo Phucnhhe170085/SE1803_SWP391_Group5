@@ -6,7 +6,9 @@
 package Controller.Security;
 
 import DAO.PenaltyDao;
+import DAO.RuleDAO;
 import Models.PenaltyList;
+import Models.Rule;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +16,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="DeleteServlet", urlPatterns={"/delete"})
-public class DeleteServlet extends HttpServlet {
+@WebServlet(name="SelectUpdatePenServlet", urlPatterns={"/updatepen"})
+public class SelectUpdatePenServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +35,16 @@ public class DeleteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String id = request.getParameter("id");
+        response.setContentType("text/html;charset=UTF-8");
         PenaltyDao penaltyDao = new PenaltyDao();
-        penaltyDao.deletePenalty(id);
-        response.sendRedirect("pen");
+        String id = request.getParameter("id");
+        PenaltyList pen = penaltyDao.selectUpdateByPenID(id);
+        RuleDAO rule = new RuleDAO();
+        List<Rule> listR = rule.getRule();
+        request.setAttribute("list", listR);
+        request.setAttribute("detail", pen);
+        request.getRequestDispatcher("security/updatePenalty.jsp").forward(request, response);
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
