@@ -154,8 +154,5 @@ public class RoomDetailSe {
 
     public void setAirConditional(boolean airConditional) {
         this.airConditional = airConditional;
-    }
-
-    
-    
+    }      
 }

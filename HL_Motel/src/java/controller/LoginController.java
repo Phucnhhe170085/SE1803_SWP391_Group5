@@ -66,6 +66,9 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect("ChartServlet");
                         break;
                     case 4:
+                        response.sendRedirect(request.getContextPath() + "/renterhome");
+                        break;
+                    case 5:
                         response.sendRedirect(request.getContextPath() + "");
                         break;
                     default:

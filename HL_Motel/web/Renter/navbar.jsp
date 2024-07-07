@@ -39,6 +39,7 @@
             <li class="has-children ${param.service == 'listRoom' ? 'active' : ''}">
                 <a href="#">View</a>
                 <ul class="dropdown">
+                    <li><a href="RenterRoomController?service=listRoom&index=1">List Of Rooms</a></li>
                     <li><a href="rentercontroller?service=guideandrule">Guide and Rule</a></li>
                     <li><a href="#">Security</a></li>
                 </ul>

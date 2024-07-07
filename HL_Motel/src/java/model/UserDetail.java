@@ -48,7 +48,7 @@ public class UserDetail{
         this.email = email;
     }
 
-    public UserDetail(String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, String userMail, String userPassword) {    
+    public UserDetail(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, String userMail, String userPassword, int userRole) {    
         this.userName = userName;
         this.userGender = userGender;
         this.userBirth = userBirth;
@@ -57,6 +57,8 @@ public class UserDetail{
         this.userAvatar = userAvatar;
         this.userMail = userMail;
         this.userPassword = userPassword;
+        this.userID = userID;
+        this.userRole = userRole;
     }
 
     

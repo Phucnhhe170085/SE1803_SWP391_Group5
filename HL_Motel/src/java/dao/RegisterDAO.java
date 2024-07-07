@@ -95,41 +95,11 @@ public class RegisterDAO extends DBContext {
         return n;
     }
 
-    public static byte[] convertImageToByteArray(String imagePath) {
-        File imageFile = new File(imagePath);
-        try (FileInputStream fis = new FileInputStream(imageFile); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-
-            // Đọc dữ liệu từ file ảnh và ghi vào ByteArrayOutputStream
-            while ((bytesRead = fis.read(buffer)) != -1) {
-                baos.write(buffer, 0, bytesRead);
-            }
-
-            // Chuyển đổi ByteArrayOutputStream thành byte[]
-            return baos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+   
 
     public static void main(String[] args) {
         RegisterDAO roomDAO = new RegisterDAO();
         int b = roomDAO.addAccount(new Account("hehehe1@gmail.com", "1234567891abC@", 1));
 
-        String imagePath = "images/firefly.jpg";
-
-        // Chuyển đổi file ảnh sang byte[]
-        byte[] imageBytes = convertImageToByteArray(imagePath);
-
-        // Kiểm tra kết quả
-        if (imageBytes != null) {
-            System.out.println("Image converted to byte array successfully.");
-            System.out.println("Byte array length: " + imageBytes.length);
-        } else {
-            System.out.println("Failed to convert image to byte array.");
-        }
     }
 }

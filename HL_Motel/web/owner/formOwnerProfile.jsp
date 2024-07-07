@@ -134,10 +134,8 @@
                                             <div class="file-input-info">Kích thước ảnh tối đa 1mb, định dạng .jpg</div>
                                         </div>
                                         <div class="error-message" id="errorMessage">File không hợp lệ hoặc quá 1MB.</div>
-                                        <div class="mt-3">
-                                            <h4>💀</h4>
-                                            <p class="text-secondary mb-1">Cần cù thì bù .....</p>
-                                            <p class="text-muted font-size-sm">A. Siêng năng B.Thông minh</p>                               
+                                        <div class="mt-3">                                            
+                                            <p class="text-secondary mb-1">Image</p>                                            
                                         </div>
                                         <input type="hidden" name="service" value="updateAvatar">
                                     </form>

@@ -19,6 +19,8 @@ public class RenterList {
     private String userGender;
     private int roomID;
     private double balance;
+    private int roomNumber;
+    private int roomFloor;
 
     public RenterList() {
     }
@@ -39,6 +41,13 @@ public class RenterList {
         this.userMail = userMail;
         this.renterHaveRoom = renterHaveRoom;
         this.renterStatus = renterStatus;
+    }
+
+    public RenterList(String userName, double balance, int roomNumber, int roomFloor) {
+        this.userName = userName;
+        this.balance = balance;
+        this.roomNumber = roomNumber;
+        this.roomFloor = roomFloor;
     }
 
     public int getUserID() {
@@ -113,4 +122,20 @@ public class RenterList {
         this.balance = balance;
     }
 
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public int getRoomFloor() {
+        return roomFloor;
+    }
+
+    public void setRoomFloor(int roomFloor) {
+        this.roomFloor = roomFloor;
+    }
+    
 }

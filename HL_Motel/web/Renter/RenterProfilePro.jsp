@@ -118,7 +118,7 @@
                                 <% if (errorMessage != null) { %>
                                 <div class="error"><%= errorMessage %></div>
                                 <% } %>
-                                 <c:set var="user" value="${requestScope.user}" />
+                                <c:set var="user" value="${requestScope.user}" />
                                 <div class="card">
                                     <form action="OwnerController" method="get">
                                         <div class="card-body">

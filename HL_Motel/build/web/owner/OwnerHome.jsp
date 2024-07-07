@@ -21,10 +21,6 @@
         <link rel="stylesheet" href="css/aos.css">
         <link rel="stylesheet" href="css/style.css">
 
-
-
-
-
         <!-- Favicons -->
         <link rel="shortcut icon" href="images/favicon.png">
         <link href="img/apple-touch-icon.png" rel="apple-touch-icon">

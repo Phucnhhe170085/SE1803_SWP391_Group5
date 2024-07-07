@@ -32,8 +32,10 @@ public class RoomDAO extends DBContext {
                 int roomSize = rs.getInt("roomSize");
                 BigDecimal roomFee = rs.getBigDecimal("roomFee");
                 String roomImg = rs.getString("roomImg");
+                int roomStatus = rs.getInt("roomStatus");
+                int roomOccupant = rs.getInt("roomOccupant");
 
-                Rooms room = new Rooms(roomID, roomFloor, roomNumber, roomSize, roomImg, roomFee);
+                Rooms room = new Rooms(roomID, roomFloor, roomNumber, roomSize, roomImg, roomFee, roomStatus, roomOccupant);
                 rooms.add(room);
             }
         } catch (SQLException e) {
@@ -41,11 +43,19 @@ public class RoomDAO extends DBContext {
         return rooms;
     }
 
-    public List<Rooms> pagingRoom(int index) {
+    public List<Rooms> pagingRoom(int index, int flag) {
         List<Rooms> rooms = new ArrayList<>();
-        String query = "select * from room\n"
+        String query = null;
+        if (flag == 0) {
+            query = "select * from room\n"
+                + "where roomStatus = 1\n"
                 + "order by roomID\n"
                 + "OFFSET ? ROWS FETCH NEXT 6 ROWS only";
+        } else if (flag == 1) {
+            query = "select * from room\n"
+                + "order by roomID\n"
+                + "OFFSET ? ROWS FETCH NEXT 6 ROWS only";
+        }        
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, (index - 1) * 6);
@@ -57,8 +67,10 @@ public class RoomDAO extends DBContext {
                 int roomSize = rs.getInt("roomSize");
                 BigDecimal roomFee = rs.getBigDecimal("roomFee");
                 String roomImg = rs.getString("roomImg");
+                int roomStatus = rs.getInt("roomStatus");
+                int roomOccupant = rs.getInt("roomOccupant");
 
-                Rooms room = new Rooms(roomID, roomFloor, roomNumber, roomSize, roomImg, roomFee);
+                Rooms room = new Rooms(roomID, roomFloor, roomNumber, roomSize, roomImg, roomFee, roomStatus, roomOccupant);
                 rooms.add(room);
             }
         } catch (SQLException e) {
@@ -179,16 +191,15 @@ public class RoomDAO extends DBContext {
         } catch (SQLException ex) {
 
         }
-
         return n;
     }
 
     public RoomDetailSe getRoomDetail(int roomid) {
-        String query = "select r.roomID, r.roomFloor, r.roomNumber, r.roomSize, r.roomFee, r.roomImg, "
-                + "i.itemName, i.itemImg, ri.quantity, ri.itemID "
-                + "from room r "
-                + "left join roomItem ri on r.roomID = ri.roomID "
-                + "left join item i on ri.itemID = i.itemID "
+        String query = "select r.roomID, r.roomFloor, r.roomNumber, r.roomSize, r.roomFee, r.roomImg, \n"
+                + "i.itemName, i.itemImg, ri.quantity, ri.itemID\n"
+                + "from room r\n"
+                + "left join roomItem ri on r.roomID = ri.roomID \n"
+                + "left join item i on ri.itemID = i.itemID \n"
                 + "where r.roomID = ?";
 
         RoomDetailSe roomDetail = null;
@@ -307,7 +318,7 @@ public class RoomDAO extends DBContext {
     }
 
     public int getTotalRoom() {
-        String query = "select count(*) from room";
+        String query = "select count(*) from room where roomStatus = 1";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
@@ -322,25 +333,9 @@ public class RoomDAO extends DBContext {
 
     public static void main(String[] args) {
         RoomDAO dao = new RoomDAO();
-        List<Rooms> pagingRoom = dao.pagingRoom(3);
+        List<Rooms> pagingRoom = dao.pagingRoom(1, 1);
         for (Rooms rooms : pagingRoom) {
-            System.out.println(rooms.getRoomNumber());
+            System.out.println(rooms.getRoomID());
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

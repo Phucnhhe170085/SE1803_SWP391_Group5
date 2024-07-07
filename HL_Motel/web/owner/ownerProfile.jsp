@@ -87,19 +87,19 @@
             }
 
             .error-message {
-                background-color: #ffe4e1; /* Màu nền hồng nhạt */
-                border: 1px solid #f5c6cb; /* Viền đỏ */
-                padding: 10px; /* Khoảng cách giữa nội dung và viền */
-                margin-bottom: 20px; /* Khoảng cách với các phần tử khác */
-                border-radius: 5px; /* Bo tròn viền */
+                background-color: #ffe4e1; 
+                border: 1px solid #f5c6cb; 
+                padding: 10px; 
+                margin-bottom: 20px; 
+                border-radius: 5px; 
             }
 
             .error-message h6 {
-                margin-bottom: 0; /* Loại bỏ khoảng cách dưới của tiêu đề */
+                margin-bottom: 0; 
             }
 
             .error-text {
-                color: #dc3545; /* Màu chữ đỏ */
+                color: #dc3545; 
                 font-size: 15px;
             }
 
@@ -136,9 +136,7 @@
                                         <% String base64Image = ownerProfile.getUserAvatar(); %>
                                         <img src="data:image/jpg;base64, <%= base64Image %>" alt="Owner" class="rounded-circle" width="150">
                                         <div class="mt-3">
-                                            <h4>💀</h4>
-                                            <p class="text-secondary mb-1">Cần cù thì bù .....</p>
-                                            <p class="text-muted font-size-sm">A. Siêng năng B.Thông minh</p>
+                                            <p class="text-secondary mb-1">Image</p>
                                         </div>
                                     </div>
                                 </div>

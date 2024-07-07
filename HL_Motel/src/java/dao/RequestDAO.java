@@ -63,7 +63,38 @@ public class RequestDAO extends DBContext {
         }
         return requests;
     }
+        
     
+    public List<RequestList> getAllRequest() {
+    List<RequestList> requests = new ArrayList<>();
+    String sql = "SELECT u.userID, u.userName, r.requestID, r.title, r.description, rt.typeName, r.createAt, r.resStatus "
+               + "FROM request r "
+               + "JOIN [user] u ON r.renterID = u.userID "
+               + "JOIN requestType rt ON r.requestType = rt.reqTypeID";
+    
+    try (PreparedStatement st = connection.prepareStatement(sql);
+         ResultSet rs = st.executeQuery()) {
+        
+        while (rs.next()) {
+            int requestID = rs.getInt("requestID");
+            int uID = rs.getInt("userID");
+            String userName = rs.getString("userName");
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            String typeName = rs.getString("typeName");
+            String createAt = rs.getString("createAt");
+            String resStatus = rs.getString("resStatus");
+
+            RequestList request = new RequestList(requestID, uID, userName, title, description, typeName, createAt, resStatus);
+            requests.add(request);
+        }
+    } catch (SQLException e) {
+        Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, "Failed to fetch all requests", e);
+    }
+    
+    return requests;
+}
+
 
     public boolean insertRequest(int renterID, int requestType, String title, String description, String createAt, String resStatus) {
         String sql = "INSERT INTO request (renterID, requestType, title, description, createAt, resStatus) VALUES (?, ?, ?, ?, ?, ?)";
@@ -143,25 +174,57 @@ public class RequestDAO extends DBContext {
         }
         return request;
     }
-    public static void main(String[] args) {
-        // Example usage to test updateRequest method
-        RequestDAO requestDAO = new RequestDAO();
-
-        // Example values (replace with your actual test values)
-        int requestID = 309;
-        int renterID = 1;
-        int requestType = 1;
-        String title = "BCD";
-        String description = "BCD";
-        String createAt = "2024-06-15 10:00:00"; // Example timestamp
-        String resStatus = "Pending"; // Example status
-
-        boolean updateSuccess = requestDAO.updateRequest(requestID, renterID, requestType, title, description, createAt, resStatus);
-
-        if (updateSuccess) {
-            System.out.println("Request updated successfully.");
-        } else {
-            System.out.println("Failed to update request.");
+     public void updateRequestStatus(String status, int requestId) {
+        String sql = "UPDATE request SET resStatus = ? WHERE requestID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, requestId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, "Failed to update request status", e);
         }
     }
+     
+        public static void main(String[] args) {
+        RequestDAO dao = new RequestDAO();
+        dao.updateRequestStatus( "Denied", 309);
+    }
+     
+//    public static void main(String[] args) {
+//    // Example usage to test updateRequest method
+//        RequestDAO requestDAO = new RequestDAO();
+//        
+//        // Fetch all requests
+//        List<RequestList> list = requestDAO.getAllRequest();
+//        
+//        // Print all requests to verify fetching
+//        System.out.println("Current requests:");
+//        for (RequestList request : list) {
+//            System.out.println(request);
+//        }
+//
+//    }
+//    public static void main(String[] args) {
+//        // Example usage to test updateRequest method
+//        RequestDAO requestDAO = new RequestDAO();
+//
+//        // Example values (replace with your actual test values)
+//        int requestID = 309;
+//        int renterID = 1;
+//        int requestType = 1;
+//        String title = "BCD";
+//        String description = "BCD";
+//        String createAt = "2024-06-15 10:00:00"; // Example timestamp
+//        String resStatus = "Pending"; // Example status
+//
+//        boolean updateSuccess = requestDAO.updateRequest(requestID, renterID, requestType, title, description, createAt, resStatus);
+//
+//        if (updateSuccess) {
+//            System.out.println("Request updated successfully.");
+//        } else {
+//            System.out.println("Failed to update request.");
+//        }
+//    }
+
+   
 }

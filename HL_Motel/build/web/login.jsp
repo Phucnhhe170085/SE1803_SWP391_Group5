@@ -4,6 +4,8 @@
     Author     : yetvv.piacom
 --%>
 
+<% String error = (String) request.getAttribute("error"); %>
+
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -19,6 +21,9 @@
     <body>
         <div class="container1">
             <div class="title">Login</div>
+            <% if (error != null) { %>
+            <h3 style="color: #FF0E0E; margin-top: 20px;"><%= error %></h3>
+            <% } %>
             <h3 style="color: #FF0E0E; margin-top: 20px;">${message}</h3>
             <div class="content">
                 <form id="loginForm" action="login" method="post" onsubmit="return validateRecaptcha();">

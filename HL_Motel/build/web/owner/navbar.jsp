@@ -37,8 +37,10 @@
             <li class="has-children <%= "pagingRoom".equals(service) ? "active" : "" %>">
                 <a href="#">View</a>
                 <ul class="dropdown">
-                    <li><a href="OwnerController?service=pagingRoom&index=1">List of room</a></li>
+                    <li><a href="OwnerController?service=pagingRoom&index=1">List of rooms</a></li>
                     <li><a href="#">Security</a></li>
+                    <li><a href="OwnerController?service=listrequest">List of Request</a></li>
+                    <li><a href="ListRenterController">List of renter</a></li>
                 </ul>
             </li>               
             <li><a href="#">Payment</a></li>
@@ -50,7 +52,7 @@
                     <li><a href="#">News</a></li>
                 </ul>
             </li>
-            <li><a href="login.html">Login</a></li>
+            <li><a href="logout">LogOut</a></li>
             <li>
                 <a href="OwnerController?service=ownerProfile">
                     <img src="images/firefly.jpg" alt="Profile Image" width="30px" height="30px" style="border-radius: 10px;">
