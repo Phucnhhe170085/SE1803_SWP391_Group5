@@ -43,7 +43,8 @@ public class RenterList {
         this.renterStatus = renterStatus;
     }
 
-    public RenterList(String userName, double balance, int roomNumber, int roomFloor) {
+    public RenterList(int roomID, String userName, double balance, int roomNumber, int roomFloor) {
+        this.roomID = roomID;
         this.userName = userName;
         this.balance = balance;
         this.roomNumber = roomNumber;

@@ -310,7 +310,7 @@ public class RenterDAO extends MyDAO {
 
     public List<RenterList> getListRenters() {
         List<RenterList> renters = new ArrayList<>();
-        String sql = "SELECT u.userName, r.roomNumber, r.roomFloor, rt.balance\n"
+        String sql = "SELECT r.roomID, u.userName, r.roomNumber, r.roomFloor, rt.balance\n"
                 + "FROM renter rt \n"
                 + "join room r on rt.roomID = r.roomID\n"
                 + "join [user] u on rt.userID = u.userID";
@@ -318,12 +318,13 @@ public class RenterDAO extends MyDAO {
         try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
+                int roomID = rs.getInt("roomID");
                 String userName = rs.getString("userName");
                 int roomNumber = rs.getInt("roomNumber");
                 int roomFloor = rs.getInt("roomFloor");
                 double balance = rs.getDouble("balance");
                 
-                RenterList renterList = new RenterList(userName, balance, roomNumber, roomFloor);
+                RenterList renterList = new RenterList(roomID, userName, balance, roomNumber, roomFloor);
                 renters.add(renterList);
             }
         } catch (Exception e) {

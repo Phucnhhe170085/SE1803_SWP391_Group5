@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.Security;
+package controller.Security;
 
 import dao.RuleDAO;
 import model.Rule;
@@ -61,7 +61,7 @@ public class RuleServlet extends HttpServlet {
         RuleDAO rule = new RuleDAO();
         List<Rule> listR = rule.getRule();
         request.setAttribute("list", listR);
-        request.getRequestDispatcher("security/Rule.jsp").forward(request, response);
+        request.getRequestDispatcher("Security/Rule.jsp").forward(request, response);
         
         
     } 

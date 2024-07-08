@@ -312,7 +312,7 @@
                                                 <th>Room Number</th>
                                                 <th>Room Floor</th>
                                                 <th>Balance</th>
-                                                <th>See Detail</th>
+                                                <th>Room Fee</th>                                               
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -322,12 +322,15 @@
                                             <td><%= renters.getRoomNumber() %></td>
                                             <td><%= renters.getRoomFloor() %></td>
                                             <td><%= renters.getBalance() %></td>
-                                            <td></td>
+                                            <td>
+                                                <a href="roomfee?roomID=<%= renters.getRoomID() %>">See Detail</a>
+                                            </td>
                                         </tr>
-                                        <%}%>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
                     </div>
                 </div>

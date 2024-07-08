@@ -6,6 +6,7 @@ import java.io.InputStream;
 import model.Rooms;
 import java.lang.System.Logger;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -337,5 +338,104 @@ public class RoomDAO extends DBContext {
         for (Rooms rooms : pagingRoom) {
             System.out.println(rooms.getRoomID());
         }
+    }
+
+     public List<Room> getAllRooms() {
+        List<Room> rooms = new ArrayList<>();
+        String sql = "SELECT * FROM Room"; 
+        
+        try (Connection conn = connection;
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            
+            while (rs.next()) {
+                Room room = new Room();
+                room.setRoomID(rs.getInt("roomID"));
+                room.setRoomFloor(rs.getInt("roomFloor"));
+                room.setRoomNumber(rs.getInt("roomNumber"));
+                room.setRoomSize(rs.getInt("roomSize"));
+                room.setRoomFee(rs.getBigDecimal("roomFee"));
+                
+                room.setRoomImg(rs.getString("roomImg"));
+                
+                
+                rooms.add(room);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return rooms;
+    }
+
+     public List<RoomItem> getRoomDetails(String roomId){
+        List<RoomItem> roomItems = new ArrayList<>();
+
+        
+        String sql = "select ri.itemID,i.itemName,i.itemImg,ri.quantity from roomItem ri join item i on ri.itemID = i.itemID where ri.roomID = ? ";
+        
+        
+        try {java.sql.Connection conn = connection;
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, roomId);
+            
+             ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                RoomItem roomItem = new RoomItem();
+                
+                
+                
+                roomItem.setItemID(rs.getInt("itemID"));
+                roomItem.setQuantity(rs.getInt("quantity"));
+                roomItem.setItemName(rs.getString("itemName"));
+                roomItem.setItemImg(rs.getString("itemImg"));
+                
+                
+                roomItems.add(roomItem);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return roomItems;
+    }
+
+    public Room getRoomDetailByID(int id) {
+        String sql = "SELECT \n"
+                + "    r.roomID,\n"
+                + "    r.roomFloor,\n"
+                + "    r.roomNumber,\n"
+                + "    r.roomSize,\n"
+                + "    r.roomImg,\n"
+                + "    COUNT(re.renterID) AS total\n"
+                + "FROM \n"
+                + "    Room r\n"
+                + "LEFT JOIN \n"
+                + "    Renter re ON r.roomID = re.roomID\n"
+                + "WHERE \n"
+                + "    r.roomID = ?\n"
+                + "GROUP BY \n"
+                + "    r.roomID, r.roomFloor, r.roomNumber, r.roomSize, r.roomImg";
+
+        Room room = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int roomID = rs.getInt("roomID");
+                    int roomFloor = rs.getInt("roomFloor");
+                    int roomNumber = rs.getInt("roomNumber");
+                    int roomSize = rs.getInt("roomSize");
+                    String roomImg = rs.getString("roomImg");
+                    int total = rs.getInt("total");
+                    room = new Room(roomID, roomFloor, roomNumber, roomSize, roomImg, total);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving room details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return room;
     }
 }

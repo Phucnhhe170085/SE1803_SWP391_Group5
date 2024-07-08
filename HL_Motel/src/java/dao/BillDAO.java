@@ -37,7 +37,7 @@ public class BillDAO extends MyDAO {
                 + "    [payAt],\n"
                 + "    ([service] + [electric] + [water] + [roomFee] + [other] + [penMoney]) AS total\n"
                 + "FROM \n"
-                + "    [GreenRoom].[dbo].[bill]\n"
+                + "    [HL_Motel].[dbo].[bill]\n"
                 + "WHERE [roomID] = ?\n"
                 + "ORDER BY \n"
                 + "    [createAt] DESC;";
@@ -76,7 +76,7 @@ public class BillDAO extends MyDAO {
                 + "    [payAt],\n"
                 + "    ([service] + [electric] + [water] + [roomFee] + [other] + [penMoney]) AS total\n"
                 + "FROM \n"
-                + "    [GreenRoom].[dbo].[bill]\n"
+                + "    [HL_Motel].[dbo].[bill]\n"
                 + "WHERE [billID] = ?\n"
                 + "ORDER BY \n"
                 + "    [createAt] DESC;";
@@ -101,7 +101,7 @@ public class BillDAO extends MyDAO {
 
     public boolean addFeeById(int roomID, double service, double electric, double water, double roomFee, double other, double penMoney, String createAt,
             String deadline, String payAt) {
-        String sql = "INSERT INTO [GreenRoom].[dbo].[bill] ([roomID], [service], [electric], [water], [roomFee], [other], [penMoney], [createAt], [deadline], [payAt])\n"
+        String sql = "INSERT INTO [HL_Motel].[dbo].[bill] ([roomID], [service], [electric], [water], [roomFee], [other], [penMoney], [createAt], [deadline], [payAt])\n"
                 + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
 
         try {
@@ -135,7 +135,7 @@ public class BillDAO extends MyDAO {
 
     public boolean updateFeeById(int roomID, double service, double electric, double water, double roomFee, double other, double penMoney,
             String deadline, String payAt) {
-        String sql = "UPDATE [GreenRoom].[dbo].[bill] SET [service] = ?, [electric] = ?, [water] = ?, [roomFee] = ?, [other] = ?, [penMoney] = ?, [deadline] = ?, [payAt] = ? WHERE [roomID] = ?";
+        String sql = "UPDATE [HL_Motel].[dbo].[bill] SET [service] = ?, [electric] = ?, [water] = ?, [roomFee] = ?, [other] = ?, [penMoney] = ?, [deadline] = ?, [payAt] = ? WHERE [roomID] = ?";
 
         try {
             ps = con.prepareStatement(sql);
@@ -166,7 +166,7 @@ public class BillDAO extends MyDAO {
     }
 
     public boolean updateRequestByID(int requestID, int requestType, String title, String description, String creatAt, String resStatus) {
-        String sql = "UPDATE [GreenRoom].[dbo].[request]\n"
+        String sql = "UPDATE [HL_Motel].[dbo].[request]\n"
                 + "SET [requestType] = ?, [title] = ?, [description] = ?, [createAt] = ?, [resStatus] = ?, [reply] = ?\n"
                 + "WHERE [requestID] = ?;";
 
@@ -199,7 +199,7 @@ public class BillDAO extends MyDAO {
     public UsagePrice getEWPrice() {
         String sql = "SELECT  [Electric_Price]\n"
                 + "      ,[Water_Block_Price]\n"
-                + "  FROM [GreenRoom].[dbo].[Usage_Price]";
+                + "  FROM [HL_Motel].[dbo].[usagePrice]";
         try {
             ps = con.prepareStatement(sql);
 
@@ -216,11 +216,60 @@ public class BillDAO extends MyDAO {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        BillDAO dao = new BillDAO();
-        Bill bill = new Bill();
-        boolean result = dao.addFeeById(1, 100000, 100000, 100000, 100000, 100000, 100000, "2022-09-30 00:00:00.000", "2022-09-30 00:00:00.000", null);
-        System.out.println(result);
+    
+        public static void main(String[] args) {
+    BillDAO dao = new BillDAO();
+    
+    // Test parameters
+    int roomID = 1; // Example room ID
+    double service = 200.0;
+    double electric = 150.0;
+    double water = 100.0;
+    double roomFee = 1000.0;
+    double other = 50.0;
+    double penMoney = 25.0;
+    String deadline = "2024-12-31";
+    String payAt = "2024-07-10";
+    
+    // Call updateFeeById method and check the result
+    boolean result = dao.updateFeeById(roomID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
+    
+    if (result) {
+        System.out.println("Fee update successful.");
+    } else {
+        System.out.println("Fee update failed.");
     }
+}
+
+    
+//    public static void main(String[] args) {
+//    BillDAO dao = new BillDAO();
+//    int roomId = 1; // Specify the room ID you want to fetch bills for
+//    List<Bill> bills = dao.getBillByRoomID(roomId);
+//
+//    // Print out the details of each bill
+//    for (Bill bill : bills) {
+//        System.out.println("Bill ID: " + bill.getBillID());
+//        System.out.println("Room ID: " + bill.getRoomID());
+//        System.out.println("Service: " + bill.getService());
+//        System.out.println("Electric: " + bill.getElectric());
+//        System.out.println("Water: " + bill.getWater());
+//        System.out.println("Room Fee: " + bill.getRoomFee());
+//        System.out.println("Other: " + bill.getOther());
+//        System.out.println("Penalty Money: " + bill.getPenMoney());
+//        System.out.println("Total: " + bill.getTotal());
+//        System.out.println("Created At: " + bill.getCreateAt());
+//        System.out.println("Deadline: " + bill.getDeadline());
+//        System.out.println("Paid At: " + bill.getPayAt());
+//        System.out.println("-----------------------------------");
+//    }
+//}
+
+
+//    public static void main(String[] args) {
+//        BillDAO dao = new BillDAO();
+//        Bill bill = new Bill();
+//        boolean result = dao.addFeeById(1, 100000, 100000, 100000, 100000, 100000, 100000, "2022-09-30 00:00:00.000", "2022-09-30 00:00:00.000", null);
+//        System.out.println(result);
+//    }
 }

@@ -62,9 +62,10 @@ public class RoomFeeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String id_raw = request.getParameter("id");
+         String id_raw = request.getParameter("roomID");
          int id = Integer.parseInt(id_raw);
         request.setAttribute("roomID", id);
+
         BillDAO dao = new BillDAO();
         List<Bill> list = dao.getBillByRoomID(id);
         request.setAttribute("billList", list);

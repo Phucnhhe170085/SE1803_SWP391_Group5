@@ -52,7 +52,7 @@ public class OwnerController extends HttpServlet {
         if (email == null) {
             request.setAttribute("error", "You have to login first!!!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
-            return;
+            return;      
         }
         if (service == null) {
             service = "OwnerHome";

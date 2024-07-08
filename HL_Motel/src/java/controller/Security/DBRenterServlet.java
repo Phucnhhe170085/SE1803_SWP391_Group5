@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.Security;
+package controller.Security;
 
 import dao.RenterDAO;
 import model.Renter;
@@ -62,7 +62,7 @@ public class DBRenterServlet extends HttpServlet {
         RenterDAO renterDAO = new RenterDAO();
         List<RenterList> renters = renterDAO.getRenters();
         request.setAttribute("rt", renters);
-        request.getRequestDispatcher("security/renterTable.jsp").forward(request, response);
+        request.getRequestDispatcher("Security/renterTable.jsp").forward(request, response);
         
     } 
 

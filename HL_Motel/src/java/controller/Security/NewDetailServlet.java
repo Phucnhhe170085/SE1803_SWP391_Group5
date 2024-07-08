@@ -62,7 +62,7 @@ public class NewDetailServlet extends HttpServlet {
         String newId = request.getParameter("newId");
         List<News> listR = newDAO.getNewsDetails(newId);
         request.setAttribute("list1", listR);
-        request.getRequestDispatcher("security/newdetail.jsp").forward(request, response);
+        request.getRequestDispatcher("Security/newdetail.jsp").forward(request, response);
         
     } 
 
