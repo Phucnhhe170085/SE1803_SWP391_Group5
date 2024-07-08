@@ -4,6 +4,7 @@
  */
 package dao;
 
+import java.math.BigDecimal;
 import model.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -99,7 +100,7 @@ public class BillDAO extends MyDAO {
         return null;
     }
 
-    public boolean addFeeById(int roomID, double service, double electric, double water, double roomFee, double other, double penMoney, String createAt,
+    public boolean addFeeById(int roomID, double service, double electric, double water, BigDecimal roomFee, double other, double penMoney, String createAt,
             String deadline, String payAt) {
         String sql = "INSERT INTO [HL_Motel].[dbo].[bill] ([roomID], [service], [electric], [water], [roomFee], [other], [penMoney], [createAt], [deadline], [payAt])\n"
                 + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
@@ -107,10 +108,10 @@ public class BillDAO extends MyDAO {
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, roomID);
-            ps.setDouble(2, service);
+           ps.setDouble(2, service);
             ps.setDouble(3, electric);
             ps.setDouble(4, water);
-            ps.setDouble(5, roomFee);
+            ps.setBigDecimal(5, roomFee);
             ps.setDouble(6, other);
             ps.setDouble(7, penMoney);
             ps.setString(8, createAt);
@@ -133,7 +134,7 @@ public class BillDAO extends MyDAO {
 
     }
 
-    public boolean updateFeeById(int roomID, double service, double electric, double water, double roomFee, double other, double penMoney,
+    public boolean updateFeeById(int roomID, double service, double electric, double water, BigDecimal roomFee, double other, double penMoney,
             String deadline, String payAt) {
         String sql = "UPDATE [HL_Motel].[dbo].[bill] SET [service] = ?, [electric] = ?, [water] = ?, [roomFee] = ?, [other] = ?, [penMoney] = ?, [deadline] = ?, [payAt] = ? WHERE [roomID] = ?";
 
@@ -142,7 +143,7 @@ public class BillDAO extends MyDAO {
             ps.setDouble(1, service);
             ps.setDouble(2, electric);
             ps.setDouble(3, water);
-            ps.setDouble(4, roomFee);
+            ps.setBigDecimal(4, roomFee);
             ps.setDouble(5, other);
             ps.setDouble(6, penMoney);
             ps.setString(7, deadline);
@@ -225,15 +226,16 @@ public class BillDAO extends MyDAO {
     double service = 200.0;
     double electric = 150.0;
     double water = 100.0;
-    double roomFee = 1000.0;
+    BigDecimal roomFee = new BigDecimal("1800.00");
     double other = 50.0;
     double penMoney = 25.0;
     String deadline = "2024-12-31";
+    String createAt = "2024-07-08";
     String payAt = "2024-07-10";
     
     // Call updateFeeById method and check the result
-    boolean result = dao.updateFeeById(roomID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
-    
+//    boolean result = dao.updateFeeById(roomID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
+     boolean result = dao.addFeeById(roomID, service, electric, water, roomFee, other, penMoney, createAt, deadline, payAt);
     if (result) {
         System.out.println("Fee update successful.");
     } else {
