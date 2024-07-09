@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class AddRoomFeeControler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -95,32 +96,27 @@ public class AddRoomFeeControler extends HttpServlet {
         String service = request.getParameter("service");
         double serviceM = Double.parseDouble(service);
         HttpSession session = request.getSession();
-        String roomID = session.getAttribute("roomID").toString();
+        String roomID = request.getParameter("roomID");
         int id = Integer.parseInt(roomID);
+//int id = 1;
         RoomDAO dao1 = new RoomDAO();
         Room room = dao1.getRoomDetailByID(id);
-        double roomfee = 0;
-        switch (room.getRoomSize()) {
-            case 1:
-                roomfee = 2500000;
-                break;
-            case 2:
-                roomfee = 3000000;
-                break;
-            case 3:
-                roomfee = 3500000;
-                break;
-            default:
-                break;
-        }
+        BigDecimal roomfee = room.getRoomFee();
         BillDAO dao = new BillDAO();
         UsagePrice price = dao.getEWPrice();
+        
+        
         double eprice = price.getEprice();
         double wprice = price.getWprice();
+        //Lay ve
         String water = request.getParameter("water");
         String electric = request.getParameter("electric");
+        
+        //Thay doi
         double elnum = Double.parseDouble(electric);
         double wnum = Double.parseDouble(water);
+        
+        //Tien dien tien nuoc de insert
         double etotal = eprice * elnum;
         double wtotal = wprice * wnum;
         String other = request.getParameter("other");
@@ -141,17 +137,18 @@ public class AddRoomFeeControler extends HttpServlet {
             String updateMessage = "updateMessage";
             if (success) {
                 request.setAttribute(updateMessage, "Add Successful");
-                response.sendRedirect(request.getContextPath() + "/roomfee?id=" + roomID);
+
+                response.sendRedirect(request.getContextPath() + "/roomfee?roomID=" + id);
                 session.removeAttribute("roomID");
             } else {
                 request.setAttribute(updateMessage, "Failed");
-                response.sendRedirect(request.getContextPath() + "/addroomfee?id="+ roomID);
 
+                response.sendRedirect(request.getContextPath() + "/addroomfee?id=" + id);
             }
         } catch (IOException ex) {
-            response.sendRedirect(request.getContextPath() + "/addroomfee?id="+ roomID);
-
+            response.sendRedirect(request.getContextPath() + "/addroomfee?id=" + id);
         }
+
     }
 
     /**

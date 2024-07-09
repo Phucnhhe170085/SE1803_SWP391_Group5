@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Owner;
+package Controller.Owner;
 
 import dao.BillDAO;
 import dao.RoomDAO;
@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -101,65 +102,55 @@ public class EditRoomFee extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String service = request.getParameter("service");
         double serviceM = Double.parseDouble(service);
+
         HttpSession session = request.getSession();
-        String roomID = null;
-        Object roomIDObj = session.getAttribute("roomID");
-        if (roomIDObj != null) {
-            roomID = roomIDObj.toString();
-        }
-        int id = Integer.parseInt(roomID);
-        RoomDAO dao1 = new RoomDAO();
-        Room room = dao1.getRoomDetailByID(id);
-        double roomfee = 0;
-        //không fix cứng nữa
-        switch (room.getRoomSize()) {
-            case 1:
-                roomfee = 3500000;
-                break;
-            case 2:
-                roomfee = 3000000;
-                break;
-            default:
-                break;
-        }
-        BillDAO dao = new BillDAO();
-        Bill bill = dao.getBillBybillID(id);
-        UsagePrice price = dao.getEWPrice();
+        String billIDStr = session.getAttribute("roomfeeID").toString(); // Assuming this holds billID
+        int billID = Integer.parseInt(billIDStr);
+
+        RoomDAO roomDAO = new RoomDAO();
+        Room room = roomDAO.getRoomDetailByID(billID);
+        BigDecimal roomfee = room.getRoomFee();
+
+        BillDAO billDAO = new BillDAO();
+        Bill bill = billDAO.getBillBybillID(billID);
+        UsagePrice price = billDAO.getEWPrice();
         double eprice = price.getEprice();
         double wprice = price.getWprice();
+
         String water = request.getParameter("water");
         String electric = request.getParameter("electric");
         double elnum = Double.parseDouble(electric);
         double wnum = Double.parseDouble(water);
         double etotal = eprice * elnum;
         double wtotal = wprice * wnum;
+
         String other = request.getParameter("other");
         double otherM = Double.parseDouble(other);
         String pen = request.getParameter("penMoney");
         double penmoney = Double.parseDouble(pen);
-//        String currentdeadline = bill.getDeadline();
+
         String deadlineStr = request.getParameter("deadline");
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        request.setCharacterEncoding("UTF-8");
+
         String updateMessage = "updateMessage";
+
         try {
-            boolean success = dao.updateFeeById(id, serviceM, etotal, wtotal, roomfee, otherM, penmoney, deadlineStr, null);
+            boolean success = billDAO.updateFeeById(billID, serviceM, etotal, wtotal, roomfee, otherM, penmoney, deadlineStr, null);
 
             if (success) {
-                request.setAttribute(updateMessage, "Add Successful");
-                response.sendRedirect(request.getContextPath() + "/roomfee?id=" + roomID);
+                request.setAttribute(updateMessage, "Update Successful");
+                response.sendRedirect(request.getContextPath() + "/roomfee?id=" + billID);
             } else {
-                request.setAttribute(updateMessage, "Failed");
-                response.sendRedirect(request.getContextPath() + "/editroomfee?id=" + roomID);
-
+                request.setAttribute(updateMessage, "Update Failed");
+                response.sendRedirect(request.getContextPath() + "/editroomfee?id=" + billID);
             }
-        } catch (IOException ex) {
-            response.sendRedirect(request.getContextPath() + "/editroomfee?id=" + roomID);
-
+        } catch (NumberFormatException | IOException ex) {
+            System.err.println("Failed to update room fee: " + ex.getMessage());
+            response.sendRedirect(request.getContextPath() + "/editroomfee?id=" + billID);
         }
     }
 

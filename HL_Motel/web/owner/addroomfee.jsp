@@ -51,10 +51,14 @@
         <link rel="icon" href="home-guest/favicon.png">
         <style>
             /*table*/
+
+            .menu-bg-wrap{
+                margin-left: 100px;
+            }
             .btn {
                 margin-top: 10px;
             }
-            
+
             .tabular--wrapper{
                 background: #fff;
                 margin-top: 1rem;
@@ -133,56 +137,49 @@
             <div class="site-mobile-menu-body"></div>
         </div>
 
-        <nav class="site-nav">
-            <div class="container">
-                <div class="menu-bg-wrap">
-                    <div class="site-navigation">
-                        <a href="Homepage.html" class="logo m-0 float-start">HL_Motel</a>
+        <div>
+            <nav class="site-nav" style="width: 85%">
+                <div class="container" >
+                    <div class="menu-bg-wrap">
+                        <div class="site-navigation">
+                            <a href="renterprofile" class="logo m-0 float-start" style="text-decoration: none;">HL_Motel</a>
 
-                        <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-                            <li><a href="Homepage.html">Home</a></li>
-                            <li><a href="manageroom">Room</a></li>
-                            <li><a href="Payment.html">Payment</a></li>
-                            <li class="active"><a href="request">Add Fee</a></li>
-                            <li><a href="Guide.html">Guide</a></li>
-                            <li><a href="News.html">News</a></li>
-                        </ul>
+                            <jsp:include page="navbar.jsp"></jsp:include>
 
-                        <a href="#"
-                           class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
-                           data-toggle="collapse" data-target="#main-navbar">
-                            <span></span>
-                        </a>
+                                <a href="" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
+                                    <span></span>
+                                </a>
 
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+
+            <div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
+
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-9 text-center mt-5">
+                            <h1 class="heading" data-aos="fade-up">Fee</h1>
+
+                            <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+                                <ol class="breadcrumb text-center justify-content-center">
+
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-        </nav>
-
-
-        <div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
-
-            <div class="container">
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-9 text-center mt-5">
-                        <h1 class="heading" data-aos="fade-up">Fee</h1>
-
-                        <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
-                            <ol class="breadcrumb text-center justify-content-center">
-
-                            </ol>
-                        </nav>
+            <section class="ftco-section">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 text-center mb-5">
+                            <h2 class="heading-section">Fee Form</h2>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-       	<section class="ftco-section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 text-center mb-5">
-                        <h2 class="heading-section">Fee Form</h2>
-                    </div>
-                </div>
                 <c:set var="r" value="${requestScope.room}"></c:set>
                     <div class="row justify-content-center">
                         <div class="col-md-12">
@@ -203,34 +200,20 @@
                                                 <tbody>
                                                     <tr>
                                                         <td style="padding: 8px; text-align: center;">${eprice}(VND/Kmw)</td>
-                                                        <td style="padding: 8px; text-align: center;">${wprice}(VND/m3)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                    <td style="padding: 8px; text-align: center;">${wprice}(VND/m3)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
 
-                                            <h3 class="mb-4">Get a fee</h3>
-                                            <form method="POST" action="addroomfee">
-                                                <div class="row">
-                                                    <div class="col-md-6"> 
-                                                        <div class="form-group">
-
-                                                        <c:choose>
-                                                            <c:when test="${r.roomSize}==1">
-                                                                <label class="label" for="subject">Room Small Size: </label>
-                                                                <input type="number" class="form-control positive-number" name="roomFee" id="roomFee" value="2500000" readonly>
-                                                            </c:when>
-                                                            <c:when test="${r.roomSize}==2">
-                                                                <label class="label" for="subject">Room Medium Size: </label>
-                                                                <input type="number" class="form-control positive-number" name="roomFee" id="roomFee" value="3000000" readonly>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <label class="label" for="subject">Room Big Size: </label>
-                                                                <input type="number" class="form-control positive-number" name="roomFee" id="roomFee" value="3500000" readonly>
-                                                            </c:otherwise>
-                                                        </c:choose>
-
-
+                                        <h3 class="mb-4">Get a fee</h3>
+                                        <form method="POST" action="addroomfee">
+                                            <div class="row">
+                                                <div class="col-md-6"> 
+                                                    <div class="form-group">
+                                                        <input type="hidden"  id="roomID" name="roomID" value="<%= request.getParameter("id") %>">
+                                                        <label class="label" for="subject">Room Fee: </label>
+                                                        <input type="number" class="form-control positive-number" name="roomFee" id="roomFee" value="${r.roomFee}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6"> 
@@ -271,7 +254,6 @@
                                                         <a href="roomfee?roomID=${sessionScope.roomID}" style="color:#FFF" class="btn btn-info"><i class="fa-regular fa-rectangle-list"></i>&nbsp;Change my mind</a>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </form>
                                     </div>
