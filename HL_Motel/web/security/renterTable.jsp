@@ -109,7 +109,7 @@
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
                                             
-                                            <th>Balance</th>
+                                
 
                                         </tr>
                                     </thead>
@@ -121,7 +121,7 @@
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
                                            
-                                            <th>Balance</th>
+                            
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -134,7 +134,7 @@
                                             <td>${t.renterStatus}</td>
                                             <td>${t.renterHaveRoom}</td>
                                            
-                                            <td>${t.balance}</td>
+                           
                                             
                                         </tr>
                                     </c:forEach>

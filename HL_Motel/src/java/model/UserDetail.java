@@ -29,6 +29,18 @@ public class UserDetail{
     public UserDetail() {
     }
 
+    public UserDetail(String userName, String userGender, String userBirth, String userAddress, String userPhone,String userMail, String userAvatar) {
+        this.userName = userName;
+        this.userGender = userGender;
+        this.userBirth = userBirth;
+        this.userAddress = userAddress;
+        this.userPhone = userPhone;
+        this.userMail = userMail;
+        this.userAvatar = userAvatar;
+    }
+
+    
+    
     public UserDetail(int userID, String userMail, String userPassword, int userRole, User user, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Renter renter, Room room, Security security, String email) {
         this.userID = userID;
         this.userMail = userMail;

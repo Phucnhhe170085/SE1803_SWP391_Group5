@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller.Owner;
 
 import dao.BillDAO;
@@ -18,36 +14,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author ASUS
+ * Servlet implementation class EditRoomFee
  */
 @WebServlet(name = "EditRoomFee", urlPatterns = {"/editroomfee"})
 public class EditRoomFee extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -60,15 +40,6 @@ public class EditRoomFee extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -77,13 +48,17 @@ public class EditRoomFee extends HttpServlet {
         try {
             int id = Integer.parseInt(id_raw);
             Bill bill = dao1.getBillBybillID(id);
+
             HttpSession session = request.getSession();
-            session.setAttribute("roomfeeID", id);
+            session.setAttribute("billID", id);
+
             RoomDAO dao = new RoomDAO();
             Room room = dao.getRoomDetailByID(id);
+
             UsagePrice price = dao1.getEWPrice();
             double eprice = price.getEprice();
             double wprice = price.getWprice();
+
             request.setAttribute("eprice", eprice);
             request.setAttribute("wprice", wprice);
             request.setAttribute("room", room);
@@ -94,74 +69,30 @@ public class EditRoomFee extends HttpServlet {
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String service = request.getParameter("service");
-        double serviceM = Double.parseDouble(service);
-
-        HttpSession session = request.getSession();
-        String billIDStr = session.getAttribute("roomfeeID").toString(); // Assuming this holds billID
-        int billID = Integer.parseInt(billIDStr);
-
-        RoomDAO roomDAO = new RoomDAO();
-        Room room = roomDAO.getRoomDetailByID(billID);
-        BigDecimal roomfee = room.getRoomFee();
+        int id = Integer.parseInt(request.getSession().getAttribute("billID").toString());
+        double service = Double.parseDouble(request.getParameter("service"));
+        double electric = Double.parseDouble(request.getParameter("electric"));
+        double water = Double.parseDouble(request.getParameter("water"));
+        BigDecimal roomFee = new BigDecimal(request.getParameter("roomFee"));
+        double other = Double.parseDouble(request.getParameter("other"));
+        double penMoney = Double.parseDouble(request.getParameter("penMoney"));
+        String deadline = request.getParameter("deadline");
+        String payAt = request.getParameter("payAt");
 
         BillDAO billDAO = new BillDAO();
-        Bill bill = billDAO.getBillBybillID(billID);
-        UsagePrice price = billDAO.getEWPrice();
-        double eprice = price.getEprice();
-        double wprice = price.getWprice();
 
-        String water = request.getParameter("water");
-        String electric = request.getParameter("electric");
-        double elnum = Double.parseDouble(electric);
-        double wnum = Double.parseDouble(water);
-        double etotal = eprice * elnum;
-        double wtotal = wprice * wnum;
+        boolean success = billDAO.updateFeeById(id, service, electric, water, roomFee, other, penMoney, deadline, payAt);
 
-        String other = request.getParameter("other");
-        double otherM = Double.parseDouble(other);
-        String pen = request.getParameter("penMoney");
-        double penmoney = Double.parseDouble(pen);
-
-        String deadlineStr = request.getParameter("deadline");
-
-        String updateMessage = "updateMessage";
-
-        try {
-            boolean success = billDAO.updateFeeById(billID, serviceM, etotal, wtotal, roomfee, otherM, penmoney, deadlineStr, null);
-
-            if (success) {
-                request.setAttribute(updateMessage, "Update Successful");
-                response.sendRedirect(request.getContextPath() + "/roomfee?id=" + billID);
-            } else {
-                request.setAttribute(updateMessage, "Update Failed");
-                response.sendRedirect(request.getContextPath() + "/editroomfee?id=" + billID);
-            }
-        } catch (NumberFormatException | IOException ex) {
-            System.err.println("Failed to update room fee: " + ex.getMessage());
-            response.sendRedirect(request.getContextPath() + "/editroomfee?id=" + billID);
-        }
+        String updateMessage = success ? "Update Successful" : "Update Failed";
+        request.setAttribute("updateMessage", updateMessage);
+        request.getRequestDispatcher("/Owner/editroomfee.jsp?id=" + id).forward(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

@@ -99,8 +99,6 @@ public class BillDAO extends MyDAO {
         }
         return null;
     }
-    
-    
 
     public boolean addFeeById(int roomID, double service, double electric, double water, BigDecimal roomFee, double other, double penMoney, String createAt,
             String deadline, String payAt) {
@@ -111,7 +109,7 @@ public class BillDAO extends MyDAO {
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, roomID);
-           ps.setDouble(2, service);
+            ps.setDouble(2, service);
             ps.setDouble(3, electric);
             ps.setDouble(4, water);
             ps.setBigDecimal(5, roomFee);
@@ -219,71 +217,30 @@ public class BillDAO extends MyDAO {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
-    BillDAO dao = new BillDAO();
-    UsagePrice u = dao.getEWPrice();
-    
-    if (u != null) {
-        System.out.println("Electric Price: " + u.getEprice());
-        System.out.println("Water Price: " + u.getWprice());
-    } else {
-        System.out.println("No usage prices found.");
-    }
-}
+        BillDAO dao = new BillDAO();
+        int billID = 41; // Example room ID
+        double service = 200.0;
+        double electric = 150.0;
+        double water = 100.0;
+        BigDecimal roomFee = new BigDecimal("9900.00");
+        double other = 50.0;
+        double penMoney = 25.0;
+        String deadline = "2024-12-31";
+        String createAt = "2024-07-08";
+        String payAt = null;
 
-    // Test parameters
-//    int billID = 38; // Example room ID
-//    double service = 200.0;
-//    double electric = 150.0;
-//    double water = 100.0;
-//    BigDecimal roomFee = new BigDecimal("1800.00");
-//    double other = 50.0;
-//    double penMoney = 25.0;
-//    String deadline = "2024-12-31";
-//    String createAt = "2024-07-08";
-//    String payAt = null;
-    
-    // Call updateFeeById method and check the result
-    
-//    boolean result = dao.updateFeeById(billID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
+        //Call updateFeeById method and check the result
+        boolean result = dao.updateFeeById(billID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
 //     boolean result = dao.addFeeById(billID, service, electric, water, roomFee, other, penMoney, createAt, deadline, payAt);
-//    if (result) {
-//        System.out.println("Fee update successful.");
-//    } else {
-//        System.out.println("Fee update failed.");
-//    }
+        if (result) {
+            System.out.println("Fee update successful.");
+        } else {
+            System.out.println("Fee update failed.");
+        }
+    }
+
 }
 
-    
-//    public static void main(String[] args) {
-//    BillDAO dao = new BillDAO();
-//    int roomId = 1; // Specify the room ID you want to fetch bills for
-//    List<Bill> bills = dao.getBillByRoomID(roomId);
-//
-//    // Print out the details of each bill
-//    for (Bill bill : bills) {
-//        System.out.println("Bill ID: " + bill.getBillID());
-//        System.out.println("Room ID: " + bill.getRoomID());
-//        System.out.println("Service: " + bill.getService());
-//        System.out.println("Electric: " + bill.getElectric());
-//        System.out.println("Water: " + bill.getWater());
-//        System.out.println("Room Fee: " + bill.getRoomFee());
-//        System.out.println("Other: " + bill.getOther());
-//        System.out.println("Penalty Money: " + bill.getPenMoney());
-//        System.out.println("Total: " + bill.getTotal());
-//        System.out.println("Created At: " + bill.getCreateAt());
-//        System.out.println("Deadline: " + bill.getDeadline());
-//        System.out.println("Paid At: " + bill.getPayAt());
-//        System.out.println("-----------------------------------");
-//    }
-//}
-
-
-//    public static void main(String[] args) {
-//        BillDAO dao = new BillDAO();
-//        Bill bill = new Bill();
-//        boolean result = dao.addFeeById(1, 100000, 100000, 100000, 100000, 100000, 100000, "2022-09-30 00:00:00.000", "2022-09-30 00:00:00.000", null);
-//        System.out.println(result);
-//    }
 

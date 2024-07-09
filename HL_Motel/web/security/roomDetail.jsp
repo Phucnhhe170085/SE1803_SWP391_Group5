@@ -107,7 +107,7 @@
                                             <th>Item ID</th>
                                             <th>Quantity</th>
                                             <th>Item Name</th>
-                                            <th>Item Img</th>                                          
+                                                                               
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -115,7 +115,7 @@
                                             <th>Item ID</th>
                                             <th>Quantity</th>
                                             <th>Item Name</th>
-                                            <th>Item Img</th>
+                                        
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -124,7 +124,7 @@
                                             <td>${o.itemID}</td>
                                             <td>${o.quantity}></td>
                                             <td>${o.itemName}</td>
-                                            <td><imag src ="${o.itemImg}"></td>
+                                          
                                             
                                         </tr>
                                     </c:forEach>

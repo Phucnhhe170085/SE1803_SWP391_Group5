@@ -15,7 +15,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import javax.mail.Session;
 
 /**
  *
@@ -62,6 +64,9 @@ public class RoomFeeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        HttpSession session = request.getSession();
+//        int billID = Integer.parseInt(request.getParameter("id"));
+//        session.setAttribute("billID", billID);
          String id_raw = request.getParameter("roomID");
          int id = Integer.parseInt(id_raw);
         request.setAttribute("roomID", id);
