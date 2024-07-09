@@ -19,6 +19,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.SecretKey;
+
 
 /**
  *
@@ -82,7 +86,7 @@ public class verifyCode extends HttpServlet {
             return Files.readAllBytes(path);
         } catch (IOException e) {
             e.printStackTrace();
-            
+
             return new byte[0];
         }
     }
