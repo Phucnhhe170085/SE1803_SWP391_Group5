@@ -3,7 +3,7 @@ package controller;
 import model.User;
 import model.Account;
 import model.News;
-import dao.DAORenter;
+import dao.RenterDAO;
 import dao.RenterDAO;
 import java.io.IOException;
 import java.util.List;
@@ -28,7 +28,7 @@ public class RenterHomeController extends HttpServlet {
 
         // Check if the account object exists in the session
         if (account != null) {
-            DAORenter dao1 = new DAORenter();
+            RenterDAO dao1 = new RenterDAO();
             List<News> listN = dao1.getAllNews();
             request.setAttribute("ListN", listN);
 

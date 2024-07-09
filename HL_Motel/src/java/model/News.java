@@ -4,7 +4,7 @@
  */
 package model;
 
-import model.*;
+import java.util.Date;
 
 /**
  *
@@ -12,41 +12,78 @@ import model.*;
  */
 public class News {
 
-    private String userName;
-    private String newsTitle;
-    private String newDes;
+    private int newId;
+    private String newTitle;
+    private String description;
+    private String img;
+    private String createAt;
 
     public News() {
     }
 
-    public News(String userName, String newsTitle, String newDes) {
-        this.userName = userName;
-        this.newsTitle = newsTitle;
-        this.newDes = newDes;
+    public News(int newId, String newTitle, String description) {
+        this.newId = newId;
+        this.newTitle = newTitle;
+        this.description = description;
     }
 
-    public String getUserName() {
-        return userName;
+    
+    
+    public News(int newId, String newTitle, String description, String img, String createAt) {
+        this.newId = newId;
+        this.newTitle = newTitle;
+        this.description = description;
+        this.img = img;
+        this.createAt = createAt;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public int getNewId() {
+        return newId;
     }
 
-    public String getNewsTitle() {
-        return newsTitle;
+    public void setNewId(int newId) {
+        this.newId = newId;
     }
 
-    public void setNewsTitle(String newsTitle) {
-        this.newsTitle = newsTitle;
+    public String getNewTitle() {
+        return newTitle;
     }
 
-    public String getNewDes() {
-        return newDes;
+    public void setNewTitle(String newTitle) {
+        this.newTitle = newTitle;
     }
 
-    public void setNewDes(String newDes) {
-        this.newDes = newDes;
+    public String getDescription() {
+        return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" + "newId=" + newId + ", newTitle=" + newTitle + ", description=" + description + ", img=" + img + ", createAt=" + createAt + '}';
+    }
+
+    
+    
+    
+    
 }

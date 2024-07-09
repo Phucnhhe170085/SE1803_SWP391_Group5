@@ -4,7 +4,6 @@
  */
 package model;
 
-import models.*;
 
 /**
  *
@@ -17,19 +16,17 @@ public class Renter {
     private int roomID;
     private boolean renterStatus;
     private boolean renterHaveRoom;
-    private int CGRScore;
     private double balance;
 
     public Renter() {
     }
 
-    public Renter(int renterID, int userID, int roomID, boolean renterStatus, boolean renterHaveRoom, int CGRScore, double balance) {
+    public Renter(int renterID, int userID, int roomID, boolean renterStatus, boolean renterHaveRoom, double balance) {
         this.renterID = renterID;
         this.userID = userID;
         this.roomID = roomID;
         this.renterStatus = renterStatus;
         this.renterHaveRoom = renterHaveRoom;
-        this.CGRScore = CGRScore;
         this.balance = balance;
     }
 
@@ -75,13 +72,6 @@ public class Renter {
         this.renterHaveRoom = renterHaveRoom;
     }
 
-    public int getCGRScore() {
-        return CGRScore;
-    }
-
-    public void setCGRScore(int CGRScore) {
-        this.CGRScore = CGRScore;
-    }
 
     public double getBalance() {
         return balance;

@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/HL_Motel/src/java/controller/Security/NewDetailServlet.java</file>
+            <file>file:/D:/HL_Motel/src/java/controller/Owner/DisplayNews.java</file>
+            <file>file:/D:/HL_Motel/web/Owner/Addnews.jsp</file>
+            <file>file:/D:/HL_Motel/src/java/controller/OwnerController.java</file>
+            <file>file:/D:/HL_Motel/web/Owner/DisplayNews.jsp</file>
+            <file>file:/D:/HL_Motel/web/Owner/navbar.jsp</file>
+            <file>file:/D:/HL_Motel/web/Owner/OwnerHome.jsp</file>
+            <file>file:/D:/HL_Motel/src/java/controller/Owner/NewsDetail.java</file>
+            <file>file:/D:/HL_Motel/web/Owner/NewsList.jsp</file>
+        </group>
     </open-files>
 </project-private>

@@ -5,7 +5,6 @@
 package model;
 
 
-
 /**
  *
  * @author ASUS
@@ -25,6 +24,13 @@ public class Account {
         this.userRole = userRole;
     }
 
+    public Account(String userMail, String userPassword, int userRole) {
+        this.userMail = userMail;
+        this.userPassword = userPassword;
+        this.userRole = userRole;
+    }
+
+    
     
     public Account(int userID, String userMail, String userPassword, int userRole) {
         this.userID = userID;

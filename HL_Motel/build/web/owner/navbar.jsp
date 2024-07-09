@@ -1,4 +1,4 @@
-<%-- 
+    z<%-- 
     Document   : navbar
     Created on : 25 thg 5, 2024, 15:32:37
     Author     : quocp
@@ -29,25 +29,25 @@
         <link rel="stylesheet" href="../css/aos.css">
         <link rel="stylesheet" href="../css/style.css">
 
-        <title>HoLa Motel</title>
+        <title>Hola Motel</title>
     </head>
     <body>        
         <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
             <li class="<%= (service == null || service.equals("OwnerHome")) ? "active" : "" %>"><a href="OwnerController?service=OwnerHome">Home</a></li>            
-            <li class="has-children <%= "listRoom".equals(service) ? "active" : "" %>">
+            <li class="has-children <%= "pagingRoom".equals(service) ? "active" : "" %>">
                 <a href="#">View</a>
                 <ul class="dropdown">
-                    <li><a href="OwnerController?service=listRoom">List of room</a></li>
+                    <li><a href="OwnerController?service=pagingRoom&index=1">List of room</a></li>
                     <li><a href="#">Security</a></li>
                 </ul>
             </li>               
             <li><a href="#">Payment</a></li>
             <li><a href="#">Renter Management</a></li>
-            <li class="has-children">
+            <li class="dropdown has-children <%=("displayNews".equals(service) || "addnews".equals(service)) ? "active" : "" %>">
                 <a href="#">Manage</a>
-                <ul class="dropdown">
+                <ul class="dropdown" >
                     <li><a href="#">Rule</a></li>
-                    <li><a href="#">News</a></li>
+                    <li><a href="displayNews?service=displayNews">News</a></li>
                 </ul>
             </li>
             <li><a href="login.html">Login</a></li>

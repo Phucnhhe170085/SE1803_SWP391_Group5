@@ -78,9 +78,10 @@ public class ForgotPassword extends HttpServlet {
             });
             try {
                 MimeMessage message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(email));
+                message.setFrom(new InternetAddress(email, "Admin"));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                 message.setSubject("Request to reset password ");
+                message.setText("Please don't share OTP code with anyone, OTP code exist in 5 minute");
                 message.setText("Hi, for security, please verify your account with the OPT below. " 
                         + "Your OTP is ==========> " + randomOtp + ". " + " <========== Click the link to enter otp: " + "http://localhost:8080/HL_Motel/enterotp.jsp");
                 Transport.send(message);

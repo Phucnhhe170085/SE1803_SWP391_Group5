@@ -253,168 +253,150 @@
     </head>
 
     <body>
+        <div class="container">
+            <div class="main-body">
+                <div>
+                    <nav class="site-nav" style="width: 85%">
+                        <div class="container" >
+                            <div class="menu-bg-wrap">
+                                <div class="site-navigation">
+                                    <a href="renterprofile" class="logo m-0 float-start" style="text-decoration: none;">Profile</a>
 
-        <div class="site-mobile-menu site-navbar-target">
-            <div class="site-mobile-menu-header">
-                <div class="site-mobile-menu-close">
-                    <span class="icofont-close js-menu-toggle"></span>
+                                    <jsp:include page="navbar.jsp"></jsp:include>
+
+                                        <a href="" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
+                                            <span></span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+
+
+                    <div class="PaddingMenu" style="background-image: url(''); height: 120px; padding: 40px;">
+                        <!-- Content of PaddingMenu -->
+                    </div>
+                    <!--INSERT PERSONAL INFO-->
+
+
+                    <div class="Avatar">
+                        <h3>Update Profile</h3>         
+                        <center><a href="renterprofile">Back To Profile</a></center>         
+                    </div>
+                    <div class="update-profile">
+                        <form action="renterupdate" method="post">
+                        <c:set var="user" value="${requestScope.user}" />
+
+                        <input type="hidden" name="userID" value="${param.userID}" readonly/><br/>
+
+                        Enter Name: <input type="text" name="userName" value="${user.userName}"/><br/>
+
+                        Enter Gender: 
+                        <div class="gender-radio">
+                            Male: <input type="radio" id="male" name="userGender" value="Male" <c:if test="${user.userGender == 'Male'}">checked</c:if>>
+                            Female: <input type="radio" id="female" name="userGender" value="Female" <c:if test="${user.userGender == 'Female'}">checked</c:if>>
+                            </div>
+
+                            Enter Birth: <input type="text" name="userBirth" value="${user.userBirth}"/><br/>
+                        Enter Address: <input type="text" name="userAddress" value="${user.userAddress}"/><br/>
+
+                        Enter Phone: <input type="text" name="userPhone" value="${user.userPhone}"/><br/>
+
+                        <input type="submit" value="Update"/>
+                    </form>
                 </div>
-            </div>
-            <div class="site-mobile-menu-body"></div>
-        </div>
 
-        <nav class="site-nav">
-            <div class="container">
-                <div class="menu-bg-wrap">
-                    <div class="site-navigation">
-                        <a href="Homepage.html" class="logo m-0 float-start">Property</a>
 
-                        <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-                            <li class="active"><a href="Homepage.html">Home</a></li>
-                            <li class="active"><a href="RoomList.html">Room</a></li>
-                            <li><a href="Payment.html">Payment</a></li>
-                            <li><a href="CustomerList.html">Customer</a></li>
-                            <li><a href="Guide.html">Guide</a></li>
-                            <li><a href="News.html">News</a></li>
-                        </ul>
 
-                        <a href="#"
-                           class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
-                           data-toggle="collapse" data-target="#main-navbar">
-                            <span></span>
-                        </a>
 
+                <div class="site-footer">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="widget">
+                                    <h3>Contact</h3>
+                                    <address>43 Raymouth Rd. Baltemoer, London 3910</address>
+                                    <ul class="list-unstyled links">
+                                        <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
+                                        <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
+                                        <li><a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /.widget -->
+                            </div>
+                            <!-- /.col-lg-4 -->
+                            <div class="col-lg-4">
+                                <div class="widget">
+                                    <h3>Sources</h3>
+                                    <ul class="list-unstyled float-start links">
+                                        <li><a href="#">About us</a></li>
+                                        <li><a href="#">Services</a></li>
+                                        <li><a href="#">Vision</a></li>
+                                        <li><a href="#">Mission</a></li>
+                                        <li><a href="#">Terms</a></li>
+                                        <li><a href="#">Privacy</a></li>
+                                    </ul>
+                                    <ul class="list-unstyled float-start links">
+                                        <li><a href="#">Partners</a></li>
+                                        <li><a href="#">Business</a></li>
+                                        <li><a href="#">Careers</a></li>
+                                        <li><a href="#">Blog</a></li>
+                                        <li><a href="#">FAQ</a></li>
+                                        <li><a href="#">Creative</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /.widget -->
+                            </div>
+                            <!-- /.col-lg-4 -->
+                            <div class="col-lg-4">
+                                <div class="widget">
+                                    <h3>Links</h3>
+                                    <ul class="list-unstyled links">
+                                        <li><a href="#">Our Vision</a></li>
+                                        <li><a href="#">About us</a></li>
+                                        <li><a href="#">Contact us</a></li>
+                                    </ul>
+
+                                    <ul class="list-unstyled social">
+                                        <li><a href="#"><span class="icon-instagram"></span></a></li>
+                                        <li><a href="#"><span class="icon-twitter"></span></a></li>
+                                        <li><a href="#"><span class="icon-facebook"></span></a></li>
+                                        <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                                        <li><a href="#"><span class="icon-pinterest"></span></a></li>
+                                        <li><a href="#"><span class="icon-dribbble"></span></a></li>
+                                    </ul>
+                                </div>
+                                <!-- /.widget -->
+                            </div>
+                            <!-- /.col-lg-4 -->
+                        </div>
+                        <!-- /.row -->
+
+
+                    </div>
+                    <!-- /.container -->
+                </div>
+                <!-- /.site-footer -->
+
+
+                <!-- Preloader -->
+                <div id="overlayer"></div>
+                <div class="loader">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-            </div>
-        </nav>
-
-        <div class="PaddingMenu" style="background-image: url(''); height: 120px; padding: 40px;">
-            <!-- Content of PaddingMenu -->
-        </div>
-        <!--INSERT PERSONAL INFO-->
 
 
-        <div class="Avatar">
-            <h3>Update Profile</h3>         
-            <center><a href="renterprofile">Back To Profile</a></center>         
-        </div>
-        <div class="update-profile">
-            <form action="renterupdate" method="post">
-                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
-                <% if (errorMessage != null) { %>
-                <div class="error"><%= errorMessage %></div>
-                <% } %>
-                <c:set var="user" value="${requestScope.user}" />
+                <script src="js/bootstrap.bundle.min.js"></script>
+                <script src="js/tiny-slider.js"></script>
+                <script src="js/aos.js"></script>
+                <script src="js/navbar.js"></script>
+                <script src="js/counter.js"></script>
+                <script src="js/custom.js"></script>
+                </body>
 
-                <input type="hidden" name="userID" value="${param.userID}" readonly/><br/>
-
-                Enter Name: <input type="text" name="userName" value="${user.userName}"/><br/>
-
-                Enter Gender: 
-                <div class="gender-radio">
-                    Male: <input type="radio" id="male" name="userGender" value="Male" <c:if test="${user.userGender == 'Male'}">checked</c:if>>
-                    Female: <input type="radio" id="female" name="userGender" value="Female" <c:if test="${user.userGender == 'Female'}">checked</c:if>>
-                    </div>
-
-                    Enter Birth: <input type="text" name="userBirth" value="${user.userBirth}"/><br/>
-                Enter Address: <input type="text" name="userAddress" value="${user.userAddress}"/><br/>
-
-                Enter Phone: <input type="text" name="userPhone" value="${user.userPhone}"/><br/>
-
-                <input type="submit" value="Update"/>
-            </form>
-        </div>
-
-
-
-
-        <div class="site-footer">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="widget">
-                            <h3>Contact</h3>
-                            <address>43 Raymouth Rd. Baltemoer, London 3910</address>
-                            <ul class="list-unstyled links">
-                                <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-                                <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-                                <li><a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
-                            </ul>
-                        </div>
-                        <!-- /.widget -->
-                    </div>
-                    <!-- /.col-lg-4 -->
-                    <div class="col-lg-4">
-                        <div class="widget">
-                            <h3>Sources</h3>
-                            <ul class="list-unstyled float-start links">
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Vision</a></li>
-                                <li><a href="#">Mission</a></li>
-                                <li><a href="#">Terms</a></li>
-                                <li><a href="#">Privacy</a></li>
-                            </ul>
-                            <ul class="list-unstyled float-start links">
-                                <li><a href="#">Partners</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Creative</a></li>
-                            </ul>
-                        </div>
-                        <!-- /.widget -->
-                    </div>
-                    <!-- /.col-lg-4 -->
-                    <div class="col-lg-4">
-                        <div class="widget">
-                            <h3>Links</h3>
-                            <ul class="list-unstyled links">
-                                <li><a href="#">Our Vision</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Contact us</a></li>
-                            </ul>
-
-                            <ul class="list-unstyled social">
-                                <li><a href="#"><span class="icon-instagram"></span></a></li>
-                                <li><a href="#"><span class="icon-twitter"></span></a></li>
-                                <li><a href="#"><span class="icon-facebook"></span></a></li>
-                                <li><a href="#"><span class="icon-linkedin"></span></a></li>
-                                <li><a href="#"><span class="icon-pinterest"></span></a></li>
-                                <li><a href="#"><span class="icon-dribbble"></span></a></li>
-                            </ul>
-                        </div>
-                        <!-- /.widget -->
-                    </div>
-                    <!-- /.col-lg-4 -->
-                </div>
-                <!-- /.row -->
-
-
-            </div>
-            <!-- /.container -->
-        </div>
-        <!-- /.site-footer -->
-
-
-        <!-- Preloader -->
-        <div id="overlayer"></div>
-        <div class="loader">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-
-
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/tiny-slider.js"></script>
-        <script src="js/aos.js"></script>
-        <script src="js/navbar.js"></script>
-        <script src="js/counter.js"></script>
-        <script src="js/custom.js"></script>
-    </body>
-
-</html>
+                </html>
