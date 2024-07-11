@@ -146,6 +146,25 @@ public class PenaltyDAO extends DBContext {
         return penalty;
     }
     
+     public ArrayList<Penalty> findByRuleId(int ruleId) {
+        ArrayList<Penalty> penaltys = new ArrayList<>();
+        try {
+            String sql = "select * from penalty where ruleID = ?";
+            PreparedStatement ps;
+            ResultSet rs;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, ruleId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                penaltys.add(toPenalty(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PenaltyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return penaltys;
+    }
+    
     public static void main(String[] args) {
         PenaltyDAO dbPenaltyDAO = new PenaltyDAO();
         System.out.println(dbPenaltyDAO.findAll().toString());

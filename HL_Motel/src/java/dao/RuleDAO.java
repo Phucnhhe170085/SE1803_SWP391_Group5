@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.GuideLine;
@@ -54,6 +55,59 @@ public class RuleDAO extends DBContext {
             Logger.getLogger(RuleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public void create(Rule rule) {
+        try {
+            String sql = "insert into [Rule](ruleName, img, scoreChange, penMoney) values (?,?,?,?)";
+            PreparedStatement ps;
+            ResultSet rs;
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, rule.getRuleName());
+            ps.setString(2, rule.getImg());
+            ps.setInt(3, rule.getScoreChange());
+            ps.setDouble(4, rule.getPenMoney());
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RuleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void update(Rule rule) {
+        try {
+            String sql = "update [Rule] set ruleName = ?, img = ? , scoreChange = ?, penMoney = ? where ruleID = ?";
+            PreparedStatement ps;
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, rule.getRuleName());
+            ps.setString(2, rule.getImg());
+            ps.setInt(3, rule.getScoreChange());
+            ps.setDouble(4, rule.getPenMoney());
+            ps.setInt(5, rule.getRuleID());
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RuleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteRule(int ruleId) {
+        try {
+            String sql = "delete from [Rule] where ruleID = ?";
+            PreparedStatement ps;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, ruleId);
+            
+            PenaltyDAO dbPenalty = new PenaltyDAO();
+            List<Penalty> penaltys = dbPenalty.findByRuleId(ruleId);
+            for (Penalty penalty : penaltys) {
+                dbPenalty.remove(penalty.getPenID());
+            }
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RuleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Rule toRule(ResultSet rs) throws SQLException {
