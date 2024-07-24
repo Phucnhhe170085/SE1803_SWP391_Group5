@@ -4,66 +4,54 @@
  */
 package model;
 
-import java.util.Date;
+import model.*;
+import java.sql.Date;
 
 /**
  *
  * @author Admin
  */
 public class Penalty {
-    private int penId;
-    private int reportId;
-    private int accuseId;
-    private int roomId;
+
+    private int penID;
+    private Room roomID;
     private String description;
     private Date penDate;
-    private int ruleId;
-    public boolean penStatus;
+    private Rule ruleID;
+    private int penStatus;
+    private String evidenceImg;
 
     public Penalty() {
+        
+        
     }
 
-    public Penalty(int penId, int reportId, int accuseId, int roomId, String description, Date penDate, int ruleId, boolean penStatus) {
-        this.penId = penId;
-        this.reportId = reportId;
-        this.accuseId = accuseId;
-        this.roomId = roomId;
+    public Penalty(int penID, Room roomID, String description, Date penDate, Rule ruleID, int penStatus, String evidenceImg) {
+        this.penID = penID;
+        this.roomID = roomID;
         this.description = description;
         this.penDate = penDate;
-        this.ruleId = ruleId;
+        this.ruleID = ruleID;
         this.penStatus = penStatus;
+        this.evidenceImg = evidenceImg;
     }
 
-    public int getPenId() {
-        return penId;
+    
+    
+    public int getPenID() {
+        return penID;
     }
 
-    public void setPenId(int penId) {
-        this.penId = penId;
+    public void setPenID(int penID) {
+        this.penID = penID;
     }
 
-    public int getReportId() {
-        return reportId;
+    public Room getRoomID() {
+        return roomID;
     }
 
-    public void setReportId(int reportId) {
-        this.reportId = reportId;
-    }
-
-    public int getAccuseId() {
-        return accuseId;
-    }
-
-    public void setAccuseId(int accuseId) {
-        this.accuseId = accuseId;
-    }
-
-    public int getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setRoomID(Room roomID) {
+        this.roomID = roomID;
     }
 
     public String getDescription() {
@@ -82,20 +70,28 @@ public class Penalty {
         this.penDate = penDate;
     }
 
-    public int getRuleId() {
-        return ruleId;
+    public Rule getRuleID() {
+        return ruleID;
     }
 
-    public void setRuleId(int ruleId) {
-        this.ruleId = ruleId;
+    public void setRuleID(Rule ruleID) {
+        this.ruleID = ruleID;
     }
 
-    public boolean isPenStatus() {
+    public int getPenStatus() {
         return penStatus;
     }
 
-    public void setPenStatus(boolean penStatus) {
+    public void setPenStatus(int penStatus) {
         this.penStatus = penStatus;
     }
-    
+
+    public String getEvidenceImg() {
+        return evidenceImg;
+    }
+
+    public void setEvidenceImg(String evidenceImg) {
+        this.evidenceImg = evidenceImg;
+    }
+
 }

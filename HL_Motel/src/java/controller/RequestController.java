@@ -1,4 +1,4 @@
-package controller;
+package controller.Renter;
 
 import dao.RequestDAO;
 import model.Account;
@@ -50,57 +50,57 @@ public class RequestController extends HttpServlet {
         request.getRequestDispatcher("Renter/contact.jsp").forward(request, response);
     }
 
-   @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    String action = request.getParameter("action");
-
-    if (action != null && action.equals("delete")) {
-        int requestId = Integer.parseInt(request.getParameter("id"));
-        boolean deleteSuccess = requestDAO.deleteRequest(requestId);
-
-        if (deleteSuccess) {
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Request deleted successfully.");
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Failed to delete request.");
-        }
-
-        // Redirect to avoid resubmission on refresh
-        response.sendRedirect(request.getContextPath() + "/request");
-        return;
-    } else {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("user");
+        int userID = (int) session.getAttribute("userID");
+        if (action != null && action.equals("delete")) {
+            int requestId = Integer.parseInt(request.getParameter("id"));
+            boolean deleteSuccess = requestDAO.deleteRequest(requestId);
 
-        if (account == null) {
-            session.setAttribute("message", "User not logged in.");
-            response.sendRedirect(request.getContextPath() + "/Renter/contact.jsp");
+            if (deleteSuccess) {
+
+                session.setAttribute("message", "Request deleted successfully.");
+            } else {
+
+                session.setAttribute("message", "Failed to delete request.");
+            }
+
+            // Redirect to avoid resubmission on refresh
+            response.sendRedirect(request.getContextPath() + "/request");
+            return;
+        } else {
+
+            Account account = (Account) session.getAttribute("user");
+
+            if (account == null) {
+                session.setAttribute("message", "User not logged in.");
+                response.sendRedirect(request.getContextPath() + "/Renter/contact.jsp");
+                return;
+            }
+
+            int renterID = account.getUserID();
+            int requestType = Integer.parseInt(request.getParameter("requestType"));
+            String title = request.getParameter("title");
+            String description = request.getParameter("description");
+            String createAt = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            String resStatus = "Pending"; // Default value
+
+            boolean insertSuccess = requestDAO.insertRequest(userID, requestType, title, description, createAt, resStatus);
+
+            if (insertSuccess) {
+                session.setAttribute("message", "Request sent to Owner.");
+            } else {
+                session.setAttribute("message", "Failed to insert request.");
+            }
+
+            // Redirect to avoid resubmission on refresh
+            response.sendRedirect(request.getContextPath() + "/request");
             return;
         }
-
-        int renterID = account.getUserID();
-        int requestType = Integer.parseInt(request.getParameter("requestType"));
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String createAt = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        String resStatus = "Pending"; // Default value
-
-        boolean insertSuccess = requestDAO.insertRequest(renterID, requestType, title, description, createAt, resStatus);
-
-        if (insertSuccess) {
-            session.setAttribute("message", "Request sent to Owner.");
-        } else {
-            session.setAttribute("message", "Failed to insert request.");
-        }
-
-        // Redirect to avoid resubmission on refresh
-        response.sendRedirect(request.getContextPath() + "/request");
-        return;
     }
-}
-
 
     @Override
     public String getServletInfo() {

@@ -119,8 +119,7 @@
                                             <td>${o.newId}</td>
                                             <td>${o.newTitle}</td>
                                             <td>${o.createAt}</td>                                            
-                                            <th><a href="newdetail?newId=${o.newId}"><i class="fas fa-eye"></i></a></th>
-                                            
+                                            <th> <a href="newdetail?newId=${o.newId}"><i class="fas fa-eye"></i></a> </th>
                                         </tr>
                                     </c:forEach>
                                     

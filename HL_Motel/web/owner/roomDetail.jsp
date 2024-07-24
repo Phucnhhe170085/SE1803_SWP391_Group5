@@ -82,7 +82,7 @@
 
                             <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                                 <ol class="breadcrumb text-center justify-content-center">
-                                    <li class="breadcrumb-item "><a href="OwnerHome.jsp">Home</a></li>                               
+                                    <li class="breadcrumb-item "><a href="OwnerController?service=OwnerHome">Home</a></li>                               
                                 </ol>
                             </nav>
 

@@ -192,6 +192,7 @@
                                     <input type="hidden" name="roomID" value="<%= roomDetail.getRoomID() %>">
                                     <input type="hidden" name="amount" value="<%= formattedFeeTotal %>">
                                     <input type="hidden" name="userID" value="<%= userID %>">
+                                    <input type="hidden" name="flag" value="1">
                                     <div class="payment-options">
                                         <button type="submit" name="paymentMethod" value="cash">Pay with Cash</button>
                                         <button type="submit" name="paymentMethod" value="online">Pay Online</button>

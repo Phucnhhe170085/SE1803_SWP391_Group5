@@ -220,25 +220,29 @@ public class BillDAO extends MyDAO {
 
     public static void main(String[] args) {
         BillDAO dao = new BillDAO();
-        int billID = 41; // Example room ID
-        double service = 200.0;
-        double electric = 150.0;
-        double water = 100.0;
-        BigDecimal roomFee = new BigDecimal("9900.00");
-        double other = 50.0;
-        double penMoney = 25.0;
-        String deadline = "2024-12-31";
-        String createAt = "2024-07-08";
-        String payAt = null;
+//        int billID = 41; // Example room ID
+//        double service = 200.0;
+//        double electric = 150.0;
+//        double water = 100.0;
+//        BigDecimal roomFee = new BigDecimal("9900.00");
+//        double other = 50.0;
+//        double penMoney = 25.0;
+//        String deadline = "2024-12-31";
+//        String createAt = "2024-07-08";
+//        String payAt = null;
+//
+//        //Call updateFeeById method and check the result
+//        boolean result = dao.updateFeeById(billID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
+////     boolean result = dao.addFeeById(billID, service, electric, water, roomFee, other, penMoney, createAt, deadline, payAt);
+//        if (result) {
+//            System.out.println("Fee update successful.");
+//        } else {
+//            System.out.println("Fee update failed.");
+//        }
 
-        //Call updateFeeById method and check the result
-        boolean result = dao.updateFeeById(billID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
-//     boolean result = dao.addFeeById(billID, service, electric, water, roomFee, other, penMoney, createAt, deadline, payAt);
-        if (result) {
-            System.out.println("Fee update successful.");
-        } else {
-            System.out.println("Fee update failed.");
-        }
+        UsagePrice price = dao.getEWPrice();
+        
+        System.out.println(price.getWprice());
     }
 
 }

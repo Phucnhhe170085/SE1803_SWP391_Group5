@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.net.URLEncoder;
 import model.Account;
 import model.User;
 import java.nio.file.Path;
@@ -66,18 +67,21 @@ public class verifyCode extends HttpServlet {
             long timeElapsed = (currentTime - codeGeneratedTime) / 1000;
 
             if (timeElapsed > 120) {
-                response.getWriter().println("Mã xác nhận đã hết hạn.");
+                request.setAttribute("message","Verification code expired");
+                request.getRequestDispatcher("verifyCode.jsp").forward(request, response);
             } else if (authCode.equals(code)) {
                 int addAccount = dao.addAccount(new Account(email, password, 1));
                 int addUser = dao.addUser(new User(addAccount, username, gender, dob,
                         address, phone, userAvatar), addAccount);
                 session.removeAttribute("authCode");
-                response.sendRedirect("login.jsp");
+                request.setAttribute("error", "Successful account registration");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-                response.getWriter().println("Mã xác nhận không chính xác.");
+                request.setAttribute("message", "Confirmation code is incorrect");
+                request.getRequestDispatcher("verifyCode.jsp").forward(request, response);
             }
         } else {
-            response.getWriter().println("Không tìm thấy mã xác nhận. Vui lòng thử lại.");
+            response.getWriter().println("Confirmation code not found. Please try again.");
         }
     }
 

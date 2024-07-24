@@ -1,3 +1,5 @@
+
+<% String message = (String) request.getParameter("message"); %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -70,7 +72,9 @@
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWxaKG6HL-_z88M5D0-zeXZjQHqN33XNtYmA&usqp=CAU" alt="Response Image">
             <div class="text-notice">Check your email for the OTP</div>
             <div class="otp-text">
-                <% if(request.getAttribute("message")!=null) { out.print(request.getAttribute("message")+"</p>"); } %>
+                <% if(message != null) { %>
+                <h3 id="message" style="color: #FF0E0E; margin-top: 20px;"><%= message %></h3> 
+                <% } %>
             </div>
             <form id="register-form" action="verifyCode" class="form" method="post">
                 <div class="otp-value">

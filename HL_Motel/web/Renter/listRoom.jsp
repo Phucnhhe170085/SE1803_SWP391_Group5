@@ -389,14 +389,6 @@
                                 <li><a href="#">Terms</a></li>
                                 <li><a href="#">Privacy</a></li>
                             </ul>
-                            <ul class="list-unstyled float-start links">
-                                <li><a href="#">Partners</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Creative</a></li>
-                            </ul>
                         </div> <!-- /.widget -->
                     </div> <!-- /.col-lg-4 -->
                     <div class="col-lg-4">

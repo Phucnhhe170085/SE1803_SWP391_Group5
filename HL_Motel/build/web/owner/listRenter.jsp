@@ -261,7 +261,7 @@
             <div class="container">
                 <div class="menu-bg-wrap">
                     <div class="site-navigation">
-                        <a href="OwnerHome.jsp" class="logo m-0 float-start">Room</a>
+                        <a href="#" class="logo m-0 float-start">Room</a>
 
                         <jsp:include page = "navbar.jsp"></jsp:include>
 
@@ -318,7 +318,7 @@
                                         <tbody>
                                         <% for (RenterList renters : listRenter) { %>
                                         <tr class="property-content">
-                                            <td><%= renters.getUserName() %></td>
+                                            <td><a href="ViewRenterProfileController?renterID=<%= renters.getUserID() %>"><%= renters.getUserName() %></a></td>
                                             <td><%= renters.getRoomNumber() %></td>
                                             <td><%= renters.getRoomFloor() %></td>
                                             <td><%= renters.getBalance() %></td>

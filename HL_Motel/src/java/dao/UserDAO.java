@@ -47,6 +47,8 @@ public class UserDAO extends MyDAO {
         }
         return list;
     }
+    
+    
 
 //    //list Renter information detail
 //    public List<User> getRenterDetail(int id) {

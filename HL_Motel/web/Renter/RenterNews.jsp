@@ -148,16 +148,9 @@
             <div class="container">
                 <div class="menu-bg-wrap">
                     <div class="site-navigation">
-                        <a href="Homepage.html" class="logo m-0 float-start">Property</a>
+                        <a href="rentercontroller?service=renterhome" class="logo m-0 float-start">News</a>
 
-                        <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-                            <li class="active"><a href="Homepage.html">Home</a></li>
-                            <li class="active"><a href="RoomList.html">Room</a></li>
-                            <li><a href="Payment.html">Payment</a></li>
-                            <li><a href="CustomerList.html">Customer</a></li>
-                            <li><a href="Guide.html">Guide</a></li>
-                            <li><a href="News.html">News</a></li>
-                        </ul>
+                        <jsp:include page = "navbar.jsp"></jsp:include>
 
                         <a href="#"
                            class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"

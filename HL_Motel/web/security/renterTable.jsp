@@ -109,7 +109,7 @@
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
                                             
-                                
+                                            
 
                                         </tr>
                                     </thead>
@@ -118,10 +118,12 @@
                                             <th>Renter Name</th>
                                             <th>Gender</th>
                                             <th>Room ID</th>
+                                            
                                             <th>Renter Status</th>
+                                            
                                             <th>Renter Have Room</th>
                                            
-                            
+                                            
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -131,10 +133,23 @@
                                             <td>${t.userName}</td>
                                             <td>${t.userGender}</td>
                                             <td>${t.roomID}</td>
-                                            <td>${t.renterStatus}</td>
+                                            
+                                            
+                                            <c:choose>
+                                                    <c:when test="${t.renterStatus == true}">
+                                                        <td>Online</td>
+                                                    </c:when>
+                                                    <c:when test="${t.renterStatus == false}">
+                                                        <td>Offline</td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td>Hanging</td>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            
                                             <td>${t.renterHaveRoom}</td>
                                            
-                           
+                                            
                                             
                                         </tr>
                                     </c:forEach>

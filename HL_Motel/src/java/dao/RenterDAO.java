@@ -18,6 +18,7 @@ import model.UserDetail;
 import model.Renter;
 import model.RenterList;
 import java.sql.CallableStatement;
+import model.RentDetail;
 
 /**
  * Data Access Object for Renter-related operations.
@@ -36,7 +37,7 @@ public class RenterDAO extends MyDAO {
                 + "    u.userID, u.userName, u.userGender, u.userBirth, u.userAddress, u.userPhone, u.userAvatar, "
                 + "    r.renterID, r.roomID, r.renterStatus, r.renterHaveRoom, r.balance, "
                 + "    a.userMail, a.userPassword, "
-                + "    rm.roomFloor, rm.roomNumber, rm.roomFee "
+                + "    rm.roomFloor, rm.roomNumber, rm.roomFee  "
                 + "FROM "
                 + "    \"user\" u "
                 + "JOIN "
@@ -83,6 +84,62 @@ public class RenterDAO extends MyDAO {
         }
         return list;
     }
+    
+    // ve sua lai
+    
+    public List<Renter> getRenterDetail(String accountInput, String passwordInput) {
+        List<Renter> list = new ArrayList<>();
+        String sql = "SELECT DISTINCT "
+                + "    u.userID, u.userName, u.userGender, u.userBirth, u.userAddress, u.userPhone, u.userAvatar, "
+                + "    r.renterID, r.roomID, r.renterStatus, r.renterHaveRoom, r.balance, "
+                + "    a.userMail, a.userPassword, "
+                + "    rm.roomFloor, rm.roomNumber, rm.roomFee  "
+                + "FROM "
+                + "    \"user\" u "
+                + "JOIN "
+                + "    renter r ON u.userID = r.userID "
+                + "JOIN "
+                + "    account a ON u.userID = a.userID "
+                + "LEFT JOIN "
+                + "    room rm ON r.roomID = rm.roomID "
+                + "WHERE "
+                + "    a.userMail = ? AND a.userPassword = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, accountInput);
+            ps.setString(2, passwordInput);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int userID = rs.getInt(1);
+                    String userName = rs.getString(2);
+                    String userGender = rs.getString(3);
+                    String userBirth = rs.getString(4);
+                    String userAddress = rs.getString(5);
+                    String userPhone = rs.getString(6);
+                    String userAvatar = rs.getString(7);
+                    int renterID = rs.getInt(8);
+                    int roomID = rs.getInt(9);
+                    boolean renterStatus = rs.getBoolean(10);
+                    boolean renterHaveRoom = rs.getBoolean(11);
+                    double balance = rs.getDouble(12);
+                    String userMail = rs.getString(13);
+                    String userPassword = rs.getString(14);
+                    int roomFloor = rs.getInt(15);
+                    String roomNumber = rs.getString(16);
+                    BigDecimal roomFee = rs.getBigDecimal(17);
+
+                    Account account = new Account(userID, userMail, userPassword, 1);
+                    Renter renter = new Renter(renterID, userID, roomID, renterStatus, renterHaveRoom, balance);
+                    Room room = new Room(roomID, roomFloor, roomFloor, roomID, roomFee);
+                    User user = new User(userID, userName, userGender, userBirth, userAddress, userPhone, userAvatar, account, renter, room);
+                    list.add(renter);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Fail: " + e.getMessage());
+        }
+        return list;
+    }
 
     // Change password for a user
     public boolean changePassword(String accountInput, String oldPassword, String newPassword) {
@@ -111,7 +168,7 @@ public class RenterDAO extends MyDAO {
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new News(rs.getString(1),
+                list.add(new News(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3)));
             }
@@ -275,6 +332,8 @@ public class RenterDAO extends MyDAO {
         }
         return userDetail;
     }
+    
+    
 
     //ThienAnh RenterDAO
     public List<RenterList> getRenters() {
@@ -310,7 +369,7 @@ public class RenterDAO extends MyDAO {
 
     public List<RenterList> getListRenters() {
         List<RenterList> renters = new ArrayList<>();
-        String sql = "SELECT r.roomID, u.userName, r.roomNumber, r.roomFloor, rt.balance\n"
+        String sql = "SELECT r.roomID, u.userName, r.roomNumber, r.roomFloor, rt.balance, u.userID\n"
                 + "FROM renter rt \n"
                 + "join room r on rt.roomID = r.roomID\n"
                 + "join [user] u on rt.userID = u.userID";
@@ -323,8 +382,10 @@ public class RenterDAO extends MyDAO {
                 int roomNumber = rs.getInt("roomNumber");
                 int roomFloor = rs.getInt("roomFloor");
                 double balance = rs.getDouble("balance");
+                int userID = rs.getInt("userID");
                 
-                RenterList renterList = new RenterList(roomID, userName, balance, roomNumber, roomFloor);
+                RenterList renterList = new RenterList(roomID, userName, balance, 
+                        roomNumber, roomFloor, userID);
                 renters.add(renterList);
             }
         } catch (Exception e) {
@@ -425,13 +486,51 @@ public class RenterDAO extends MyDAO {
         }
         return n;
     }
+    
+    public List<RentDetail> rentDetail(int renterID) {
+        List<RentDetail> rentDetails = new ArrayList<>();
+        String sql = "SELECT "
+                + "    r.roomID, r.roomFloor, r.roomNumber, r.roomSize, r.roomFee, r.roomImg, "
+                + "    re.userID, re.renterStatus, re.renterHaveRoom, re.balance "
+                + "FROM "
+                + "    room r "
+                + "LEFT JOIN "
+                + "    renter re ON r.roomID = re.roomID "
+                + "WHERE "
+                + "    re.userID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, renterID);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int roomId = rs.getInt("roomID");
+                    int roomFloor = rs.getInt("roomFloor");
+                    int roomNumber = rs.getInt("roomNumber");
+                    int roomSize = rs.getInt("roomSize");
+                    BigDecimal roomFee = rs.getBigDecimal("roomFee");
+                    String roomImg = rs.getString("roomImg");
+                    int userId = rs.getInt("userID");
+                    boolean renterStatus = rs.getBoolean("renterStatus");
+                    boolean renterHaveRoom = rs.getBoolean("renterHaveRoom");
+                    double balance = rs.getDouble("balance");
+
+                    RentDetail rentDetail = new RentDetail(roomId, roomFloor, roomNumber, roomSize, roomFee, roomImg, userId, renterStatus, renterHaveRoom, balance);
+                    rentDetails.add(rentDetail);
+
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Fail: " + e.getMessage());
+        }
+        return rentDetails;
+    }
 
     public static void main(String[] args) {
         RenterDAO dao = new RenterDAO();
-        List<RenterList> renters = dao.getListRenters();
-        
-        for (RenterList renter : renters) {
-            System.out.println(renter.getUserName());
+        List<RentDetail> rentDetail = dao.rentDetail(2);
+        for (RentDetail rentDetail1 : rentDetail) {
+            System.out.println(rentDetail1.getRoomNumber());
         }
     }
 

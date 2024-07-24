@@ -100,26 +100,21 @@
                                         <tr>
                                             <th>Rule Id</th>
                                             <th>Rule Name</th>
-                                            <th>Image</th>
-                                            <th>PenMoney</th>
-
+                                            <th>PenMoney (K.VND)</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Rule Id</th>
-                                            <th>Rule Name</th>
-                                            <th>Image</th>
+                                            <th>Rule Name</th>        
                                             <th>PenMoney</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                     <c:forEach var="o" items="${list}">
-                                        <tr>
-                                            
+                                        <tr>   
                                             <td>${o.ruleID}</td>
-                                            <td>${o.ruleName}</td>
-                                            <td>${o.img}</td>
+                                            <td>${o.ruleName}</td> 
                                             <td>${o.penMoney}</td>
                                             
                                         </tr>

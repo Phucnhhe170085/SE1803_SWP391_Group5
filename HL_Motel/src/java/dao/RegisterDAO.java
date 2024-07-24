@@ -67,6 +67,27 @@ public class RegisterDAO extends DBContext {
         }
         return userID;
     }
+    
+    public List<Account> getListAccount() {
+        List<Account> listAccount = new ArrayList<>();
+        String sql = "select * from account";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int userID = rs.getInt("userID");
+                String userMail = rs.getString("userMail");
+                String userPassword = rs.getString("userPassword");
+                int userRole = rs.getInt("userRole");
+                
+                Account account = new Account(userID, userMail, userPassword, userRole);
+                listAccount.add(account);
+            }
+        } catch (SQLException ex) {
+
+        }
+        return listAccount;
+    }
 
     public int addUser(User user, int userID) {
         int n = 0;
@@ -87,7 +108,7 @@ public class RegisterDAO extends DBContext {
             pre.setString(4, user.getUserBirth());
             pre.setString(5, user.getUserAddress());
             pre.setString(6, user.getUserPhone());
-//            pre.setBytes(7, user.getUserAvatar());
+            pre.setString(7, user.getUserAvatar());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
 
@@ -98,8 +119,14 @@ public class RegisterDAO extends DBContext {
    
 
     public static void main(String[] args) {
-        RegisterDAO roomDAO = new RegisterDAO();
-        int b = roomDAO.addAccount(new Account("hehehe1@gmail.com", "1234567891abC@", 1));
-
+        RegisterDAO dao = new RegisterDAO();        
+        String email = "quocphongoccho5@gmail.com";
+        List<Account> listAccount = dao.getListAccount();
+        
+        for (Account account : listAccount) {
+            if (email.equals(account.getUserMail())) {
+                System.out.println("fail");
+            }
+        }
     }
 }

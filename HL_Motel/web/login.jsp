@@ -12,8 +12,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
-       
-        <link rel="icon" href="home-guest/favicon.png">
+
+        <link rel="shortcut icon" href="images/favicon.png">
         <link rel="stylesheet" href="css/login.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -54,18 +54,23 @@
                         <a href="forgotPassword.jsp"><input type="button" value="Forgot password"></a>
                     </div>
                 </div>
+                <div class="form1">
+                    <div class="button">
+                        <a href="GuestController"><input type="button" value="Back to Home"></a>
+                    </div>
+                </div>
             </div>
         </div>
 
-<!--        <script>
-            function validateRecaptcha() {
-                var response = grecaptcha.getResponse();
-                if (response.length == 0) {
-                    alert("Please complete the reCAPTCHA");
-                    return false;
-                }
-                return true;
-            }
-        </script>-->
+        <!--        <script>
+                    function validateRecaptcha() {
+                        var response = grecaptcha.getResponse();
+                        if (response.length == 0) {
+                            alert("Please complete the reCAPTCHA");
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>-->
     </body>
 </html>

@@ -68,8 +68,11 @@ public class RoomFeeController extends HttpServlet {
 //        int billID = Integer.parseInt(request.getParameter("id"));
 //        session.setAttribute("billID", billID);
          String id_raw = request.getParameter("roomID");
+         
          int id = Integer.parseInt(id_raw);
         request.setAttribute("roomID", id);
+        HttpSession session = request.getSession();
+        session.setAttribute("roomID", id);
 
         BillDAO dao = new BillDAO();
         List<Bill> list = dao.getBillByRoomID(id);

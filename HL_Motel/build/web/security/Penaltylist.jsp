@@ -146,8 +146,15 @@
                                                 </c:choose>
 
                                                 <th><a href="updatepen?id=${o.penId}">Update</a></th>
-                                                <th><a href="delete?id=${o.penId}">Delete</a></th>
-
+<!--                                                <th><a href="delete?id=${o.penId}">Delete</a></th>-->
+                                                <th><a href="javascript:confirmDelete(${o.penId})">Delete</a></th>
+                                                <script>
+                                                        function confirmDelete(penId) {
+                                                          if (confirm("Are you sure you want to delete this record?")) {
+                                                            window.location.href = "delete?id=" + penId;
+                                                          }
+                                                        }
+                                                      </script>
                                             </tr>
                                         </c:forEach>
 

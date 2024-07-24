@@ -24,11 +24,24 @@ public class VNPay_PaymentController extends HttpServlet {
         HttpSession session = request.getSession();
 
         String amount = request.getParameter("amount");
-        int userID = Integer.parseInt(request.getParameter("userID"));
-        int roomID_BookRoom = Integer.parseInt(request.getParameter("roomID"));
-        session.setAttribute("roomID_BookRoom", roomID_BookRoom);
-        session.setAttribute("userID", userID);
-        amount = amount.replace("k VND", "").replace(",", "").trim();
+        
+         
+        int flag = Integer.parseInt(request.getParameter("flag"));
+        int id = 0; // id payment
+        if (flag == 0) {
+            id = Integer.parseInt(request.getParameter("id"));
+            double money_convert = Double.parseDouble(amount);
+            session.setAttribute("money", money_convert);
+            session.setAttribute("idPayment", id);
+            session.setAttribute("flag", 0);
+        } else {
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            int roomID_BookRoom = Integer.parseInt(request.getParameter("roomID"));
+            session.setAttribute("roomID_BookRoom", roomID_BookRoom);
+            session.setAttribute("userID", userID);
+            session.setAttribute("flag", 1);
+            amount = amount.replace("k VND", "").replace(",", "").trim();
+        }
 
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = VNPayConfig.getIpAddress(request);

@@ -59,8 +59,9 @@ public class NewDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         NewDAO newDAO = new NewDAO();
-        String newId = request.getParameter("newId");
-        List<News> listR = newDAO.getNewsDetails(newId);
+        String newId_raw = request.getParameter("newId");
+        int newID = Integer.parseInt(newId_raw);
+        List<News> listR = newDAO.getNewsDetails(newID);
         request.setAttribute("list1", listR);
         request.getRequestDispatcher("Security/newdetail.jsp").forward(request, response);
         

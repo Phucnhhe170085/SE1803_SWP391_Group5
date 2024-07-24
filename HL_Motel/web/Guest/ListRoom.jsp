@@ -347,7 +347,7 @@
         <!-- paging -->
         <div class="pagination" style="margin: 0px; padding-bottom: 50px">
             <% for (int i = 0; i < totalPage; i++) { %>
-            <a href="RenterRoomController?service=listRoom&index=<%=i+1%>" class="<%= (i + 1 == index) ? "active" : "" %>"><%= i + 1 %></a>
+            <a href="GuestController?service=ListRoom&index=<%=i+1%>" class="<%= (i + 1 == index) ? "active" : "" %>"><%= i + 1 %></a>
             <% } %>
         </div>  
 
