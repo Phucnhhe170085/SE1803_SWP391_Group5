@@ -35,7 +35,7 @@ public class RequestDAO extends DBContext {
         List<RequestList> requests = new ArrayList<>();
         String sql = "SELECT u.userID, u.userName, r.requestID, r.title, r.description, rt.typeName, r.createAt, r.resStatus "
                 + "FROM request r "
-                + "JOIN [user] u ON r.renterID = u.userID "
+                + "JOIN [user] u ON r.userID = u.userID "
                 + "JOIN requestType rt ON r.requestType = rt.reqTypeID "
                 + "WHERE u.userID = ?";
         try (
@@ -69,7 +69,7 @@ public class RequestDAO extends DBContext {
     List<RequestList> requests = new ArrayList<>();
     String sql = "SELECT u.userID, u.userName, r.requestID, r.title, r.description, rt.typeName, r.createAt, r.resStatus "
                + "FROM request r "
-               + "JOIN [user] u ON r.renterID = u.userID "
+               + "JOIN [user] u ON r.userID = u.userID "
                + "JOIN requestType rt ON r.requestType = rt.reqTypeID";
     
     try (PreparedStatement st = connection.prepareStatement(sql);
@@ -96,10 +96,10 @@ public class RequestDAO extends DBContext {
 }
 
 
-    public boolean insertRequest(int renterID, int requestType, String title, String description, String createAt, String resStatus) {
-        String sql = "INSERT INTO request (renterID, requestType, title, description, createAt, resStatus) VALUES (?, ?, ?, ?, ?, ?)";
+    public boolean insertRequest(int userID, int requestType, String title, String description, String createAt, String resStatus) {
+        String sql = "INSERT INTO request (userID, requestType, title, description, createAt, resStatus) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, renterID);
+            ps.setInt(1, userID);
             ps.setInt(2, requestType);
             ps.setString(3, title);
             ps.setString(4, description);
@@ -115,7 +115,7 @@ public class RequestDAO extends DBContext {
     }
 
     public boolean updateRequest(int requestID, int renterID, int requestType, String title, String description, String createAt, String resStatus) {
-        String sql = "UPDATE request SET renterID = ?, requestType = ?, title = ?, description = ?, createAt = ?, resStatus = ? WHERE requestID = ?";
+        String sql = "UPDATE request SET userID = ?, requestType = ?, title = ?, description = ?, createAt = ?, resStatus = ? WHERE requestID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, renterID);
             ps.setInt(2, requestType);
@@ -150,7 +150,7 @@ public class RequestDAO extends DBContext {
         RequestList request = null;
         String sql = "SELECT u.userName, r.title, r.description, rt.typeName, r.createAt, r.resStatus "
                 + "FROM request r "
-                + "JOIN [user] u ON r.renterID = u.userID "
+                + "JOIN [user] u ON r.userID = u.userID "
                 + "JOIN requestType rt ON r.requestType = rt.reqTypeID "
                 + "WHERE r.requestID = ?";
         try (
@@ -174,7 +174,7 @@ public class RequestDAO extends DBContext {
         }
         return request;
     }
-     public void updateRequestStatus(String status, int requestId) {
+     public boolean updateRequestStatus(String status, int requestId) {
         String sql = "UPDATE request SET resStatus = ? WHERE requestID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, status);
@@ -183,6 +183,7 @@ public class RequestDAO extends DBContext {
         } catch (SQLException e) {
             Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, "Failed to update request status", e);
         }
+        return false;
     }
      
         public static void main(String[] args) {
