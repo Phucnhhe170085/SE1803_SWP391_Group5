@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/HL_Motel/src/java/controller/Security/NewDetailServlet.java</file>
-            <file>file:/D:/HL_Motel/src/java/controller/Owner/DisplayNews.java</file>
-            <file>file:/D:/HL_Motel/web/Owner/Addnews.jsp</file>
-            <file>file:/D:/HL_Motel/src/java/controller/OwnerController.java</file>
+            <file>file:/D:/HL_Motel/src/java/controller/LogoutController.java</file>
+            <file>file:/D:/HL_Motel/src/java/controller/Admin/Add.java</file>
+            <file>file:/D:/HL_Motel/web/Admin/User.jsp</file>
             <file>file:/D:/HL_Motel/web/Owner/DisplayNews.jsp</file>
-            <file>file:/D:/HL_Motel/web/Owner/navbar.jsp</file>
-            <file>file:/D:/HL_Motel/web/Owner/OwnerHome.jsp</file>
-            <file>file:/D:/HL_Motel/src/java/controller/Owner/NewsDetail.java</file>
-            <file>file:/D:/HL_Motel/web/Owner/NewsList.jsp</file>
+            <file>file:/D:/HL_Motel/src/java/controller/Admin/Adduser.java</file>
+            <file>file:/D:/HL_Motel/web/Admin/Tables.jsp</file>
+            <file>file:/D:/HL_Motel/src/java/dao/EditNewsDAO.java</file>
+            <file>file:/D:/HL_Motel/src/java/dao/DBContext.java</file>
+            <file>file:/D:/HL_Motel/src/java/dao/DAOUser.java</file>
         </group>
     </open-files>
 </project-private>

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.Security;
+package controller.Security;
 
 import dao.SecurityDAO;
 import model.RenterPenChart;
@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet(name="ChartServlet", urlPatterns={"/ChartServlet"})
+@WebServlet(name = "ChartServlet", urlPatterns = {"/chartServlet"})
 public class ChartServlet extends HttpServlet {
    
     /** 
@@ -39,7 +39,7 @@ public class ChartServlet extends HttpServlet {
         List<RulePenChart> list2 = dao.getTopPenRule();
         request.setAttribute("list1", list1);
         request.setAttribute("list2", list2);
-        request.getRequestDispatcher("security/SEdashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("Security/SEdashboard.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

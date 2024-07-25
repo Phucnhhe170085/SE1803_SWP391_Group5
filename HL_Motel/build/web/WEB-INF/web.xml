@@ -2,7 +2,7 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                               http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
         <servlet-name>RenterHomeController</servlet-name>
-        <servlet-class>controller.RenterHomeController</servlet-class>
+        <servlet-class>controller.Renter.RenterHomeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RenterHomeController</servlet-name>
@@ -10,7 +10,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>RenterProfileController</servlet-name>
-        <servlet-class>controller.RenterProfileController</servlet-class>
+        <servlet-class>controller.Renter.RenterProfileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RenterProfileController</servlet-name>
@@ -18,7 +18,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>RenterUpdateProfileController</servlet-name>
-        <servlet-class>controller.RenterUpdateProfileController</servlet-class>
+        <servlet-class>controller.Renter.RenterUpdateProfileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RenterUpdateProfileController</servlet-name>

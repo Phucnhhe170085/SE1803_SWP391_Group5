@@ -21,7 +21,7 @@
         <link rel="shortcut icon" href="images/favicon.png">
         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css'>
         <title>Edit Owner Profile</title>
-
+ <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -106,6 +106,101 @@
                 margin-top: 5px;
                 display: none;
             }
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+            }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 34px;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: #4CAF50;
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
+
+            .button-group {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .under-repair-form {
+                margin: 20px auto; 
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+                width: 400px; 
+            }
+
+            .under-repair-form select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+                box-sizing: border-box; 
+            }
+
+            .under-repair-form input[type="submit"] {
+                margin-top: 20px;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: #fff;
+                font-size: 16px;
+                cursor: pointer;
+                display: block;
+                width: 100%; 
+            }
+
+            .under-repair-form input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+
+            .under-repair-form .form-group {
+                margin-bottom: 15px;
+            }
+
+            .under-repair-form .form-group label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                display: block;
+            }
         </style>
     </head>
     <body>
@@ -168,7 +263,7 @@
                                             <h6 class="mb-0">Room Number</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="roomNumber" value="<%= roomDetail.getRoomNumber()%>">
+                                            <input  type="text" class="form-control" name="roomNumber" value="<%= roomDetail.getRoomNumber()%>">
                                         </div>
                                     </div>                              
                                     <div class="row mb-3">
@@ -188,7 +283,7 @@
                                             <h6 class="mb-0">Room Size</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="roomSize" value="<%= roomDetail.getRoomSize()%>">
+                                            <input readonly="" type="text" class="form-control" name="roomSize" value="<%= roomDetail.getRoomSize()%>">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -200,7 +295,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <h6 class="mb-0" style="padding-left: 220px; padding-bottom: 20px; padding-top: 10px; font-weight: 800">Items in the rooom</h6>
+                                        <h6 class="mb-0" style="padding-left: 220px; padding-bottom: 20px; padding-top: 10px; font-weight: 800">Items in the room</h6>
                                         <table id="itemTable" class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -238,18 +333,72 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10 text-secondary">
-                                            <button type="button" id="updateButton" class="btn btn-success" onclick="updateRoomItems()">Update Room Item</button>
-                                            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addItemModal">Add Room Item</a>
-                                            <input type="submit" class="btn btn-primary px-4" value="Save Changes">                                           
+                                    <div class="container">
+                                        <div class="row" style="margin-top: 50px">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10 text-secondary">
+                                                <button type="button" id="updateButton" class="btn btn-success" onclick="updateRoomItems()">Update Room Item</button>
+                                                <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addItemModal">Add Room Item</a>
+                                                <input type="submit" class="btn btn-primary px-4" value="Save Changes">                                           
+                                            </div>
                                         </div>
+
                                     </div>
                                     <input type="hidden" name="roomID" value="<%= roomDetail.getRoomID()%>">
                                     <input type="hidden" class="btn btn-primary px-4" name="service" value="updateRoomDetail">
                                 </div>               
-                            </form>         
+                            </form>  
+                            <%
+                                int roomStatus = roomDetail.getRoomStatus();
+                                String statusLabel;
+
+                                switch (roomStatus) {
+                                    case 0:
+                                        statusLabel = "Rented";
+                                        break;
+                                    case 1:
+                                        statusLabel = "Available";
+                                        break;
+                                    case 2:
+                                        statusLabel = "Under Repair";
+                                        break;
+                                    default:
+                                        statusLabel = "Unknown";
+                                }
+                            %>
+
+                            <form id="roomForm" action="OwnerController" method="post">
+                                <input type="hidden" name="service" value="updateRoomStatus">
+                                <input type="hidden" name="roomID" value="<%= roomDetail.getRoomID() %>">
+                                <input type="hidden" name="roomOccupant" value="<%= roomDetail.getRoomOccupant() %>">
+                                <input type="hidden" id="roomStatusInput" name="roomStatus" value="<%= roomStatus %>">
+                                <div class="row button-group">
+                                    <div class="col-sm-12 text-center">
+                                        <div class="status-container">
+                                            <label class="switch">
+                                                <input type="checkbox" id="toggle" onclick="toggleButton()" <%= roomStatus == 1 ? "checked" : "" %>>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <p>Status: <span id="status"><%= statusLabel %></span></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="OwnerController" method="post" class="under-repair-form">
+                                <input type="hidden" name="service" value="setUnderRepair">
+                                <input type="hidden" name="roomID" value="<%= roomDetail.getRoomID() %>">
+                                <input type="hidden" name="roomStatus" value="<%= roomDetail.getRoomStatus() %>">
+                                <div class="form-group">
+                                    <label for="updateRoomStatus">Update Room Status</label>
+                                    <select name="updateRoomStatus" id="updateRoomStatus">
+                                        <option selected disabled hidden>Repair</option>
+                                        <option value="2">Under Repair</option>
+                                        <option value="0">Rented</option>
+                                    </select>
+                                </div>
+                                <input style="text-align: center" type="submit" value="Submit">
+                            </form>                
                             <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -298,17 +447,17 @@
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>     
 <script>
-                                                document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
-                                                    var quantityInput = document.getElementById('newQuantityModal').value;
-                                                    var quantity = parseFloat(quantityInput);
+                                                    document.getElementById('btnSubmitNewItemModal').addEventListener('click', function () {
+                                                        var quantityInput = document.getElementById('newQuantityModal').value;
+                                                        var quantity = parseFloat(quantityInput);
 
-                                                    if (!Number.isInteger(quantity) || quantity <= 0) {
-                                                        alert('Quantity is not valid. Please enter a positive integer');
-                                                    } else {
-                                                        var form = document.getElementById('addItemFormModal');
-                                                        form.submit();
-                                                    }
-                                                });
+                                                        if (!Number.isInteger(quantity) || quantity <= 0) {
+                                                            alert('Quantity is not valid. Please enter a positive integer');
+                                                        } else {
+                                                            var form = document.getElementById('addItemFormModal');
+                                                            form.submit();
+                                                        }
+                                                    });
 </script>
 
 <script>
@@ -369,6 +518,56 @@
             }
         };
         xhr.send(JSON.stringify(updatedItems));
+    }
+</script>
+
+<script>
+    function setUnderRepair() {
+        var form = document.getElementById("updateStatusForm");
+        var roomID = form.roomID.value;
+        var roomOccupant = form.roomOccupant.value;
+
+        document.getElementById("roomStatus").value = 2;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "OwnerController", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("service=updateRoomStatus&roomID=" + roomID + "&roomOccupant=" + roomOccupant + "&roomStatus=2");
+
+    }
+
+</script>
+<script>
+    function toggleButton() {
+        var checkbox = document.getElementById('toggle');
+        var form = document.getElementById('roomForm');
+        var roomStatusInput = document.getElementById('roomStatusInput');
+        var statusLabel = document.getElementById('status');
+
+        if (checkbox.checked) {
+            // Checkbox was checked (turning ON)
+            roomStatusInput.value = 2; // Set room status to "Available"
+            statusLabel.textContent = 'Available';
+            form.submit(); // Submit the form
+        } else {
+            // Checkbox was unchecked (turning OFF)
+            var confirmOff = confirm('Are you sure you want to set the status to Off?');
+            if (confirmOff) {
+                roomStatusInput.value = 1; // Set room status to "Occupied"
+                statusLabel.textContent = 'Occupied';
+                form.submit(); // Submit the form
+            } else {
+                checkbox.checked = true; // Keep the checkbox checked if cancelled
+            }
+        }
+    }
+
+    function setUnderRepair() {
+        var form = document.getElementById('roomForm');
+        var roomStatusInput = document.getElementById('roomStatusInput');
+        roomStatusInput.value = 2; // Set room status to "Under Repair"
+        document.getElementById('status').textContent = 'Under Repair';
+        form.submit(); // Submit the form
     }
 </script>
 

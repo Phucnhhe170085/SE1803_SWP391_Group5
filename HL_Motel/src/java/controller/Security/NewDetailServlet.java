@@ -60,10 +60,10 @@ public class NewDetailServlet extends HttpServlet {
     throws ServletException, IOException {
         NewDAO newDAO = new NewDAO();
         String newId_raw = request.getParameter("newId");
-        int newId = Integer.parseInt(newId_raw);
-        List<News> listR = newDAO.getNewsDetails(newId);
+        int newID = Integer.parseInt(newId_raw);
+        List<News> listR = newDAO.getNewsDetails(newID);
         request.setAttribute("list1", listR);
-        request.getRequestDispatcher("security/newdetail.jsp").forward(request, response);
+        request.getRequestDispatcher("Security/newdetail.jsp").forward(request, response);
         
     } 
 

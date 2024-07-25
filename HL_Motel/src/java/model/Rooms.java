@@ -13,19 +13,23 @@ public class Rooms {
     private Item item;
     private RoomItem roomitem;
     private BigDecimal roomFee;
-
+    private int roomStatus;
+    private int roomOccupant;
+    
     public Rooms(Item item, RoomItem roomitem) {
         this.item = item;
         this.roomitem = roomitem;
     }
 
-    public Rooms(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, BigDecimal roomFee) {
+    public Rooms(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, BigDecimal roomFee, int roomStatus, int roomOccupant) {
         this.roomID = roomID;
         this.roomFloor = roomFloor;
         this.roomNumber = roomNumber;
         this.roomSize = roomSize;
         this.roomImg = roomImg;
         this.roomFee = roomFee;
+        this.roomStatus = roomStatus;
+        this.roomOccupant = roomOccupant;
     }
 
     public Rooms(int roomID, int roomFloor, int roomNumber, int roomSize, String roomImg, int total) {
@@ -127,6 +131,22 @@ public class Rooms {
 
     public void setRoomFee(BigDecimal roomFee) {
         this.roomFee = roomFee;
+    }
+
+    public int getRoomStatus() {
+        return roomStatus;
+    }
+
+    public void setRoomStatus(int roomStatus) {
+        this.roomStatus = roomStatus;
+    }
+
+    public int getRoomOccupant() {
+        return roomOccupant;
+    }
+
+    public void setRoomOccupant(int roomOccupant) {
+        this.roomOccupant = roomOccupant;
     }
     
     

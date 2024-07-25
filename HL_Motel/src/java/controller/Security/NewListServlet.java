@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.Security;
+package controller.Security;
 
 import dao.NewDAO;
 import model.News;
@@ -61,7 +61,7 @@ public class NewListServlet extends HttpServlet {
         NewDAO newDAO = new NewDAO();
         List<News> listR = newDAO.getNewsList();
         request.setAttribute("list", listR);
-        request.getRequestDispatcher("security/newList.jsp").forward(request, response);
+        request.getRequestDispatcher("Security/newList.jsp").forward(request, response);
     } 
 
     /** 

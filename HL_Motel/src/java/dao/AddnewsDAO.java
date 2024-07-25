@@ -4,8 +4,13 @@
  */
 package dao;
 
+import jakarta.servlet.http.Part;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.util.Date;
+import model.News;
 
 /**
  *
@@ -13,7 +18,7 @@ import java.util.Date;
  */
 public class AddnewsDAO extends DBContext{
 
-    public int insertNews(String title, String description, String image, String createAt) {
+    public int insertNews(News news) {
         int n = 0;
         String query = "INSERT INTO [dbo].[news]\n"
                 + "           ([newTitle]\n"
@@ -25,10 +30,10 @@ public class AddnewsDAO extends DBContext{
          try {
             java.sql.Connection conn = connection;
             PreparedStatement ps = conn.prepareStatement(query);
-             ps.setString(1, title);
-             ps.setString(2, description);
-             ps.setString(3, image);
-             ps.setString(4, createAt);
+             ps.setString(1, news.getNewTitle());
+             ps.setString(2, news.getDescription());
+             ps.setString(3, news.getImg());
+             ps.setString(4, news.getCreateAt());
         
          n = ps.executeUpdate();
         } catch (Exception e) {
@@ -36,10 +41,17 @@ public class AddnewsDAO extends DBContext{
         }
         return n;
     }
+    
+    
     public static void main(String[] args) {
-        AddnewsDAO news = new AddnewsDAO();
-        int n = news.insertNews("asfasf","hello world","hhuhuuu","8-7-2024");
-        if(n>0) System.out.println("Done");
-        else System.out.println("Fail");
+        AddnewsDAO dao = new AddnewsDAO();
+        int news = dao.insertNews(new News("test", "test", "img", "10/07/2024"));
+        
+        if (news > 0) {
+            System.out.println("done");
+        } else {
+            System.out.println("fail");
+        }
+    
     }
 }

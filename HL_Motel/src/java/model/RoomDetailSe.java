@@ -17,10 +17,12 @@ public class RoomDetailSe {
     private int[] quantity;
     private double roomFee;
     private int[] itemID;
+    private int roomOccupant; // thêm ngày 21 / 7
+    private int roomStatus; // thêm ngày 21 / 7
 
     public RoomDetailSe(int roomID, int roomNumber, int roomSize, int roomFloor, 
             String roomImg, String[] itemName, byte[] itemImg, int[] quantity, 
-            double roomFee, int[] itemID) {
+            double roomFee, int[] itemID, int roomOccupant, int roomStatus) {
         this.roomID = roomID;
         this.roomNumber = roomNumber;
         this.roomSize = roomSize;
@@ -31,6 +33,8 @@ public class RoomDetailSe {
         this.quantity = quantity;
         this.roomFee = roomFee;
         this.itemID = itemID;
+        this.roomOccupant = roomOccupant;
+        this.roomStatus = roomStatus;
     }
 
     public int[] getItemID() {
@@ -154,8 +158,23 @@ public class RoomDetailSe {
 
     public void setAirConditional(boolean airConditional) {
         this.airConditional = airConditional;
+    }   
+
+    public int getRoomOccupant() {
+        return roomOccupant;
     }
 
+    public void setRoomOccupant(int roomOccupant) {
+        this.roomOccupant = roomOccupant;
+    }
+
+    public int getRoomStatus() {
+        return roomStatus;
+    }
+
+    public void setRoomStatus(int roomStatus) {
+        this.roomStatus = roomStatus;
+    }
     
     
 }

@@ -99,7 +99,7 @@
 
         <div class="intro intro-carousel">
 
-            <div class="carousel-item-a intro-item bg-image" style="background-image: url(img_owner/hi.jpg)">
+            <div class="carousel-item-a intro-item bg-image" style="background-image: url(images/hero_bg_2.jpg)">
 
             </div>
 
@@ -118,11 +118,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Upload Image</label>
-                    <input type="file" class="form-control" id="image" name="image" accept="image/*" >
+                    <input type="file" class="form-control" name="image">
                 </div>
                 <div class="mb-3">
                     <label for="createAt" class="form-label">Create at:</label>
-                    <input type="date" class="form-control" id="createAt" name="createAt" required>
+                    <input type="date" class="form-control" id="createAt" name="createAt" required readonly="">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

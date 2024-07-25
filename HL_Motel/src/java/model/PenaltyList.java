@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class PenaltyList {
     private int penId;
+    private int reportID;
+    private int accuseId;
     private int roomId;
     private String description;
     private Date penDate;
@@ -22,9 +24,11 @@ public class PenaltyList {
     public PenaltyList() {
     }
 
-    public PenaltyList(int penId, int roomId, String description, Date penDate, int ruleId, String ruleName, boolean penStatus) {
+    public PenaltyList(int penId, int roomId, int reportID, int accuseId, String description, Date penDate, int ruleId, String ruleName, boolean penStatus) {
         this.penId = penId;
         this.roomId = roomId;
+        this.reportID = reportID;
+        this.accuseId = accuseId;
         this.description = description;
         this.penDate = penDate;
         this.ruleId = ruleId;
@@ -46,6 +50,22 @@ public class PenaltyList {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
+    }
+
+    public int getReportID() {
+        return reportID;
+    }
+
+    public void setReportID(int reportID) {
+        this.reportID = reportID;
+    }
+
+    public int getAccuseId() {
+        return accuseId;
+    }
+
+    public void setAccuseId(int accuseId) {
+        this.accuseId = accuseId;
     }
 
     public String getDescription() {
@@ -87,13 +107,8 @@ public class PenaltyList {
     public void setPenStatus(boolean penStatus) {
         this.penStatus = penStatus;
     }
-
     @Override
     public String toString() {
-        return "PenaltyList{" + "penId=" + penId + ", roomId=" + roomId + ", description=" + description + ", penDate=" + penDate + ", ruleId=" + ruleId + ", ruleName=" + ruleName + ", penStatus=" + penStatus + '}';
-    }
-    
-
-    
-    
+        return  penId + ", " + reportID + ", " + accuseId + ", " + roomId + ", " + description + ", " + penDate + ", " + ruleId + ", " + ruleName + ", " + penStatus;
+    }  
 }

@@ -29,6 +29,18 @@ public class UserDetail{
     public UserDetail() {
     }
 
+    public UserDetail(String userName, String userGender, String userBirth, String userAddress, String userPhone,String userMail, String userAvatar) {
+        this.userName = userName;
+        this.userGender = userGender;
+        this.userBirth = userBirth;
+        this.userAddress = userAddress;
+        this.userPhone = userPhone;
+        this.userMail = userMail;
+        this.userAvatar = userAvatar;
+    }
+
+    
+    
     public UserDetail(int userID, String userMail, String userPassword, int userRole, User user, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, Account account, Renter renter, Room room, Security security, String email) {
         this.userID = userID;
         this.userMail = userMail;
@@ -48,7 +60,7 @@ public class UserDetail{
         this.email = email;
     }
 
-    public UserDetail(String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, String userMail, String userPassword) {    
+    public UserDetail(int userID, String userName, String userGender, String userBirth, String userAddress, String userPhone, String userAvatar, String userMail, String userPassword, int userRole) {    
         this.userName = userName;
         this.userGender = userGender;
         this.userBirth = userBirth;
@@ -57,6 +69,8 @@ public class UserDetail{
         this.userAvatar = userAvatar;
         this.userMail = userMail;
         this.userPassword = userPassword;
+        this.userID = userID;
+        this.userRole = userRole;
     }
 
     

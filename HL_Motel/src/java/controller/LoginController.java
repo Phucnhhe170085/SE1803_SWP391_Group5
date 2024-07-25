@@ -44,6 +44,7 @@ public class LoginController extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 HttpSession session = request.getSession();
+                session.setAttribute("userID", account.getUserID());
                 session.setAttribute("user", account);
                 session.setAttribute("email", email);
                 session.setAttribute("password", password);
@@ -63,10 +64,10 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/OwnerController");
                         break;
                     case 3:
-                        response.sendRedirect("ChartServlet");
+                        response.sendRedirect(request.getContextPath() + "/chartServlet");
                         break;
                     case 4:
-                        response.sendRedirect(request.getContextPath() + "");
+                        response.sendRedirect(request.getContextPath() + "/manage");
                         break;
                     default:
                         request.setAttribute("message", "Login failed"); // or handle other roles as needed

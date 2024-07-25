@@ -3,7 +3,9 @@
 <%@ page import="java.util.Base64" %>
 <%@ page import="java.text.DecimalFormat" %>
 
-<% RoomDetailSe roomDetail = (RoomDetailSe) request.getAttribute("roomDetail"); %>
+<% RoomDetailSe roomDetail = (RoomDetailSe) request.getAttribute("roomDetail"); 
+   List<String> listNameRenter = (List<String>) request.getAttribute("listNameRenter");
+%>
 
 <!doctype html>
 <html lang="en">
@@ -39,6 +41,7 @@
                 font-size: 15px;
                 line-height: 1.5;
             }
+
         </style>
     </head>
     <body>
@@ -79,7 +82,7 @@
 
                             <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                                 <ol class="breadcrumb text-center justify-content-center">
-                                    <li class="breadcrumb-item "><a href="OwnerHome.jsp">Home</a></li>                               
+                                    <li class="breadcrumb-item "><a href="OwnerController?service=OwnerHome">Home</a></li>                               
                                 </ol>
                             </nav>
 
@@ -134,8 +137,13 @@
                                 }
                             %>
                             <p class="textDetail">Address: Thon 3, Tan Xa, Thach That, Ha Noi</p>
-                            <p class="textDetail">Contact Info: 0123456789</p>
-                            <div class="row">
+                            <p class="textDetail">Contact Info: 0123456789</p>                            
+                            <% for (String renterName : listNameRenter) { %>
+                            <p class="textDetail">Renter: 
+                            <a style="color: blue;" href="#"> <%= renterName %> </a> 
+                            </p> <br>
+                            <%}%> 
+                            <div class="row" style="margin-top: 20px">
                                 <div class="col-sm-12">
                                     <a class="btn btn-info " href="OwnerController?service=editRoom&roomID=<%= roomDetail.getRoomID()%>">Edit Room</a>
                                 </div>

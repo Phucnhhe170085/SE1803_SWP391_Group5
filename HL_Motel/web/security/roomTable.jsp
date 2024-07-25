@@ -15,7 +15,7 @@
         <meta name="author" content="" />
         <title>Tables - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="SecurityCSS/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -99,11 +99,11 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>IMG</th>
+                                            
                                             <th>Floor</th>
                                             <th>Number</th>
                                             <th>Size</th>
-                                            <th>Fee</th>
+                                            
                                             <th>Detail</th>
 
                                         </tr>
@@ -111,11 +111,11 @@
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>IMG</th>
+                                            
                                             <th>Floor</th>
                                             <th>Number</th>
                                             <th>Size</th>
-                                            <th>Fee</th>
+                                            
                                             <th>Detail</th>
                                         </tr>
                                     </tfoot>
@@ -124,11 +124,11 @@
                                         <tr>
                                             
                                             <td>${o.roomID}</td>
-                                            <td><imag src ="${o.roomImg}"></td>
+                                            
                                             <td>${o.roomFloor}</td>
                                             <td>${o.roomNumber}</td>
                                             <td>${o.roomSize}</td>
-                                            <td>${o.roomFee}</td>
+                                            
                                             <th><a href="roomdetail?roomID=${o.roomID}"> <i class="fas fa-eye"></i></a></th>
                                             
                                         </tr>
@@ -155,8 +155,8 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="SecurityCSS/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="SecurityCSS/js/datatables-simple-demo.js"></script>
     </body>
 </html>

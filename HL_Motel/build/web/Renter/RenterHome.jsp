@@ -33,12 +33,12 @@
             </div>
             <div class="site-mobile-menu-body"></div>
         </div>
-        
+
         <nav class="site-nav">
             <div class="container">
                 <div class="menu-bg-wrap">
                     <div class="site-navigation">
-                        <a href="RenterHome.jsp" class="logo m-0 float-start">Renter</a>
+                        <a href="rentercontroller?service=renterhome" class="logo m-0 float-start">Renter</a>
 
                         <jsp:include page = "navbar.jsp"></jsp:include>
 
@@ -50,13 +50,79 @@
                 </div>
             </div>
         </nav>
-        
+
+
         <div class="hero">
-            <div class="hero-slide">           
+            <div class="hero-slide">
+                <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
                 <div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
-                <div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>              
+                <div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-9 text-center">
+                        <h1 class="heading" data-aos="fade-up">Wellcome to HoaLac-Motel</h1>
+
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <section id="list-topics" class="list-topics">
+            <div class="container">
+                <div class="list-topics-content">
+                    <ul>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="single-list-topics-icon">
+                                    <i class="flaticon-restaurant"></i>
+                                </div>
+                                <h2><a href="#">resturent</a></h2>
+                                <p>150 listings</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="single-list-topics-icon">
+                                    <i class="flaticon-travel"></i>
+                                </div>
+                                <h2><a href="#">destination</a></h2>
+                                <p>214 listings</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="single-list-topics-icon">
+                                    <i class="flaticon-building"></i>
+                                </div>
+                                <h2><a href="#">hotels</a></h2>
+                                <p>185 listings</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="single-list-topics-icon">
+                                    <i class="flaticon-pills"></i>
+                                </div>
+                                <h2><a href="#">healthcaree</a></h2>
+                                <p>200 listings</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="single-list-topics-icon">
+                                    <i class="flaticon-transport"></i>
+                                </div>
+                                <h2><a href="#">automotion</a></h2>
+                                <p>120 listings</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div><!--/.container-->
+
+        </section><!--/.list-topics-->
 
 
         <script src="js/bootstrap.bundle.min.js"></script>

@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.util.Date;
+
 
 /**
  *
@@ -25,6 +25,13 @@ public class News {
         this.newId = newId;
         this.newTitle = newTitle;
         this.description = description;
+    }
+
+    public News(String newTitle, String description, String img, String createAt) {
+        this.newTitle = newTitle;
+        this.description = description;
+        this.img = img;
+        this.createAt = createAt;
     }
 
     

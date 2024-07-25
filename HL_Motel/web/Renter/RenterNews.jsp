@@ -148,68 +148,61 @@
             <div class="container">
                 <div class="menu-bg-wrap">
                     <div class="site-navigation">
-                        <a href="Homepage.html" class="logo m-0 float-start">Property</a>
+                        <a href="rentercontroller?service=renterhome" class="logo m-0 float-start">News</a>
 
-                        <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-                            <li class="active"><a href="Homepage.html">Home</a></li>
-                            <li class="active"><a href="RoomList.html">Room</a></li>
-                            <li><a href="Payment.html">Payment</a></li>
-                            <li><a href="CustomerList.html">Customer</a></li>
-                            <li><a href="Guide.html">Guide</a></li>
-                            <li><a href="News.html">News</a></li>
-                        </ul>
+                        <jsp:include page = "navbar.jsp"></jsp:include>
 
-                        <a href="#"
-                           class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
-                           data-toggle="collapse" data-target="#main-navbar">
-                            <span></span>
-                        </a>
+                            <a href="#"
+                               class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+                               data-toggle="collapse" data-target="#main-navbar">
+                                <span></span>
+                            </a>
 
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
+
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-9 text-center mt-5">
+                            <h1 class="heading" data-aos="fade-up">News</h1>
+
+                            <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+                                <ol class="breadcrumb text-center justify-content-center">
+                                    <li class="breadcrumb-item "><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item active text-white-50" aria-current="page">News</li>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-        </nav>
 
 
-        <div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
+            <div class="tabular--wrapper">
+                <h3 class="main--title">New</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
 
-            <div class="container">
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-9 text-center mt-5">
-                        <h1 class="heading" data-aos="fade-up">News</h1>
+                                <th>Author</th>
+                            </tr>
+                        </thead>
 
-                        <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
-                            <ol class="breadcrumb text-center justify-content-center">
-                                <li class="breadcrumb-item "><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active text-white-50" aria-current="page">News</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <tbody>
+                        <c:forEach items="${ListN}" var="n">
+                            <tr>
+                                <td><a href="https://example.com"></a>${n.newsTitle}</td>
 
-
-        <div class="tabular--wrapper">
-            <h3 class="main--title">New</h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            
-                            <th>Author</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                    <c:forEach items="${ListN}" var="n">
-                        <tr>
-                            <td><a href="https://example.com"></a>${n.newsTitle}</td>
-                           
-                            <td>${n.userName}</td>
-                        </tr>
-</c:forEach>
+                                <td>${n.userName}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

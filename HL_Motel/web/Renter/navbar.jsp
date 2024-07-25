@@ -12,7 +12,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Untree.co">
-        <link rel="shortcut icon" href="../images/favicon.png">
+        <link rel="shortcut icon" href="./images/favicon.png">
 
         <meta name="description" content="Your description here" />
         <meta name="keywords" content="bootstrap, bootstrap5" />
@@ -28,6 +28,11 @@
         <link rel="stylesheet" href="../css/tiny-slider.css">
         <link rel="stylesheet" href="../css/aos.css">
         <link rel="stylesheet" href="../css/style.css">
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
         <title>HoLa Motel</title>
     </head>
@@ -36,20 +41,21 @@
             <li class="${param.service == null || param.service == 'renterhome' ? 'active' : ''}">
                 <a href="rentercontroller?service=renterhome">Home</a>
             </li>
-            <li class="has-children ${param.service == 'listRoom' ? 'active' : ''}">
+            <li class="has-children ${(param.service == 'listRoom') || (param.service == 'guideandrule') || (param.service == 'RenterRoomDetail') ? 'active' : ''}">
                 <a href="#">View</a>
                 <ul class="dropdown">
+                    <li><a href="RenterRoomController?service=listRoom&index=1">List Of Rooms</a></li>
                     <li><a href="rentercontroller?service=guideandrule">Guide and Rule</a></li>
-                    <li><a href="#">Security</a></li>
+                    <li><a href="RenterRoomDetail?service=RenterRoomDetail">My Room</a></li>
                 </ul>
             </li>               
-            <li><a href="#">Payment</a></li>
+            <li class="${param.service == "paymentList" ? "active" : ''}"><a href="WalletController">Wallet</a></li>
             <li><a href="rentercontroller?service=request">Contact Us</a></li>
             <li class="has-children">
                 <a href="#">Manage</a>
                 <ul class="dropdown">
                     <li><a href="#">Rule</a></li>
-                    <li><a href="#">News</a></li>
+                    <li><a href="rentercontroller?service=news">News</a></li>
                 </ul>
             </li>
             <li><a href="logout">Logout</a></li>
