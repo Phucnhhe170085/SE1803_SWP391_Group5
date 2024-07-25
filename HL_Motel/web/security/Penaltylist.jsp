@@ -15,8 +15,9 @@
         <meta name="author" content="" />
         <title>Tables - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="SecurityCSS/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script type = ></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -26,13 +27,14 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                
+
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="profile">Show Profile</a></li>
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
@@ -88,7 +90,7 @@
                             <li class="breadcrumb-item"><a href="ChartServlet">Dashboard</a></li>
                             <li class="breadcrumb-item active">Tables</li>
                         </ol>
-                        
+
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -107,7 +109,7 @@
                                             <th>Rule</th>
                                             <th>Status</th>
                                             <th> </th>
-                                             <th> </th>
+                                            <th> </th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -123,21 +125,39 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                    <c:forEach var="o" items="${list}">
-                                        <tr>
-                                            
-                                            <td>${o.penId}</td>
-                                            <td>${o.roomId}</td>
-                                            <td>${o.description}</td>
-                                            <td>${o.penDate}</td>
-                                            <td>${o.ruleName}</td>
-                                            <td>${o.penStatus}</td>
-                                            <th><a href="up">Update</a></th>
-                                            <th><a href="up">Delete</a></th>
-                                            
-                                        </tr>
-                                    </c:forEach>
-                                    
+                                        <c:forEach var="o" items="${list}">
+                                            <tr>
+
+                                                <td>${o.penId}</td>
+                                                <td>${o.roomId}</td>
+                                                <td>${o.description}</td>
+                                                <td>${o.penDate}</td>
+                                                <td>${o.ruleName}</td>
+                                                <c:choose>
+                                                    <c:when test="${o.penStatus == true}">
+                                                        <td>done</td>
+                                                    </c:when>
+                                                    <c:when test="${o.penStatus == false}">
+                                                        <td>processing</td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td>unknown status</td>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <th><a href="updatepen?id=${o.penId}">Update</a></th>
+<!--                                                <th><a href="delete?id=${o.penId}">Delete</a></th>-->
+                                                <th><a href="javascript:confirmDelete(${o.penId})">Delete</a></th>
+                                                <script>
+                                                        function confirmDelete(penId) {
+                                                          if (confirm("Are you sure you want to delete this record?")) {
+                                                            window.location.href = "delete?id=" + penId;
+                                                          }
+                                                        }
+                                                      </script>
+                                            </tr>
+                                        </c:forEach>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -159,8 +179,8 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="SecurityCSS/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="SecurityCSS/js/datatables-simple-demo.js"></script>
     </body>
 </html>

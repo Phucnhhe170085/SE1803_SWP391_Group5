@@ -186,6 +186,25 @@ public class AccountDAO extends MyDAO {
         }
         return null;
     }
+    
+    public int getUserIdByEmail(String email) {
+        int userID = 0;
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+            String sql = "SELECT [userID] FROM [HL_Motel].[dbo].[Account] where Account.userMail = ?";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+              userID = rs.getInt("userID");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userID;
+    }
 
     public void changep(Account a) {
         String sql = "UPDATE [dbo].[account] set userPassword = ? where userMail = ?";
@@ -251,12 +270,7 @@ public class AccountDAO extends MyDAO {
     }
         public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
-//        int role = dao.getUserRole("maitu@gmail.com", "12345678");
-//        System.out.println("Role: " + role);
-//         AccountDAO dao = new AccountDAO();
-        Account a = dao.check("maingoctu@gmail.com", "pass1234");
-        dao.updatePassword(a);
-        Account ac = new Account(a.getUserID(), "maingoctu@gmail.com", "pass123", a.getUserRole());
-        dao.changep(ac);
+        int userID = dao.getUserIdByEmail("maingoctu@gmail.com");
+            System.out.println(userID);
     }
 }

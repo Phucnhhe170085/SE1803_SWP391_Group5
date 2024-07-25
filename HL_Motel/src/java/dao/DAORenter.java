@@ -28,7 +28,7 @@ public class DAORenter extends DBContext {
             rs = ps.executeQuery();
             while (rs.next()) {
                 // Assuming the News constructor takes three parameters: String, String, String
-                News news = new News(rs.getString(1), rs.getString(2), rs.getString(3));
+                News news = new News(rs.getInt(1), rs.getString(2), rs.getString(3));
                 list.add(news);
             }
         } catch (SQLException e) {

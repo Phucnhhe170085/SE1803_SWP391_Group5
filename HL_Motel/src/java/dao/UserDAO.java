@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author ASUS
@@ -103,7 +102,6 @@ public class UserDAO extends MyDAO {
 //        }
 //        return list;
 //    }
-
 //    public static void main(String[] args) {
 //        UserDAO dao = new UserDAO();
 //
@@ -136,7 +134,6 @@ public class UserDAO extends MyDAO {
 //            System.out.println("--------");
 //        }
 //    }
-
     public List<User> getOwner() {
         List<User> list = new ArrayList<>();
         String sql = "  SELECT [User].userID, [User].userName, [User].userGender, [User].userBirth, [User].userAddress, [User].userPhone, [User].userAvatar\n"
@@ -157,6 +154,72 @@ public class UserDAO extends MyDAO {
         return list;
     }
 
-    
-    
+    public int getUserIDByEmailAndPassword(String userMail, String password) {
+        String sql = "  select u.userID from [User] u\n"
+                + "  join account a on u.userID = a.userID\n"
+                + "  where a.userMail = ? and a.userPassword = ?";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, userMail);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("userID");
+            }
+        } catch (SQLException e) {
+            System.out.println("Fail: " + e.getMessage());
+        }
+        return -1;
+    }
+
+    public String getImageUserByUserID(int userID) {
+        String sql = "select userAvatar from [User] \n"
+                + "  where userID = ?";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("userAvatar");
+            }
+        } catch (SQLException e) {
+            System.out.println("Fail: " + e.getMessage());
+        }
+        return "abc.jpg";
+    }
+
+    public int isRenter(int userID) {
+        int recordNumber = 0;
+        String sql = "select count(*) as [recordNumber]\n"
+                + "from [user] u \n"
+                + "join renter r\n"
+                + "on u.userID = r.userID\n"
+                + "where u.userID = ?";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                recordNumber = rs.getInt("recordNumber");
+            }
+        } catch (SQLException e) {
+            System.out.println("Fail: " + e.getMessage());
+        }
+        return recordNumber;
+    }
+
+    public static void main(String[] args) {
+        UserDAO dao = new UserDAO();
+        int getUserIDByEmailAndPassword = dao.getUserIDByEmailAndPassword("nguyenvanlinh@gmail.com", "pass1234");
+        if (getUserIDByEmailAndPassword > 0) {
+            System.out.println(getUserIDByEmailAndPassword);
+        } else {
+            System.out.println("-1");
+        }
+    }
+
 }

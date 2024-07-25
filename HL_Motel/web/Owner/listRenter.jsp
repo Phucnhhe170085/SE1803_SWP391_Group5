@@ -261,7 +261,7 @@
             <div class="container">
                 <div class="menu-bg-wrap">
                     <div class="site-navigation">
-                        <a href="OwnerHome.jsp" class="logo m-0 float-start">Room</a>
+                        <a href="#" class="logo m-0 float-start">Room</a>
 
                         <jsp:include page = "navbar.jsp"></jsp:include>
 
@@ -311,27 +311,26 @@
                                                 <th>Renter Name</th>
                                                 <th>Room Number</th>
                                                 <th>Room Floor</th>
-                                                <th>Renter Status</th>
-                                                <th>Renter Have Room</th>
                                                 <th>Balance</th>
-                                                <th>Action</th>
+                                                <th>Room Fee</th>                                               
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <% for (RenterList renters : listRenter) { %>
                                         <tr class="property-content">
-                                            <td><%= renters.getUserName() %></td>
+                                            <td><a href="ViewRenterProfileController?renterID=<%= renters.getUserID() %>"><%= renters.getUserName() %></a></td>
                                             <td><%= renters.getRoomNumber() %></td>
                                             <td><%= renters.getRoomFloor() %></td>
-                                            <td><%= renters.isRenterStatus() %></td>
-                                            <td><%= renters.isRenterHaveRoom() %></td>
-                                            <td><%= String.format("%.1f", renters.getBalance()) %>k VND</td>
-                                            <td><a href="ViewRenterProfileController?renterID=<%= renters.getUserID() %>">See Detail</a></td>
+                                            <td><%= renters.getBalance() %></td>
+                                            <td>
+                                                <a href="roomfee?roomID=<%= renters.getRoomID() %>">See Detail</a>
+                                            </td>
                                         </tr>
-                                        <%}%>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
                     </div>
                 </div>

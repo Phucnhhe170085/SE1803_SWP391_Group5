@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.Security;
+package controller.Security;
 
 import dao.PenaltyDao;
 import model.PenaltyList;
@@ -63,7 +63,7 @@ public class PenaltyServlet extends HttpServlet {
         PenaltyDao penaltyDao = new PenaltyDao();
         List<PenaltyList> listR = penaltyDao.getPenList();
         request.setAttribute("list", listR);
-        request.getRequestDispatcher("security/Penaltylist.jsp").forward(request, response);
+        request.getRequestDispatcher("Security/Penaltylist.jsp").forward(request, response);
         for(PenaltyList list : listR){
             System.out.println(list.getPenId());
         }
@@ -79,36 +79,7 @@ public class PenaltyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String action = request.getParameter("action");
-        int penId = Integer.parseInt(request.getParameter("penId"));
-        int roomId = Integer.parseInt(request.getParameter("roomId"));
-        String description = request.getParameter("description");
-        String penDateStr = request.getParameter("penDate");
-        String ruleId = request.getParameter("ruleId");
-        boolean penStatus = Boolean.parseBoolean(request.getParameter("penStatus"));
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date penDate = null;
-        try {
-            penDate = sdf.parse(penDateStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PenaltyList penalty = new PenaltyList();
-        PenaltyDao penaltyDao = new PenaltyDao();
-        penaltyDao.addPenalty(penalty);
-        penStatus = true;
-//        if ("Add".equals(action)) {
-//            penaltyDao.addPenalty(penalty);
-//            penStatus = true;
-//        } else if ("Update".equals(action)) {
-//            penaltyDao.updatePenalty(penalty);
-//        } else if ("Delete".equals(action)) {
-//            penaltyDao.deletePenalty(penId);
-//        }
-
-        response.sendRedirect("pen");
+        
     }
 
     /** 

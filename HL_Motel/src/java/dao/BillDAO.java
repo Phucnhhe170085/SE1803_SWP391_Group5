@@ -4,6 +4,7 @@
  */
 package dao;
 
+import java.math.BigDecimal;
 import model.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -37,7 +38,7 @@ public class BillDAO extends MyDAO {
                 + "    [payAt],\n"
                 + "    ([service] + [electric] + [water] + [roomFee] + [other] + [penMoney]) AS total\n"
                 + "FROM \n"
-                + "    [GreenRoom].[dbo].[bill]\n"
+                + "    [HL_Motel].[dbo].[bill]\n"
                 + "WHERE [roomID] = ?\n"
                 + "ORDER BY \n"
                 + "    [createAt] DESC;";
@@ -76,7 +77,7 @@ public class BillDAO extends MyDAO {
                 + "    [payAt],\n"
                 + "    ([service] + [electric] + [water] + [roomFee] + [other] + [penMoney]) AS total\n"
                 + "FROM \n"
-                + "    [GreenRoom].[dbo].[bill]\n"
+                + "    [HL_Motel].[dbo].[bill]\n"
                 + "WHERE [billID] = ?\n"
                 + "ORDER BY \n"
                 + "    [createAt] DESC;";
@@ -99,9 +100,10 @@ public class BillDAO extends MyDAO {
         return null;
     }
 
-    public boolean addFeeById(int roomID, double service, double electric, double water, double roomFee, double other, double penMoney, String createAt,
+    public boolean addFeeById(int roomID, double service, double electric, double water, BigDecimal roomFee, double other, double penMoney, String createAt,
             String deadline, String payAt) {
-        String sql = "INSERT INTO [GreenRoom].[dbo].[bill] ([roomID], [service], [electric], [water], [roomFee], [other], [penMoney], [createAt], [deadline], [payAt])\n"
+        String sql = "INSERT INTO [HL_Motel].[dbo].[bill] ([roomID], [service], [electric], [water], [roomFee], [other],"
+                + " [penMoney], [createAt], [deadline], [payAt])\n"
                 + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
 
         try {
@@ -110,7 +112,7 @@ public class BillDAO extends MyDAO {
             ps.setDouble(2, service);
             ps.setDouble(3, electric);
             ps.setDouble(4, water);
-            ps.setDouble(5, roomFee);
+            ps.setBigDecimal(5, roomFee);
             ps.setDouble(6, other);
             ps.setDouble(7, penMoney);
             ps.setString(8, createAt);
@@ -133,21 +135,22 @@ public class BillDAO extends MyDAO {
 
     }
 
-    public boolean updateFeeById(int roomID, double service, double electric, double water, double roomFee, double other, double penMoney,
+    public boolean updateFeeById(int billID, double service, double electric, double water, BigDecimal roomFee, double other, double penMoney,
             String deadline, String payAt) {
-        String sql = "UPDATE [GreenRoom].[dbo].[bill] SET [service] = ?, [electric] = ?, [water] = ?, [roomFee] = ?, [other] = ?, [penMoney] = ?, [deadline] = ?, [payAt] = ? WHERE [roomID] = ?";
+        String sql = "UPDATE [HL_Motel].[dbo].[bill] SET [service] = ?, [electric] = ?, [water] = ?, [roomFee] = ?, "
+                + "[other] = ?, [penMoney] = ?, [deadline] = ?, [payAt] = ? WHERE [billID] = ?";
 
         try {
             ps = con.prepareStatement(sql);
             ps.setDouble(1, service);
             ps.setDouble(2, electric);
             ps.setDouble(3, water);
-            ps.setDouble(4, roomFee);
+            ps.setBigDecimal(4, roomFee);
             ps.setDouble(5, other);
             ps.setDouble(6, penMoney);
             ps.setString(7, deadline);
             ps.setString(8, payAt);
-            ps.setInt(9, roomID);
+            ps.setInt(9, billID);
 
             int rowsAffected = ps.executeUpdate();
 
@@ -166,7 +169,7 @@ public class BillDAO extends MyDAO {
     }
 
     public boolean updateRequestByID(int requestID, int requestType, String title, String description, String creatAt, String resStatus) {
-        String sql = "UPDATE [GreenRoom].[dbo].[request]\n"
+        String sql = "UPDATE [HL_Motel].[dbo].[request]\n"
                 + "SET [requestType] = ?, [title] = ?, [description] = ?, [createAt] = ?, [resStatus] = ?, [reply] = ?\n"
                 + "WHERE [requestID] = ?;";
 
@@ -197,9 +200,7 @@ public class BillDAO extends MyDAO {
     }
 
     public UsagePrice getEWPrice() {
-        String sql = "SELECT  [Electric_Price]\n"
-                + "      ,[Water_Block_Price]\n"
-                + "  FROM [GreenRoom].[dbo].[Usage_Price]";
+        String sql = "Select Electric_Price, Water_Block_Price from usagePrice";
         try {
             ps = con.prepareStatement(sql);
 
@@ -219,8 +220,31 @@ public class BillDAO extends MyDAO {
 
     public static void main(String[] args) {
         BillDAO dao = new BillDAO();
-        Bill bill = new Bill();
-        boolean result = dao.addFeeById(1, 100000, 100000, 100000, 100000, 100000, 100000, "2022-09-30 00:00:00.000", "2022-09-30 00:00:00.000", null);
-        System.out.println(result);
+//        int billID = 41; // Example room ID
+//        double service = 200.0;
+//        double electric = 150.0;
+//        double water = 100.0;
+//        BigDecimal roomFee = new BigDecimal("9900.00");
+//        double other = 50.0;
+//        double penMoney = 25.0;
+//        String deadline = "2024-12-31";
+//        String createAt = "2024-07-08";
+//        String payAt = null;
+//
+//        //Call updateFeeById method and check the result
+//        boolean result = dao.updateFeeById(billID, service, electric, water, roomFee, other, penMoney, deadline, payAt);
+////     boolean result = dao.addFeeById(billID, service, electric, water, roomFee, other, penMoney, createAt, deadline, payAt);
+//        if (result) {
+//            System.out.println("Fee update successful.");
+//        } else {
+//            System.out.println("Fee update failed.");
+//        }
+
+        UsagePrice price = dao.getEWPrice();
+        
+        System.out.println(price.getWprice());
     }
+
 }
+
+

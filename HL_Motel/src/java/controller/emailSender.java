@@ -10,9 +10,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.mail.*;
 import javax.mail.internet.*;
 import model.Account;
@@ -20,6 +23,8 @@ import model.User;
 
 @WebServlet(name = "emailSender", urlPatterns = {"/emailSender"})
 public class emailSender extends HttpServlet {
+
+    private static final String PHONE_NUMBER_REGEX = "^0\\d{9}$";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -32,7 +37,25 @@ public class emailSender extends HttpServlet {
         String dob = request.getParameter("dob");
         String password = request.getParameter("password");
         String address = request.getParameter("address");
-        
+        List<Account> listAccount = dao.getListAccount();
+
+        // phone_regex
+        Pattern phone_number_pattern = Pattern.compile(PHONE_NUMBER_REGEX);
+        Matcher matcher = phone_number_pattern.matcher(phone);
+        if (!matcher.matches()) {
+            request.setAttribute("error", "Invalid phone number!!!");
+            request.getRequestDispatcher("register.jsp").forward(request, response);            
+        }
+
+        // check exist email
+        for (Account account : listAccount) {
+            if (email.equals(account.getUserMail())) {
+                request.setAttribute("error", "Email already exists!!!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);              
+            }
+        }
+
+        // random otp
         String code = generateRandomCode();
         // send email
         boolean emailSent = sendEmail(email, code);
@@ -42,7 +65,7 @@ public class emailSender extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("authCode", code);
             session.setAttribute("codeGeneratedTime", System.currentTimeMillis());
-            
+
             session.setAttribute("email", email);
             session.setAttribute("phone", phone);
             session.setAttribute("username", username);
@@ -56,8 +79,7 @@ public class emailSender extends HttpServlet {
         } else {
             response.getWriter().println("Sending email failed. Please try again.");
         }
-        
-        
+
     }
 
     private boolean sendEmail(String recipient, String code) throws UnsupportedEncodingException {

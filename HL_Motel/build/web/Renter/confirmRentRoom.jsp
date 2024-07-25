@@ -3,8 +3,9 @@
 <%@ page import="java.util.Base64" %>
 <%@ page import="java.text.DecimalFormat" %>
 
-<% RoomDetailSe roomDetail = (RoomDetailSe) request.getAttribute("roomDetail"); %>
-<% int roomID = (int) request.getAttribute("roomID"); %>
+<% RoomDetailSe roomDetail = (RoomDetailSe) request.getAttribute("roomDetail");  
+   int userID = (int) request.getAttribute("userID"); 
+%>
 
 <!doctype html>
 <html lang="en">
@@ -187,12 +188,15 @@
                                         <td><%= formattedFeeTotal %>k VND</td> 
                                     </tr>
                                 </table>
-                                <form action="" method="post">
-                                    <input type="hidden" name="roomId" value="<%= roomDetail.getRoomID() %>">
+                                <form action="VNPay_PaymentController" method="post">
+                                    <input type="hidden" name="roomID" value="<%= roomDetail.getRoomID() %>">
+                                    <input type="hidden" name="amount" value="<%= formattedFeeTotal %>">
+                                    <input type="hidden" name="userID" value="<%= userID %>">
+                                    <input type="hidden" name="flag" value="1">
                                     <div class="payment-options">
                                         <button type="submit" name="paymentMethod" value="cash">Pay with Cash</button>
                                         <button type="submit" name="paymentMethod" value="online">Pay Online</button>
-                                        <a href="RenterRoomController?service=cancelRoom&roomID=<%= roomID %>" class="cancel-link">Cancel payment</a>
+                                        <a href="RenterRoomController?service=cancelRoom&roomID=<%= roomDetail.getRoomID() %>" class="cancel-link">Cancel payment</a>
                                     </div>
                                 </form>
                             </div>

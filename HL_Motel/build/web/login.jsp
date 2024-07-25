@@ -4,14 +4,16 @@
     Author     : yetvv.piacom
 --%>
 
+<% String error = (String) request.getAttribute("error"); %>
+
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
-       
-        <link rel="icon" href="home-guest/favicon.png">
+
+        <link rel="shortcut icon" href="images/favicon.png">
         <link rel="stylesheet" href="css/login.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -19,6 +21,9 @@
     <body>
         <div class="container1">
             <div class="title">Login</div>
+            <% if (error != null) { %>
+            <h3 style="color: #FF0E0E; margin-top: 20px;"><%= error %></h3>
+            <% } %>
             <h3 style="color: #FF0E0E; margin-top: 20px;">${message}</h3>
             <div class="content">
                 <form id="loginForm" action="login" method="post" onsubmit="return validateRecaptcha();">
@@ -49,18 +54,23 @@
                         <a href="forgotPassword.jsp"><input type="button" value="Forgot password"></a>
                     </div>
                 </div>
+                <div class="form1">
+                    <div class="button">
+                        <a href="GuestController"><input type="button" value="Back to Home"></a>
+                    </div>
+                </div>
             </div>
         </div>
 
-<!--        <script>
-            function validateRecaptcha() {
-                var response = grecaptcha.getResponse();
-                if (response.length == 0) {
-                    alert("Please complete the reCAPTCHA");
-                    return false;
-                }
-                return true;
-            }
-        </script>-->
+        <!--        <script>
+                    function validateRecaptcha() {
+                        var response = grecaptcha.getResponse();
+                        if (response.length == 0) {
+                            alert("Please complete the reCAPTCHA");
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>-->
     </body>
 </html>

@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dao.UserDAO, dao.RoomDAO"%>
+<%@page import="jakarta.servlet.http.HttpSession"%>
+<%@page import="model.Rooms, model.User" %>
 <% String service = (String) request.getParameter("service"); %>
 <!DOCTYPE html>
 <html>
@@ -28,6 +31,12 @@
         <link rel="stylesheet" href="../css/tiny-slider.css">
         <link rel="stylesheet" href="../css/aos.css">
         <link rel="stylesheet" href="../css/style.css">
+        
+        <!-- Include jQuery from a CDN -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
         <title>Hola Motel</title>
     </head>
@@ -37,23 +46,39 @@
             <li class="has-children <%= "pagingRoom".equals(service) ? "active" : "" %>">
                 <a href="#">View</a>
                 <ul class="dropdown">
-                    <li><a href="OwnerController?service=pagingRoom&index=1">List of room</a></li>
-                    <li><a href="#">Security</a></li>
+                    <li><a href="OwnerController?service=pagingRoom&index=1">List of rooms</a></li>
+                    <li><a href="OwnerController?service=listrequest">List of Request</a></li>
+                    <li><a href="ListRenterController">List of renter</a></li>
                 </ul>
             </li>               
             <li><a href="#">Payment</a></li>
             <li><a href="#">Renter Management</a></li>
-            <li class="has-children">
+            <li class="dropdown has-children <%=("displayNews".equals(service) || "addnews".equals(service) || "ruleList".equals(service) || "addGuideline".equals(service)
+                    || "penaltys".equals(service)) ? "active" : "" %>">
                 <a href="#">Manage</a>
                 <ul class="dropdown">
-                    <li><a href="#">Rule</a></li>
-                    <li><a href="#">News</a></li>
+                    <li><a href="ruleList?service=ruleList">Rule</a></li>
+                    <li><a href="displayNews?service=displayNews">News</a></li>
+                    <li><a href="guidelines?service=guidelines">GuildLine</a></li>
+                    <li><a href="penaltys?service=penaltys">Penalty</a></li>
                 </ul>
             </li>
-            <li><a href="login.html">Login</a></li>
+            <li><a href="logout">Logout</a></li>
+            <% UserDAO daoUser = new UserDAO();
+               RoomDAO daoRoom = new RoomDAO();
+               HttpSession session_navbar = request.getSession();
+               User getImageUser = null;
+               
+               String email = (String) session.getAttribute("email");
+               String password = (String) session.getAttribute("password");
+               int userID = daoUser.getUserIDByEmailAndPassword(email, password);
+               if (userID != 0) {
+                   getImageUser = daoRoom.getOwnerProfileByID(userID);
+                }
+            %>
             <li>
                 <a href="OwnerController?service=ownerProfile">
-                    <img src="images/firefly.jpg" alt="Profile Image" width="30px" height="30px" style="border-radius: 10px;">
+                    <img src="data:image/jpg;base64,<%= getImageUser.getUserAvatar() %>" alt="Profile Image" width="30px" height="30px" style="border-radius: 10px;">
                 </a>
             </li>
         </ul>

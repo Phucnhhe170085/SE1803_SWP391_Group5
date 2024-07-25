@@ -122,27 +122,27 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Full Name</label>
-                                <input type="text" class="form-control" placeholder="Full Name" value="<%= renterProfile.getUserName() %>">
+                                <input type="text" class="form-control" placeholder="Full Name" value="<%= renterProfile.getUserName() %>" readonly="">
                             </div>
                             <div class="col-md-6">
                                 <label>Phone Number</label>
-                                <input type="text" class="form-control" value="<%= renterProfile.getUserPhone() %>" placeholder="Phone number">
+                                <input type="text" class="form-control" value="<%= renterProfile.getUserPhone() %>" placeholder="Phone number" readonly="">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <label>Gender</label>
-                                <input type="text" class="form-control" value="<%= renterProfile.getUserGender() %>" placeholder="Gender">
+                                <input type="text" class="form-control" value="<%= renterProfile.getUserGender() %>" placeholder="Gender" readonly="">
                             </div>
                             <div class="col-md-6">
                                 <label>BirthDay</label>
-                                <input type="text" class="form-control" value="<%= renterProfile.getUserBirth() %>" placeholder="BirthDay">
+                                <input type="text" class="form-control" value="<%= renterProfile.getUserBirth() %>" placeholder="BirthDay" readonly="">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label>Address</label>
-                                <input type="text" class="form-control" value="<%= renterProfile.getUserAddress() %>" placeholder="Address">
+                                <input type="text" class="form-control" value="<%= renterProfile.getUserAddress() %>" placeholder="Address" readonly="">
                             </div>                            
                         </div>
                         <div class="mt-5 text-right"></div>

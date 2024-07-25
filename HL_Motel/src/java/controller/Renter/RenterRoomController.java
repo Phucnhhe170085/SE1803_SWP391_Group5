@@ -6,6 +6,7 @@ package controller.Renter;
 
 import dao.RenterDAO;
 import dao.RoomDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.RoomDetailSe;
 import model.Rooms;
+import model.UserDetail;
 
 /**
  *
@@ -54,18 +56,29 @@ public class RenterRoomController extends HttpServlet {
     }
 
     private void listRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RoomDAO dao = new RoomDAO();
+        RoomDAO roomDAO = new RoomDAO();
+        UserDAO userDAO = new UserDAO();
+        RenterDAO renterDAO = new RenterDAO();
+        HttpSession session = request.getSession();
+        
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
+        UserDetail userDetail = renterDAO.RenterBasicDetail(email, password);
+        int userID = userDetail.getUserID();
+        int isRenter = userDAO.isRenter(userID);
         int index = Integer.parseInt(request.getParameter("index"));
         if (index == 0) {
             index = 1;
         }
-        List<Rooms> rooms = dao.pagingRoom(index);
-        List<Rooms> allRooms = dao.getRooms();
-        int totalRoom = dao.getTotalRoom();
+        List<Rooms> rooms = roomDAO.pagingRoom(index, 0);
+        List<Rooms> allRooms = roomDAO.getRooms();
+        int totalRoom = roomDAO.getTotalRoom();
         int totalPage = totalRoom / 6;
         if (totalPage % 6 != 0) {
             totalPage++;
         }
+        
+        request.setAttribute("isRenter", isRenter);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("index", index);
         request.setAttribute("rooms", rooms);
@@ -85,18 +98,23 @@ public class RenterRoomController extends HttpServlet {
     }
 
     private void rentRoom(HttpServletRequest request, HttpServletResponse response, int flag) throws ServletException, IOException {
-        RenterDAO dao = new RenterDAO();
+        RenterDAO daoRenter = new RenterDAO();
         RoomDAO daoRoom = new RoomDAO();
+        HttpSession session = request.getSession();
         int roomID = Integer.parseInt(request.getParameter("roomID"));
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
 
         if (flag == 0) {
-            boolean lockRoom = dao.lockRoom(roomID);
+            boolean lockRoom = daoRenter.lockRoom(roomID);
             RoomDetailSe roomDetail = daoRoom.getRoomDetail(roomID);
+            UserDetail basicUserDetail = daoRenter.RenterBasicDetail(email, password);
+            int userID = basicUserDetail.getUserID();
+            request.setAttribute("userID", userID);
             request.setAttribute("roomDetail", roomDetail);
-            request.setAttribute("roomID", roomID);
             request.getRequestDispatcher("Renter/confirmRentRoom.jsp").forward(request, response);
         } else if (flag == 1) {
-            boolean unlockRoom = dao.unlockRoom(roomID);
+            boolean unlockRoom = daoRenter.unlockRoom(roomID);
             request.getRequestDispatcher("RenterRoomController?service=listRoom&index=1").forward(request, response);
         }
     }

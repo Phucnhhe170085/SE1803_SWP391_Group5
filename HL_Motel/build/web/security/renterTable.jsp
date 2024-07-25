@@ -15,7 +15,7 @@
         <meta name="author" content="" />
         <title>Tables - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="SecurityCSS/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -108,8 +108,8 @@
                                             <th>Room ID</th>
                                             <th>Renter Status</th>
                                             <th>Renter Have Room</th>
-                                            <th>CGR Score</th>
-                                            <th>Balance</th>
+                                            
+                                            
 
                                         </tr>
                                     </thead>
@@ -118,10 +118,12 @@
                                             <th>Renter Name</th>
                                             <th>Gender</th>
                                             <th>Room ID</th>
+                                            
                                             <th>Renter Status</th>
+                                            
                                             <th>Renter Have Room</th>
-                                            <th>CGR Score</th>
-                                            <th>Balance</th>
+                                           
+                                            
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -131,10 +133,23 @@
                                             <td>${t.userName}</td>
                                             <td>${t.userGender}</td>
                                             <td>${t.roomID}</td>
-                                            <td>${t.renterStatus}</td>
+                                            
+                                            
+                                            <c:choose>
+                                                    <c:when test="${t.renterStatus == true}">
+                                                        <td>Online</td>
+                                                    </c:when>
+                                                    <c:when test="${t.renterStatus == false}">
+                                                        <td>Offline</td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td>Hanging</td>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            
                                             <td>${t.renterHaveRoom}</td>
-                                            <td>${t.CGRScore}</td>
-                                            <td>${t.balance}</td>
+                                           
+                                            
                                             
                                         </tr>
                                     </c:forEach>
@@ -160,8 +175,8 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="SecurityCSS/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="SecurityCSS/js/datatables-simple-demo.js"></script>
     </body>
 </html>

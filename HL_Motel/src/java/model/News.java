@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.util.Date;
+
 
 /**
  *
@@ -12,24 +12,31 @@ import java.util.Date;
  */
 public class News {
 
-    private String newId;
+    private int newId;
     private String newTitle;
     private String description;
     private String img;
-    private Date createAt;
+    private String createAt;
 
     public News() {
     }
 
-    public News(String newId, String newTitle, String description) {
+    public News(int newId, String newTitle, String description) {
         this.newId = newId;
         this.newTitle = newTitle;
         this.description = description;
     }
 
+    public News(String newTitle, String description, String img, String createAt) {
+        this.newTitle = newTitle;
+        this.description = description;
+        this.img = img;
+        this.createAt = createAt;
+    }
+
     
     
-    public News(String newId, String newTitle, String description, String img, Date createAt) {
+    public News(int newId, String newTitle, String description, String img, String createAt) {
         this.newId = newId;
         this.newTitle = newTitle;
         this.description = description;
@@ -37,11 +44,11 @@ public class News {
         this.createAt = createAt;
     }
 
-    public String getNewId() {
+    public int getNewId() {
         return newId;
     }
 
-    public void setNewId(String newId) {
+    public void setNewId(int newId) {
         this.newId = newId;
     }
 
@@ -69,11 +76,11 @@ public class News {
         this.img = img;
     }
 
-    public Date getCreateAt() {
+    public String getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Date createAt) {
+    public void setCreateAt(String createAt) {
         this.createAt = createAt;
     }
 

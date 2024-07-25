@@ -6,6 +6,7 @@
     List<Rooms> listAllRoom = (List<Rooms>) request.getAttribute("allRooms");
     int totalPage = (int) request.getAttribute("totalPage");
     int index = (int) request.getAttribute("index");
+    int isRenter = (int) request.getAttribute("isRenter");
 %>
 <!doctype html>
 <html lang="en">
@@ -181,7 +182,15 @@
                 border-color: #007bff;
             }
 
-
+            .rented-room-message {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                text-align: center;
+            }
         </style>
     </head>
     <body>
@@ -200,7 +209,7 @@
             <div class="container">
                 <div class="menu-bg-wrap">
                     <div class="site-navigation">
-                        <a href="OwnerHome.jsp" class="logo m-0 float-start">Room</a>
+                        <a href="rentercontroller?service=renterhome" class="logo m-0 float-start">Room</a>
 
                         <jsp:include page = "navbar.jsp"></jsp:include>
 
@@ -235,7 +244,7 @@
             <div class="section section-properties" style="padding-bottom: 30px">
                 <div class="container main-container">
                     <div class="row">
-                        <!-- search -->
+                        <!-- Search and Filter -->
                         <div class="col-lg-3" style="margin-left: -80px;">
                             <div class="search-filter">
                                 <div class="search-container">
@@ -243,7 +252,7 @@
                                 </div>
 
                                 <div class="price-range">
-                                    <label style="margin: 0px; padding-bottom: 0px" class="price-label">Price Levels</label><br>
+                                    <label class="price-label">Price Levels</label><br>
                                     <input type="checkbox" id="priceAll" name="priceRange" value="all" class="price-input" onclick="filterRooms(this)">
                                     <label for="priceAll" class="price-label">All</label><br>
                                     <input type="checkbox" id="priceBelow1M" name="priceRange" value="below1M" class="price-input" onclick="filterRooms(this)">
@@ -255,95 +264,101 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end search -->
+                        <!-- End Search and Filter -->
 
-                        <!-- room detail -->
-                        <div class="col-lg-9" id="roomListContainer">
+                        <div class="col-lg-9">
+                        <% if (isRenter != 0) { %>
+                        <!-- Rented Room Message -->
+                        <div class="rented-room-message text-center">
+                            <p>You have already rented a room</p>
+                        </div>
+                        <% } %>
+
+                        <% if (isRenter == 0) { %>
+                        <!-- Available Rooms -->
+                        <div id="roomListContainer">
                             <div id="roomList" class="room-list-container row">
-                            <% for (int i = 0; i < listRoom.size(); i++) { 
-                                   if (listRoom.get(i).getRoomStatus() == 1) {
-                            %>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-room-name="<%= listRoom.get(i).getRoomNumber() %>" data-room-price="<%= listRoom.get(i).getRoomFee().longValue() %>">
-                                <div class="property-item mb-30">
-                                    <a href="OwnerController?service=roomDetail&roomID=<%= listRoom.get(i).getRoomID()%>" class="img">
-                                        <% String base64Image = listRoom.get(i).getRoomImg(); %>
-                                        <img src="data:image/jpg;base64,<%= base64Image %>" class="img-fluid" style="height: 350px; width: 100%;">
-                                    </a>
-                                    <div class="property-content">
-                                        <div class="price mb-2"><span><%= listRoom.get(i).getRoomFee().longValue()%>k VND</span></div>
-                                        <div>
-                                            <span class="d-block mb-2 text-black-50">Thon 3, Tan Xa, Thach That</span>
-                                            <span class="city d-block mb-3">Room <%= listRoom.get(i).getRoomNumber()%></span>
-                                            <div class="specs d-flex mb-4">
-                                                <span class="d-block d-flex align-items-center me-3">
-                                                    <span class="icon-bed me-2"></span>
-                                                    <span class="caption"><%= listRoom.get(i).getRoomSize()%> beds</span>
-                                                </span>
-                                                <span class="d-block d-flex align-items-center">
-                                                    <span class="icon-building me-2"></span>
-                                                    <span class="caption"><%= listRoom.get(i).getRoomFloor()%> Floor</span>
-                                                </span>
+                                <% for (Rooms room : listRoom) { 
+                            if (room.getRoomStatus() == 1) { %>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-room-name="<%= room.getRoomNumber() %>" data-room-price="<%= room.getRoomFee().longValue() %>">
+                                    <div class="property-item mb-30">
+                                        <a href="OwnerController?service=roomDetail&roomID=<%= room.getRoomID() %>" class="img">
+                                            <% String base64Image = room.getRoomImg(); %>
+                                            <img src="data:image/jpg;base64,<%= base64Image %>" class="img-fluid" style="height: 350px; width: 100%;">
+                                        </a>
+                                        <div class="property-content">
+                                            <div class="price mb-2"><span><%= room.getRoomFee().longValue() %>k VND</span></div>
+                                            <div>
+                                                <span class="d-block mb-2 text-black-50">Thon 3, Tan Xa, Thach That</span>
+                                                <span class="city d-block mb-3">Room <%= room.getRoomNumber() %></span>
+                                                <div class="specs d-flex mb-4">
+                                                    <span class="d-block d-flex align-items-center me-3">
+                                                        <span class="icon-bed me-2"></span>
+                                                        <span class="caption"><%= room.getRoomSize() %> beds</span>
+                                                    </span>
+                                                    <span class="d-block d-flex align-items-center">
+                                                        <span class="icon-building me-2"></span>
+                                                        <span class="caption"><%= room.getRoomFloor() %> Floor</span>
+                                                    </span>
+                                                </div>
+                                                <a style="margin-right: 53px" href="RenterRoomController?service=roomDetail&roomID=<%= room.getRoomID() %>" class="btn btn-primary py-2 px-3">See details</a>
+                                                <a style="background-color: #17a2b8;" href="RenterRoomController?service=rentRoom&roomID=<%= room.getRoomID() %>" class="btn btn-rent py-2 px-3">Rent</a>
                                             </div>
-                                            <a style="margin-right: 53px" href="RenterRoomController?service=roomDetail&roomID=<%= listRoom.get(i).getRoomID()%>" class="btn btn-primary py-2 px-3">See details</a>
-                                            <a style="background-color: #17a2b8;" href="RenterRoomController?service=rentRoom&roomID=<%= listRoom.get(i).getRoomID()%>" class="btn btn-rent py-2 px-3">Rent</a>
                                         </div>
                                     </div>
                                 </div>
+                                <% } } %>
                             </div>
-                            <%      } 
-                                }
-                            %>
                         </div>
-                    </div> 
-                    <!-- room detail end -->
+                        <!-- End Available Rooms -->
 
-                    <!-- all rooms detail -->
-                    <div class="col-lg-9" id="allRoomListContainer" style="display: none;">
-                        <div id="allRoomList" class="room-list-container row">
-                            <% for (int i = 0; i < listAllRoom.size(); i++) { 
-                                   if (listAllRoom.get(i).getRoomStatus() == 1) {
-                            %>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-room-name="<%= listAllRoom.get(i).getRoomNumber() %>" data-room-price="<%= listAllRoom.get(i).getRoomFee().longValue() %>">
-                                <div class="property-item mb-30">
-                                    <a href="OwnerController?service=roomDetail&roomID=<%= listAllRoom.get(i).getRoomID()%>" class="img">
-                                        <% String base64Image = listAllRoom.get(i).getRoomImg(); %>
-                                        <img src="data:image/jpg;base64,<%= base64Image %>" class="img-fluid" style="height: 350px; width: 100%;">
-                                    </a>
-                                    <div class="property-content">
-                                        <div class="price mb-2"><span><%= listAllRoom.get(i).getRoomFee().longValue()%>k VND</span></div>
-                                        <div>
-                                            <span class="d-block mb-2 text-black-50">Thon 3, Tan Xa, Thach That</span>
-                                            <span class="city d-block mb-3">Room <%= listAllRoom.get(i).getRoomNumber()%></span>
-                                            <div class="specs d-flex mb-4">
-                                                <span class="d-block d-flex align-items-center me-3">
-                                                    <span class="icon-bed me-2"></span>
-                                                    <span class="caption"><%= listAllRoom.get(i).getRoomSize()%> beds</span>
-                                                </span>
-                                                <span class="d-block d-flex align-items-center">
-                                                    <span class="icon-building me-2"></span>
-                                                    <span class="caption"><%= listAllRoom.get(i).getRoomFloor()%> Floor</span>
-                                                </span>
+                        <!-- All Rooms -->
+                        <div id="allRoomListContainer" style="display: none;">
+                            <div id="allRoomList" class="room-list-container row">
+                                <% for (Rooms room : listAllRoom) { 
+                            if (room.getRoomStatus() == 1) { %>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-room-name="<%= room.getRoomNumber() %>" data-room-price="<%= room.getRoomFee().longValue() %>">
+                                    <div class="property-item mb-30">
+                                        <a href="OwnerController?service=roomDetail&roomID=<%= room.getRoomID() %>" class="img">
+                                            <% String base64Image = room.getRoomImg(); %>
+                                            <img src="data:image/jpg;base64,<%= base64Image %>" class="img-fluid" style="height: 350px; width: 100%;">
+                                        </a>
+                                        <div class="property-content">
+                                            <div class="price mb-2"><span><%= room.getRoomFee().longValue() %>k VND</span></div>
+                                            <div>
+                                                <span class="d-block mb-2 text-black-50">Thon 3, Tan Xa, Thach That</span>
+                                                <span class="city d-block mb-3">Room <%= room.getRoomNumber() %></span>
+                                                <div class="specs d-flex mb-4">
+                                                    <span class="d-block d-flex align-items-center me-3">
+                                                        <span class="icon-bed me-2"></span>
+                                                        <span class="caption"><%= room.getRoomSize() %> beds</span>
+                                                    </span>
+                                                    <span class="d-block d-flex align-items-center">
+                                                        <span class="icon-building me-2"></span>
+                                                        <span class="caption"><%= room.getRoomFloor() %> Floor</span>
+                                                    </span>
+                                                </div>
+                                                <a style="margin-right: 53px" href="RenterRoomController?service=roomDetail&roomID=<%= room.getRoomID() %>" class="btn btn-primary py-2 px-3">See details</a>
+                                                <a style="background-color: #17a2b8;" href="RenterRoomController?service=rentRoom&roomID=<%= room.getRoomID() %>" class="btn btn-rent py-2 px-3">Rent</a>
                                             </div>
-                                            <a style="margin-right: 53px" href="RenterRoomController?service=roomDetail&roomID=<%= listAllRoom.get(i).getRoomID()%>" class="btn btn-primary py-2 px-3">See details</a>
-                                            <a style="background-color: #17a2b8;" href="RenterRoomController?service=rentRoom&roomID=<%= listAllRoom.get(i).getRoomID()%>" class="btn btn-rent py-2 px-3">Rent</a>
                                         </div>
                                     </div>
                                 </div>
+                                <% } } %>
                             </div>
-                            <%      } 
-                                }
-                            %>
                         </div>
+                        <!-- End All Rooms -->
+                        <% } %>
                     </div>
-                    <!-- all rooms detail end -->
                 </div>
             </div>
         </div>
 
+
         <!-- paging -->
         <div class="pagination" style="margin: 0px; padding-bottom: 50px">
             <% for (int i = 0; i < totalPage; i++) { %>
-            <a href="OwnerController?service=pagingRoom&index=<%=i+1%>" class="<%= (i + 1 == index) ? "active" : "" %>"><%= i + 1 %></a>
+            <a href="RenterRoomController?service=listRoom&index=<%=i+1%>" class="<%= (i + 1 == index) ? "active" : "" %>"><%= i + 1 %></a>
             <% } %>
         </div>  
 
@@ -373,14 +388,6 @@
                                 <li><a href="#">Mission</a></li>
                                 <li><a href="#">Terms</a></li>
                                 <li><a href="#">Privacy</a></li>
-                            </ul>
-                            <ul class="list-unstyled float-start links">
-                                <li><a href="#">Partners</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Creative</a></li>
                             </ul>
                         </div> <!-- /.widget -->
                     </div> <!-- /.col-lg-4 -->

@@ -32,15 +32,11 @@ public class LogoutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-//        session.removeAttribute("user");
-//        session.removeAttribute("userID");
-//        session.removeAttribute("userRole");
-        session.invalidate();
-//      session.removeAttribute("renterID").toString();
-//      session.removeAttribute("userName").toString();
-//      session.removeAttribute("avatar").toString();
-        response.sendRedirect("login");
+         HttpSession session = request.getSession(false); // Fetch session if exists
+        if (session != null) {
+            session.invalidate(); // Invalidate the session
+        }
+        response.sendRedirect("login.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -38,7 +38,7 @@ public class EditRequestController extends HttpServlet {
             request.setAttribute("reqID", reqIdParam);
             if (reqIdParam != null) {
                 int requestId = Integer.parseInt(reqIdParam);
-                RequestList requestDetails = requestDAO.getRequestByID(requestId);
+                RequestList requestDetails = requestDAO.getRequestByReqID(requestId);
                 request.setAttribute("requestDetails", requestDetails);
             }
         } else {

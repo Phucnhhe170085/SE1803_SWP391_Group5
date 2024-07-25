@@ -39,15 +39,9 @@
                 <ul class="dropdown">
                     <li><a href="GuestController?service=ListRoom&index=1">List of rooms</a></li>
                 </ul>
-            </li>
-            <li><a href="#">Payment</a></li>
-            <li><a href="about.html">About</a></li>
+            </li>               
+            <li><a href="register.jsp">Sign up</a></li>
             <li><a href="login.jsp">Login</a></li>
-<!--            <li>
-                <a href="OwnerController?service=ownerProfile">
-                    <img src="images/firefly.jpg" alt="Profile Image" width="30px" height="30px" style="border-radius: 10px;">
-                </a>
-            </li>-->
         </ul>
 
         <script src="../js/bootstrap.bundle.min.js"></script>

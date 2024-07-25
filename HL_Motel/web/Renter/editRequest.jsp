@@ -118,7 +118,8 @@
                             <input type="text" name="resStatus" class="form-control" value="${requestDetails.resStatus}" readonly>
                         </div>
                         <div></br></div>
-                        <button" type="submit" class="btn btn-primary">Update Request</button>
+                        <button type="submit" class="btn btn-primary">Update Request</button>
+
                     </form>
                 </div>
             </div>

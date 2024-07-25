@@ -21,10 +21,6 @@
         <link rel="stylesheet" href="css/aos.css">
         <link rel="stylesheet" href="css/style.css">
 
-
-
-
-
         <!-- Favicons -->
         <link rel="shortcut icon" href="images/favicon.png">
         <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -61,7 +57,7 @@
             <div class="container">
                 <div class="menu-bg-wrap">
                     <div class="site-navigation">
-                        <a href="OwnerHome.jsp" class="logo m-0 float-start">Owner</a>
+                        <a href="OwnerController?service=OwnerHome" class="logo m-0 float-start">Owner</a>
 
                         <jsp:include page = "navbar.jsp"></jsp:include>
 
@@ -89,7 +85,7 @@
                                                 <span class="color-b">The </span> Best
                                                 <br> Motel in Hoa Lac</h1>
                                             <p class="intro-subtitle intro-price">
-                                                <a href="#"><span class="price-a">From only 1.5 million VND</span></a>
+                                                <a href="#"><span class="price-a">From only 800 thousand VND</span></a>
                                             </p>
                                         </div>
                                     </div>
@@ -152,20 +148,19 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="widget-a">
                             <div class="w-header-a">
-                                <h3 class="w-title-a text-brand">EstateAgency</h3>
+                                <h3 class="w-title-a text-brand">HoLa Motel</h3>
                             </div>
                             <div class="w-body-a">
                                 <p class="w-text-a color-text-a">
-                                    Enim minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip exea commodo consequat duis
-                                    sed aute irure.
+                                    This is a Hoa Lac boarding house business project, providing FPT students with the most reasonably priced and cleanest rooms.
                                 </p>
                             </div>
                             <div class="w-footer-a">
                                 <ul class="list-unstyled">
                                     <li class="color-a">
-                                        <span class="color-text-a">Phone .</span> contact@example.com</li>
+                                        <span class="color-text-a">Phone .</span> 0123456789 </li>
                                     <li class="color-a">
-                                        <span class="color-text-a">Email .</span> +54 356 945234</li>
+                                        <span class="color-text-a">Email .</span> annqhe171660@fpt.edu.com</li>
                                 </ul>
                             </div>
                         </div>
@@ -173,28 +168,28 @@
                     <div class="col-sm-12 col-md-4 section-md-t3">
                         <div class="widget-a">
                             <div class="w-header-a">
-                                <h3 class="w-title-a text-brand">The Company</h3>
+                                <h3 class="w-title-a text-brand">Hola Motel</h3>
                             </div>
                             <div class="w-body-a">
                                 <div class="w-body-a">
                                     <ul class="list-unstyled">
                                         <li class="item-list-a">
-                                            <i class="fa fa-angle-right"></i> <a href="#">Site Map</a>
+                                            <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                         </li>
                                         <li class="item-list-a">
-                                            <i class="fa fa-angle-right"></i> <a href="#">Legal</a>
+                                            <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                         </li>
                                         <li class="item-list-a">
-                                            <i class="fa fa-angle-right"></i> <a href="#">Agent Admin</a>
+                                            <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                         </li>
                                         <li class="item-list-a">
-                                            <i class="fa fa-angle-right"></i> <a href="#">Careers</a>
+                                            <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                         </li>
                                         <li class="item-list-a">
-                                            <i class="fa fa-angle-right"></i> <a href="#">Affiliate</a>
+                                            <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                         </li>
                                         <li class="item-list-a">
-                                            <i class="fa fa-angle-right"></i> <a href="#">Privacy Policy</a>
+                                            <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -204,27 +199,27 @@
                     <div class="col-sm-12 col-md-4 section-md-t3">
                         <div class="widget-a">
                             <div class="w-header-a">
-                                <h3 class="w-title-a text-brand">International sites</h3>
+                                <h3 class="w-title-a text-brand">Hola Motel</h3>
                             </div>
                             <div class="w-body-a">
                                 <ul class="list-unstyled">
                                     <li class="item-list-a">
-                                        <i class="fa fa-angle-right"></i> <a href="#">Venezuela</a>
+                                        <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                     </li>
                                     <li class="item-list-a">
-                                        <i class="fa fa-angle-right"></i> <a href="#">China</a>
+                                        <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                     </li>
                                     <li class="item-list-a">
-                                        <i class="fa fa-angle-right"></i> <a href="#">Hong Kong</a>
+                                        <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                     </li>
                                     <li class="item-list-a">
-                                        <i class="fa fa-angle-right"></i> <a href="#">Argentina</a>
+                                        <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                     </li>
                                     <li class="item-list-a">
-                                        <i class="fa fa-angle-right"></i> <a href="#">Singapore</a>
+                                        <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                     </li>
                                     <li class="item-list-a">
-                                        <i class="fa fa-angle-right"></i> <a href="#">Philippines</a>
+                                        <i class="fa fa-angle-right"></i> <a href="#">Sample</a>
                                     </li>
                                 </ul>
                             </div>
@@ -285,15 +280,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="copyright-footer">
-                            <p class="copyright color-text-a">
-                                &copy; Copyright
-                                <span class="color-a">EstateAgency</span> All Rights Reserved.
-                            </p>
-                        </div>
-                        <div class="credits">
-                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                        </div>
+
                     </div>
                 </div>
             </div>

@@ -8,7 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.RenterList;
 
@@ -29,14 +28,6 @@ public class ListRenterController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        if (email == null) {
-            request.setAttribute("error", "You have to login first!!!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            return;
-        }        
-        
         RenterDAO renterDAO = new RenterDAO();
         List<RenterList> renters = renterDAO.getListRenters();
         

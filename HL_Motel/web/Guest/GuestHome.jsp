@@ -16,7 +16,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
 
         <link rel="stylesheet" href="fonts/icomoon/style.css">
         <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
@@ -46,35 +46,45 @@
 
                         <jsp:include page = "navbar.jsp"></jsp:include>
 
-                        <a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-                            <span></span>
-                        </a>
+                            <a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
+                                <span></span>
+                            </a>
 
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="hero">
+                <div class="hero-slide">
+                    <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
+                    <div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
+                    <div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-9 text-center">
+                            <h1 class="heading" data-aos="fade-up">Hoa Lac Motel - The Motel For college student</h1>
+
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </nav>
 
-        <div class="hero">
-            <div class="hero-slide">
-                <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
-                <div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
-                <div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
-            </div>
-        </div>
 
-        <div class="section">
-            <div class="container">
-                <div class="row mb-5 align-items-center">
-                    <div class="col-lg-12 text-lg-end">
-                        <p><a href="GuestController?service=ListRoom&index=1" class="btn btn-primary text-white py-3 px-4">View list rooms</a></p>
+            <div class="section">
+                <div class="container">
+                    <div class="row mb-5 align-items-center">
+                        <div class="col-lg-12 text-lg-end">
+                            <p><a href="GuestController?service=ListRoom&index=1" class="btn btn-primary text-white py-3 px-4">View list rooms</a></p>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="property-slider-wrap">
-                            <div class="property-slider">
-                               <% for (int i = 0; i <= 4; i++) { %>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="property-slider-wrap">
+                                <div class="property-slider">
+                                <% for (int i = 0; i <= 4; i++) { %>
                                 <div class="property-item">
                                     <a href="OwnerController?service=roomDetail&roomID=<%= listRoom.get(i).getRoomID()%>" class="img">
                                         <% String base64Image = listRoom.get(i).getRoomImg(); %>
@@ -103,7 +113,7 @@
                                 </div> <!-- .item -->
                                 <%}%>
                             </div>
-                            
+
                             <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
                                 <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
                                 <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
@@ -116,6 +126,127 @@
             </div>
         </div>
 
+        <section class="features-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="300">
+                        <div class="box-feature">
+                            <span class="flaticon-house"></span>
+                            <h3 class="mb-3">Our Properties</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
+                            <p><a href="#" class="learn-more">Learn More</a></p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="500">
+                        <div class="box-feature">
+                            <span class="flaticon-building"></span>
+                            <h3 class="mb-3">Property for Sale</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
+                            <p><a href="#" class="learn-more">Learn More</a></p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="400">
+                        <div class="box-feature">
+                            <span class="flaticon-house-3"></span>
+                            <h3 class="mb-3">Real Estate Agent</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
+                            <p><a href="#" class="learn-more">Learn More</a></p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">
+                        <div class="box-feature">
+                            <span class="flaticon-house-1"></span>
+                            <h3 class="mb-3">House for Sale</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
+                            <p><a href="#" class="learn-more">Learn More</a></p>
+                        </div>
+                    </div>	
+                </div>
+            </div>
+        </section>
+        <div class="section section-4 bg-light">
+            <div class="container">
+                <div class="row justify-content-center  text-center mb-5">
+                    <div class="col-lg-5">
+                        <h2 class="font-weight-bold heading text-primary mb-4">Let's find the room that's perfect for you</h2>
+                        <p class="text-black-50">Motel Page can help you find your room that you want.</p>
+                    </div>
+                </div>
+                <div class="row justify-content-between mb-5">
+                    <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
+                        <div class="img-about dots">
+                            <img src="images/hero_bg_3.jpg" alt="Image" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex feature-h">
+                            <span class="wrap-icon me-3">
+                                <span class="icon-home2"></span>
+                            </span>
+                            <div class="feature-text">
+                                <h3 class="heading">Cheap Price</h3>
+                                <p class="text-black-50">Price will be 800kVND to 1mVND.</p>   
+                            </div>
+                        </div>
+
+                        <div class="d-flex feature-h">
+                            <span class="wrap-icon me-3">
+                                <span class="icon-person"></span>
+                            </span>
+                            <div class="feature-text">
+                                <h3 class="heading">Top 100 in HOA LAC</h3>
+                                <p class="text-black-50">With the best service and smart paymemnt</p>   
+                            </div>
+                        </div>
+
+                        <div class="d-flex feature-h">
+                            <span class="wrap-icon me-3">
+                                <span class="icon-security"></span>
+                            </span>
+                            <div class="feature-text">
+                                <h3 class="heading">Best security</h3>
+                                <p class="text-black-50">We have best security and camera.</p>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row section-counter mt-5">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                        <div class="counter-wrap mb-5 mb-lg-0">
+                            <span class="number"><span class="countup text-primary">32</span>+</span>
+                            <span class="caption text-black-50">Room that available</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                        <div class="counter-wrap mb-5 mb-lg-0">
+                            <span class="number"><span class="countup text-primary">150</span>+</span>
+                            <span class="caption text-black-50">Rented</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
+                        <div class="counter-wrap mb-5 mb-lg-0">
+                            <span class="number"><span class="countup text-primary">2</span>Km</span>
+                            <span class="caption text-black-50">Near FPT University</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
+                        <div class="counter-wrap mb-5 mb-lg-0">
+                            <span class="number"><span class="countup text-primary">80</span>%</span>
+                            <span class="caption text-black-50">Sound proof</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="row justify-content-center footer-cta" data-aos="fade-up">
+                <div class="col-lg-7 mx-auto text-center">
+                    <h2 class="mb-4 ">Join Zalo Group to get help better</h2>
+                    <p><a href="https://zalo.me/g/pimjmz442" target="_blank" class="btn btn-primary text-white py-3 px-4">Click here to Join</a></p>
+                </div> <!-- /.col-lg-7 -->
+            </div> <!-- /.row -->
+        </div>
+
         <div class="site-footer">
             <div class="container">
 
@@ -123,7 +254,7 @@
                     <div class="col-lg-4">
                         <div class="widget">
                             <h3>Contact</h3>
-                            <address>43 Raymouth Rd. Baltemoer, London 3910</address>
+                            <address>Thon 3 Thach Hoa Thach That Ha Noi</address>
                             <ul class="list-unstyled links">
                                 <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
                                 <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
