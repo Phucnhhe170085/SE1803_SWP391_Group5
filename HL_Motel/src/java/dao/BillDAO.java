@@ -5,7 +5,10 @@
 package dao;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import model.*;
+import dao.RoomDAO;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,7 +22,7 @@ import java.util.Locale;
  *
  * @author ASUS
  */
-public class BillDAO extends MyDAO {
+public class BillDAO extends DBContext {
 
     public List<Bill> getBillByRoomID(int id) {
         List<Bill> list = new ArrayList<>();
@@ -44,12 +47,12 @@ public class BillDAO extends MyDAO {
                 + "    [createAt] DESC;";
 
         try {
-            ps = con.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Bill bill = new Bill(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4),
-                        rs.getDouble(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8),
+                        rs.getDouble(5), rs.getBigDecimal(6), rs.getDouble(7), rs.getDouble(8),
                         rs.getDouble(12), rs.getString(9), rs.getString(10), rs.getString(11));
                 list.add(bill);
             }
@@ -83,12 +86,12 @@ public class BillDAO extends MyDAO {
                 + "    [createAt] DESC;";
 
         try {
-            ps = con.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Bill bill = new Bill(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4),
-                        rs.getDouble(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8),
+                        rs.getDouble(5), rs.getBigDecimal(6), rs.getDouble(7), rs.getDouble(8),
                         rs.getDouble(12), rs.getString(9), rs.getString(10), rs.getString(11));
                 return bill;
             }
@@ -107,7 +110,7 @@ public class BillDAO extends MyDAO {
                 + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
 
         try {
-            ps = con.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, roomID);
             ps.setDouble(2, service);
             ps.setDouble(3, electric);
@@ -141,7 +144,7 @@ public class BillDAO extends MyDAO {
                 + "[other] = ?, [penMoney] = ?, [deadline] = ?, [payAt] = ? WHERE [billID] = ?";
 
         try {
-            ps = con.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setDouble(1, service);
             ps.setDouble(2, electric);
             ps.setDouble(3, water);
@@ -174,7 +177,7 @@ public class BillDAO extends MyDAO {
                 + "WHERE [requestID] = ?;";
 
         try {
-            ps = con.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, requestType);
             ps.setString(2, title);
             ps.setString(3, description);
@@ -202,9 +205,8 @@ public class BillDAO extends MyDAO {
     public UsagePrice getEWPrice() {
         String sql = "Select Electric_Price, Water_Block_Price from usagePrice";
         try {
-            ps = con.prepareStatement(sql);
-
-            rs = ps.executeQuery();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 UsagePrice up = new UsagePrice(rs.getDouble(1), rs.getDouble(2));
                 return up;
@@ -218,8 +220,78 @@ public class BillDAO extends MyDAO {
         return null;
     }
 
+    public int getRoomIDByRoomNumber(int roomNumber) {
+        String sql = "SELECT roomID FROM Room WHERE roomNumber = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, roomNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("roomID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Return an invalid roomID if not found
+    }
+
+    public boolean insertBillFromExcel(int roomNumber, double service, double electric, double water, BigDecimal roomFee, double other, double penMoney) {
+        int roomID = getRoomIDByRoomNumber(roomNumber);
+        if (roomID == -1) {
+            System.out.println("Invalid room number: " + roomNumber);
+            return false;
+        }
+
+        String sql = "INSERT INTO [HL_Motel].[dbo].[bill] \n"
+                + "    ([roomID], [service], [electric], [water],\n"
+                + "	[roomFee], [other], [penMoney], [createAt],\n"
+                + "	[deadline], [payAt]) \n"
+                + "VALUES \n"
+                + "    (?, ?, ?, ?, ?, ?, ?, GETDATE(), DATEADD(month, 1, GETDATE()), NULL);";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, roomID);
+            ps.setDouble(2, service);
+            ps.setDouble(3, electric);
+            ps.setDouble(4, water);
+            ps.setBigDecimal(5, roomFee);
+            ps.setDouble(6, other);
+            ps.setDouble(7, penMoney);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Bill inserted successfully for room number: " + roomNumber);
+                return true;
+            } else {
+                System.out.println("Failed to insert bill for room number: " + roomNumber);
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error inserting bill: " + e.getMessage());
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         BillDAO dao = new BillDAO();
+
+        int roomNumberToTest = 102; // Replace with an actual room number from your database
+        int roomID = dao.getRoomIDByRoomNumber(roomNumberToTest);
+        System.out.println("Room ID for room number " + roomNumberToTest + ": " + roomID);
+        RoomDAO dao1 = new RoomDAO();
+        Room room = dao1.getRoomDetailByNumber(roomID);
+       
+        BigDecimal roomFee = room.getRoomFee();
+        double serviceFee = 50.0;
+        double electricFee = 20.0;
+        double waterFee = 15.0;
+        double otherFees = 10.0;
+        double penaltyMoney = 5.0;
+
+        // Call the method and print the result
+        boolean result = dao.insertBillFromExcel(roomNumberToTest, serviceFee, electricFee, waterFee, roomFee, otherFees, penaltyMoney);
+        System.out.println("Insert bill result: " + result);
+
 //        int billID = 41; // Example room ID
 //        double service = 200.0;
 //        double electric = 150.0;
@@ -239,12 +311,9 @@ public class BillDAO extends MyDAO {
 //        } else {
 //            System.out.println("Fee update failed.");
 //        }
-
         UsagePrice price = dao.getEWPrice();
-        
+
         System.out.println(price.getWprice());
     }
 
 }
-
-
